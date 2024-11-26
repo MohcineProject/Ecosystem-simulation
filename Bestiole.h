@@ -6,6 +6,12 @@
 
 #include <iostream>
 
+#include <vector>
+#include <memory>
+
+#include "Accessoire.h"
+
+
 using namespace std;
 
 
@@ -39,6 +45,16 @@ class Bestiole
     Bestiole( const Bestiole & b );                 // Constructeur de copies
     ~Bestiole( void );                              // Destructeur
     // Operateur d'affectation binaire par defaut
+
+   void addAccessory(std::shared_ptr<Accessoire> accessory) {
+      accessories.push_back(accessory);
+   }
+
+   void applyAccessoriesEffects() {
+      for (auto& acc : accessories) {
+         acc->applyEffect();
+      }
+   }
     void action( Milieu & monMilieu );
     void draw( UImg & support );
 

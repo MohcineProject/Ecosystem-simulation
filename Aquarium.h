@@ -3,7 +3,7 @@
 
 
 #include <iostream>
-#include <CImg.h>
+#include "CImg.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -21,8 +21,25 @@ class Aquarium : public CImgDisplay
     int            delay;
 
     public :
+       void assign(const Milieu & milieu, const char * str);
+
        Aquarium( int width, int height, int _delay );
     ~Aquarium( void );
+
+    private:
+        double finsSpeedFactor;
+        double carapaceOmega, carapaceMu;
+        double camouflageMin, camouflageMax;
+
+    public:
+        void setAccessoryParams(double finsSF, double omega, double mu, double camoMin, double camoMax) {
+            finsSpeedFactor = finsSF;
+            carapaceOmega = omega;
+            carapaceMu = mu;
+            camouflageMin = camoMin;
+            camouflageMax = camoMax;
+    }
+
 
     Milieu & getMilieu( void ) { return *flotte; }
 

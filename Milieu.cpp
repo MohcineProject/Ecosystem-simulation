@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 #include <ctime>
+#include "CImg.h"
 
 
 const T    Milieu::white[] = { (T)255, (T)255, (T)255 };
@@ -25,6 +26,8 @@ Milieu::~Milieu( void )
 
 }
 
+
+void fillC(int i, int y, int i1, T c, T c1, T c2);
 
 void Milieu::step( void )
 {

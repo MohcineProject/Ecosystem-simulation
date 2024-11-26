@@ -9,4 +9,8 @@ add_executable(project main.cpp
         Bestiole.cpp
         Aquarium.h
         Milieu.cpp
-        CImg.h)
+        CImg.h
+        Accessoire.h
+        Fins.h
+        Carapace.h
+        Camouflage.h)
