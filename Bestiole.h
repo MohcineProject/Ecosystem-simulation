@@ -15,38 +15,38 @@ class Milieu;
 class Bestiole
 {
 
-private :
-   static const double     AFF_SIZE;
-   static const double     MAX_VITESSE;
-   static const double     LIMITE_VUE;
+    private :
+       static const double     AFF_SIZE;
+    static const double     MAX_VITESSE;
+    static const double     LIMITE_VUE;
 
-   static int              next;
+    static int              next;
 
-private :
-   int               identite;
-   int               x, y;
-   double            cumulX, cumulY;
-   double            orientation;
-   double            vitesse;
+    private :
+       int               identite;
+    int               x, y;
+    double            cumulX, cumulY;
+    double            orientation;
+    double            vitesse;
 
-   T               * couleur;
+    T               * couleur;
 
-private :
-   void bouge( int xLim, int yLim );
+    private :
+       void bouge( int xLim, int yLim );
 
-public :                                           // Forme canonique :
-   Bestiole( void );                               // Constructeur par defaut
-   Bestiole( const Bestiole & b );                 // Constructeur de copies
-   ~Bestiole( void );                              // Destructeur
-                                                   // Operateur d'affectation binaire par defaut
-   void action( Milieu & monMilieu );
-   void draw( UImg & support );
+    public :                                           // Forme canonique :
+       Bestiole( void );                               // Constructeur par defaut
+    Bestiole( const Bestiole & b );                 // Constructeur de copies
+    ~Bestiole( void );                              // Destructeur
+    // Operateur d'affectation binaire par defaut
+    void action( Milieu & monMilieu );
+    void draw( UImg & support );
 
-   bool jeTeVois( const Bestiole & b ) const;
+    bool jeTeVois( const Bestiole & b ) const;
 
-   void initCoords( int xLim, int yLim );
+    void initCoords( int xLim, int yLim );
 
-   friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
+    friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
 
 };
 
