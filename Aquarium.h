@@ -17,7 +17,13 @@ class Aquarium : public CImgDisplay
 
 private :
    Milieu       * flotte;
-
+   float         cap_detection_max;
+   float         cap_detection_min;
+   float         cap_camouflage_min;
+   float         cap_camouflage_max;
+   float         mult_vitesse_max;
+   float         red_vitesse_max;
+   float         resistance_max;
    int            delay;
 
 public :
