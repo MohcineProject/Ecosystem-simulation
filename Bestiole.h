@@ -5,7 +5,7 @@
 #include "UImg.h"
 
 #include <iostream>
-#include <Behaviours/Behaviour.h>
+#include "Behaviours/Behaviour.h"
 
 using namespace std;
 

@@ -4,10 +4,7 @@
 
 #include <cstdlib>
 #include <cmath>
-#include "Accessoire.h"
-#include "Camouflage.h"
-#include "Carapace.h"
-#include "Fins.h"
+
 
 
 const double      Bestiole::AFF_SIZE = 8.;
@@ -85,16 +82,6 @@ double Bestiole::getOrientation() const {
 
 void Bestiole::bouge( int xLim, int yLim ){
 
-   double speedModifier = 1.0;
-   for (auto& acc : accessories) {
-      if (acc->getType() == "Fins") {
-         speedModifier *= static_cast<Fins*>(acc.get())->getSpeedFactor();
-      } else if (acc->getType() == "Carapace") {
-         speedModifier /= static_cast<Carapace*>(acc.get())->getMu();
-      }
-   }
-   vitesse *= speedModifier;
-
    double         nx, ny;
    double         dx = cos( orientation )*vitesse;
    double         dy = -sin( orientation )*vitesse;
@@ -127,22 +114,9 @@ void Bestiole::bouge( int xLim, int yLim ){
 
 }
 
-bool Bestiole::collisionWith(Bestiole& other) {
-   double deathProbability = 1.0;
-   for (auto& acc : accessories) {
-      if (acc->getType() == "Carapace") {
-         deathProbability *= static_cast<Carapace*>(acc.get())->getOmega();
-      }
-   }
-}
 
 bool Bestiole::jeTeVois(const Bestiole& b) const {
-   double camouflageEffect = 1.0;
-   for (auto& acc : accessories) {
-      if (acc->getType() == "Camouflage") {
-         camouflageEffect *= static_cast<Camouflage*>(acc.get())->getCamouflageValue();
-      }
-   }
+   return false;
 }
 
 
@@ -175,17 +149,6 @@ bool operator==( const Bestiole & b1, const Bestiole & b2 )
 
 }
 
-
-bool Bestiole::jeTeVois( const Bestiole & b ) const
-{
-
-   double         dist;
-
-
-   dist = std::sqrt( (x-b.x)*(x-b.x) + (y-b.y)*(y-b.y) );
-   return ( dist <= LIMITE_VUE );
-
-}
 
 int Bestiole::getCoordx() const
 {
