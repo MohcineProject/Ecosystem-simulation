@@ -17,7 +17,7 @@ double Cautious::calculateNewDirection(const Bestiole& bestiole, const Bestiole*
 
     double dx = closestBestiolePtr->getCoordx() - bestiole.getCoordx();
     double dy = closestBestiolePtr->getCoordy() - bestiole.getCoordy();
-    double newOrientation = M_PI / 2 - atan2(dx, dy); // Angle to avoid collision
+    double newOrientation = M_PI / 2 - atan2(dy, dx); // Angle to avoid collision
     return newOrientation;
 }
 
