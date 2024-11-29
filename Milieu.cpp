@@ -35,9 +35,9 @@ void Milieu::step( void )
 
       it->action( *this );
       it->draw( *this );
-
+     
    } // for
-
+  this.cleanDeads();
 }
 
 
@@ -52,5 +52,8 @@ int Milieu::nbVoisins( const Bestiole & b )
          ++nb;
 
    return nb;
-
+void cleanDeads(){
+  for ( std::vector<Bestiole>::iterator it = listeBestioles.begin() ; it != listeBestioles.end() ; ++it )
+    if (*it.isAlive == false)
+      delete it;
 }
