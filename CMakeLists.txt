@@ -3,7 +3,15 @@ project(BE-aquarium)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(BE-aquarium main.cpp
+# Set compiler warnings
+add_compile_options(-Wall)
+
+# Include directories
+include_directories(${CMAKE_SOURCE_DIR})
+
+# Add the executable
+add_executable(BE-aquarium
+        main.cpp
         Aquarium.cpp
         Bestiole.h
         Bestiole.cpp
@@ -15,5 +23,9 @@ add_executable(BE-aquarium main.cpp
         Behaviours/Gregaire.cpp
         Behaviours/Fearful.h
         Behaviours/Fearful.cpp
-
+        Behaviours/Cautious.h
+        Behaviours/Cautious.cpp
 )
+
+# Link required libraries
+target_link_libraries(BE-aquarium X11)

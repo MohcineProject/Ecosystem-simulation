@@ -8,7 +8,7 @@
 const int Fearful::DENSITE_BESTIOLE = 2;
 const double Fearful::COEF_FPEUR = 3. ;
 
-double Fearful::getNewDirection(Bestiole& bestiole, const std::vector<Bestiole>& neighbors){
+double Fearful::calculateNewDirection(Bestiole& bestiole, const std::vector<Bestiole>& neighbors){
     if (neighbors.empty())
         return bestiole.getOrientation();
     double moyenneX = 0.0;
@@ -46,7 +46,7 @@ double Fearful::getNewDirection(Bestiole& bestiole, const std::vector<Bestiole>&
 
 void Fearful::doBehaviour(Bestiole& bestiole, const std::vector<Bestiole>& neighbors){
     if (neighbors.size() >= DENSITE_BESTIOLE) {
-        bestiole.setOrientation(getNewDirection(bestiole, neighbors));
+        bestiole.setOrientation(calculateNewDirection(bestiole, neighbors));
         bestiole.setVitesse(bestiole.getVitesse() * COEF_FPEUR);
     }
     else {

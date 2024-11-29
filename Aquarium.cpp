@@ -4,7 +4,7 @@
 #include "Milieu.h"
 
 
-Aquarium::Aquarium( int width, int height, int _delay ) : cimg_library::CImgDisplay(), delay( _delay )
+Aquarium::Aquarium( int width, int height, int _delay ) : CImgDisplay(), delay( _delay )
 {
 
     int         screenWidth = 1280; //screen_width();
