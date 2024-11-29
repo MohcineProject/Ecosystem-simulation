@@ -5,11 +5,13 @@
 #include "UImg.h"
 
 #include <iostream>
+#include <Behaviours/Behaviour.h>
 
 using namespace std;
 
 
 class Milieu;
+class Behaviour;
 
 
 class Bestiole
@@ -29,6 +31,8 @@ private :
    double            orientation;
    double            vitesse;
 
+   Behaviour *behaviour;
+
    T               * couleur;
 
 private :
@@ -44,9 +48,24 @@ public :                                           // Forme canonique :
 
    bool jeTeVois( const Bestiole & b ) const;
 
+   int getCoordx() const;
+
+   int getCoordy() const;
+
+   void setCoordx(int newx);
+
+   void setCoordy(int newy);
+
+   double getVitesse();
+
+   void setVitesse(double newv);
+
    void initCoords( int xLim, int yLim );
 
    friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
+
+   void setOrientation( double orientation );
+   double getOrientation() const;
 
 };
 

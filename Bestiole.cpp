@@ -69,6 +69,15 @@ void Bestiole::initCoords( int xLim, int yLim )
 
 }
 
+void Bestiole::setOrientation(double o) {
+
+   orientation = o;
+}
+
+double Bestiole::getOrientation() const {
+   return orientation;
+}
+
 
 void Bestiole::bouge( int xLim, int yLim )
 {
@@ -144,4 +153,32 @@ bool Bestiole::jeTeVois( const Bestiole & b ) const
    dist = std::sqrt( (x-b.x)*(x-b.x) + (y-b.y)*(y-b.y) );
    return ( dist <= LIMITE_VUE );
 
+}
+
+int Bestiole::getCoordx() const
+{
+   return x;
+}
+
+int Bestiole::getCoordy() const
+{
+   return y;
+}
+
+void Bestiole::setCoordx(int newx)
+{
+   x = newx;
+}
+
+void Bestiole::setCoordy(int newy)
+{
+   y = newy;
+}
+
+double Bestiole::getVitesse() {
+   return vitesse;
+}
+
+void Bestiole::setVitesse(double newv) {
+   vitesse = newv;
 }
