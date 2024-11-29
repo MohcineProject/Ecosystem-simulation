@@ -19,12 +19,15 @@ add_executable(BE-aquarium
         Milieu.cpp
         CImg.h
         Behaviours/Behaviour.h
+        Behaviours/Behaviour.cpp
         Behaviours/Gregaire.h
         Behaviours/Gregaire.cpp
         Behaviours/Fearful.h
         Behaviours/Fearful.cpp
         Behaviours/Cautious.h
         Behaviours/Cautious.cpp
+        Behaviours/Kamikaze.h
+        Behaviours/Kamikaze.cpp
 )
 
 # Link required libraries

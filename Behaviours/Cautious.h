@@ -11,7 +11,6 @@
 class Bestiole;
 
 class Cautious : public Behaviour {
-    static Bestiole* closestBestiole(const Bestiole &bestiole, const std::vector<Bestiole>& neighbors) ;
 
     static double calculateNewDirection(const Bestiole& bestiole, const Bestiole* closestBestiolePtr);
 

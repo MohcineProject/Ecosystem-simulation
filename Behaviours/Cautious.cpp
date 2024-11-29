@@ -8,21 +8,6 @@
 #include <cmath>
 
 // Find the closest bestiole in a vector of Bestiole objects
-Bestiole* Cautious::closestBestiole(const Bestiole &bestiole, const std::vector<Bestiole>& neighbors) {
-    double minDistanceSquared = 1000000000;
-    Bestiole* closestBestiolePtr = nullptr;
-
-    for (const auto& neighbor : neighbors) {
-        double currentDistanceSquared = std::pow(neighbor.getCoordx() - bestiole.getCoordx(), 2) +
-                                         std::pow(neighbor.getCoordy() - bestiole.getCoordy(), 2);
-        if (currentDistanceSquared < minDistanceSquared) {
-            closestBestiolePtr = const_cast<Bestiole*>(&neighbor); // Point to the current closest neighbor
-            minDistanceSquared = currentDistanceSquared;
-        }
-    }
-
-    return closestBestiolePtr;
-}
 
 // Calculate the new direction to avoid collision
 double Cautious::calculateNewDirection(const Bestiole& bestiole, const Bestiole* closestBestiolePtr) {

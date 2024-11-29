@@ -77,6 +77,13 @@ build CMakeFiles/BE-aquarium.dir/Milieu.cpp.o: CXX_COMPILER__BE-aquarium_unscann
   OBJECT_DIR = CMakeFiles/BE-aquarium.dir
   OBJECT_FILE_DIR = CMakeFiles/BE-aquarium.dir
 
+build CMakeFiles/BE-aquarium.dir/Behaviours/Behaviour.cpp.o: CXX_COMPILER__BE-aquarium_unscanned_Debug /home/mouha1505/CLionProjects/BE-aquarium/Behaviours/Behaviour.cpp || cmake_object_order_depends_target_BE-aquarium
+  DEP_FILE = CMakeFiles/BE-aquarium.dir/Behaviours/Behaviour.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always -Wall
+  INCLUDES = -I/home/mouha1505/CLionProjects/BE-aquarium
+  OBJECT_DIR = CMakeFiles/BE-aquarium.dir
+  OBJECT_FILE_DIR = CMakeFiles/BE-aquarium.dir/Behaviours
+
 build CMakeFiles/BE-aquarium.dir/Behaviours/Gregaire.cpp.o: CXX_COMPILER__BE-aquarium_unscanned_Debug /home/mouha1505/CLionProjects/BE-aquarium/Behaviours/Gregaire.cpp || cmake_object_order_depends_target_BE-aquarium
   DEP_FILE = CMakeFiles/BE-aquarium.dir/Behaviours/Gregaire.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always -Wall
@@ -98,6 +105,13 @@ build CMakeFiles/BE-aquarium.dir/Behaviours/Cautious.cpp.o: CXX_COMPILER__BE-aqu
   OBJECT_DIR = CMakeFiles/BE-aquarium.dir
   OBJECT_FILE_DIR = CMakeFiles/BE-aquarium.dir/Behaviours
 
+build CMakeFiles/BE-aquarium.dir/Behaviours/Kamikaze.cpp.o: CXX_COMPILER__BE-aquarium_unscanned_Debug /home/mouha1505/CLionProjects/BE-aquarium/Behaviours/Kamikaze.cpp || cmake_object_order_depends_target_BE-aquarium
+  DEP_FILE = CMakeFiles/BE-aquarium.dir/Behaviours/Kamikaze.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always -Wall
+  INCLUDES = -I/home/mouha1505/CLionProjects/BE-aquarium
+  OBJECT_DIR = CMakeFiles/BE-aquarium.dir
+  OBJECT_FILE_DIR = CMakeFiles/BE-aquarium.dir/Behaviours
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target BE-aquarium
@@ -106,7 +120,7 @@ build CMakeFiles/BE-aquarium.dir/Behaviours/Cautious.cpp.o: CXX_COMPILER__BE-aqu
 #############################################
 # Link the executable BE-aquarium
 
-build BE-aquarium: CXX_EXECUTABLE_LINKER__BE-aquarium_Debug CMakeFiles/BE-aquarium.dir/main.cpp.o CMakeFiles/BE-aquarium.dir/Aquarium.cpp.o CMakeFiles/BE-aquarium.dir/Bestiole.cpp.o CMakeFiles/BE-aquarium.dir/Milieu.cpp.o CMakeFiles/BE-aquarium.dir/Behaviours/Gregaire.cpp.o CMakeFiles/BE-aquarium.dir/Behaviours/Fearful.cpp.o CMakeFiles/BE-aquarium.dir/Behaviours/Cautious.cpp.o
+build BE-aquarium: CXX_EXECUTABLE_LINKER__BE-aquarium_Debug CMakeFiles/BE-aquarium.dir/main.cpp.o CMakeFiles/BE-aquarium.dir/Aquarium.cpp.o CMakeFiles/BE-aquarium.dir/Bestiole.cpp.o CMakeFiles/BE-aquarium.dir/Milieu.cpp.o CMakeFiles/BE-aquarium.dir/Behaviours/Behaviour.cpp.o CMakeFiles/BE-aquarium.dir/Behaviours/Gregaire.cpp.o CMakeFiles/BE-aquarium.dir/Behaviours/Fearful.cpp.o CMakeFiles/BE-aquarium.dir/Behaviours/Cautious.cpp.o CMakeFiles/BE-aquarium.dir/Behaviours/Kamikaze.cpp.o
   FLAGS = -g
   LINK_LIBRARIES = -lX11
   OBJECT_DIR = CMakeFiles/BE-aquarium.dir
