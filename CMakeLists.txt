@@ -13,7 +13,7 @@ add_executable(BE-aquarium main.cpp
         Behaviours/Behaviour.h
         Behaviours/Gregaire.h
         Behaviours/Gregaire.cpp
-        Behaviours/Peureuse.h
-        Behaviours/Peureuse.cpp
+        Behaviours/Fearful.h
+        Behaviours/Fearful.cpp
 
 )

@@ -13,7 +13,7 @@ class Behaviour
 {
 public:
     virtual ~Behaviour() = default;
-    virtual void doComportement(Bestiole& me, const std::vector<Bestiole>& neighbors) = 0;
+    virtual void doBehaviour(Bestiole& me, const std::vector<Bestiole>& neighbors) = 0;
 };
 
 #endif //BEHAVIOUR_H

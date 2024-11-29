@@ -5,7 +5,7 @@
 #include "Gregaire.h"
 #include "../Bestiole.h"
 
-void Gregaire::doComportement(Bestiole& me, const std::vector<Bestiole>& neighbors){
+void Gregaire::doBehaviour(Bestiole& me, const std::vector<Bestiole>& neighbors){
     if (neighbors.empty())
         return;
 
