@@ -26,10 +26,20 @@ add_executable(BE-aquarium
         Behaviours/Fearful.cpp
         Behaviours/Cautious.h
         Behaviours/Cautious.cpp
+        Behaviours/MultipleBehaviour.h
+        Behaviours/MultipleBehaviour.cpp
+        Test/CreateBestioleForTest.h
+        Test/CreateBestioleForTest.cpp
         Behaviours/Kamikaze.h
         Behaviours/Kamikaze.cpp
         Test/KamikazeTest.h
         Test/KamikazeTest.cpp
+        Test/CautiousTest.h
+        Test/CautiousTest.cpp
+        Test/FearfulTest.h
+        Test/FearfulTest.cpp
+        Test/GregaireTest.h
+        Test/GregaireTest.cpp
 )
 
 # Link required libraries
