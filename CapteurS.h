@@ -10,7 +10,7 @@ class Bestiole;
 
 class CapteurS {
 private:
-    int r = 30;
+    int r = 50;
     float cap_detec = 1;
 
 public:

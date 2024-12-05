@@ -48,7 +48,7 @@ Bestiole::Bestiole(const Bestiole &b)
     std::memcpy(couleur, b.couleur, 3 * sizeof(T));
 
     captor = new CapteurS(*b.captor);
-    captorV = new CapteurV(*b.captorV); 
+    captorV = new CapteurV(*b.captorV);
 }
 
 Bestiole::~Bestiole(void)
