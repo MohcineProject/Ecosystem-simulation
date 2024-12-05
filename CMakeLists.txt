@@ -28,6 +28,8 @@ add_executable(BE-aquarium
         Behaviours/Cautious.cpp
         Behaviours/Kamikaze.h
         Behaviours/Kamikaze.cpp
+        Test/KamikazeTest.h
+        Test/KamikazeTest.cpp
 )
 
 # Link required libraries
