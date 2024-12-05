@@ -6,6 +6,7 @@
 #include <cmath>
 
 #include "Carapace.h"
+#include "Accessoire.h"
 
 
 const double      Bestiole::AFF_SIZE = 8.;
@@ -15,47 +16,40 @@ const double      Bestiole::LIMITE_VUE = 30.;
 int               Bestiole::next = 0;
 
 
-Bestiole::Bestiole( void )
+
+
+Bestiole::Bestiole(double baseSpeed)
+    : identite(++next),
+      x(0), y(0),
+      cumulX(0.0), cumulY(0.0),
+      orientation(static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI),
+      vitesse(static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE),
+      baseSpeed(baseSpeed),
+      accessoires(),
+      detectionCapability(1.0),
+      resistance(1.0)
 {
-
-   identite = ++next;
-
-   cout << "const Bestiole (" << identite << ") par defaut" << endl;
-
-   x = y = 0;
-   cumulX = cumulY = 0.;
-   orientation = static_cast<double>( rand() )/RAND_MAX*2.*M_PI;
-   vitesse = static_cast<double>( rand() )/RAND_MAX*MAX_VITESSE;
-   baseSpeed(baseSpeed);
-   detectionCapability(1.0);
-   resistance(1.0);
-
-   couleur = new T[ 3 ];
-   couleur[ 0 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
-   couleur[ 1 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
-   couleur[ 2 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
-
+   couleur = new T[3];
+   couleur[0] = static_cast<T>(static_cast<double>(rand()) / RAND_MAX * 230.0);
+   couleur[1] = static_cast<T>(static_cast<double>(rand()) / RAND_MAX * 230.0);
+   couleur[2] = static_cast<T>(static_cast<double>(rand()) / RAND_MAX * 230.0);
+   std::cout << "Construct Bestiole (" << identite << ") with base speed " << baseSpeed << std::endl;
 }
 
-
-Bestiole::Bestiole( const Bestiole & b )
+Bestiole::Bestiole(const Bestiole& b)
+    : identite(++next),
+      x(b.x), y(b.y),
+      cumulX(b.cumulX), cumulY(b.cumulY),
+      orientation(b.orientation),
+      vitesse(b.vitesse),
+      baseSpeed(b.baseSpeed),
+      accessoires(b.accessoires),
+      detectionCapability(b.detectionCapability),
+      resistance(b.resistance)
 {
-
-   identite = ++next;
-
-   cout << "const Bestiole (" << identite << ") par copie" << endl;
-
-   x = b.x;
-   y = b.y;
-   cumulX = cumulY = 0.;
-   orientation = b.orientation;
-   vitesse = b.vitesse;
-   couleur = new T[ 3 ];
-   accessoires(b.accessoires);
-   detectionCapability(b.detectionCapability);
-   resistance(b.resistance);
-   memcpy( couleur, b.couleur, 3*sizeof(T) );
-
+   couleur = new T[3];
+   memcpy(couleur, b.couleur, 3 * sizeof(T));
+   std::cout << "Copy Construct Bestiole (" << identite << ") from (" << b.identite << ")" << std::endl;
 }
 
 

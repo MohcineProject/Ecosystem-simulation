@@ -33,10 +33,10 @@ class Bestiole
 
     T               * couleur;
 
-    double *baseSpeed;
+    double baseSpeed;
 
 
-    vector <shared_ptr<Accessoire> > *accessoires;
+    std :: vector <std::shared_ptr<Accessoire> > accessoires;
     float detectionCapability;
     float resistance;
 
