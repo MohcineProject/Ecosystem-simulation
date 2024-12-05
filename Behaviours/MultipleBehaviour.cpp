@@ -21,7 +21,7 @@ void MultipleBehaviour::switchToRandomBehaviour() {
     }
 }
 
-void MultipleBehaviour::doBehaviour(Bestiole &bestiole, const std::vector<Bestiole> &neighbors) {
+void MultipleBehaviour::doBehaviour(Bestiole &bestiole, const std::set<Bestiole> &neighbors) {
     // Perform the current behaviour
     currentBehaviour->doBehaviour(bestiole, neighbors);
 

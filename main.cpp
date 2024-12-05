@@ -1,16 +1,20 @@
 #include "Aquarium.h"
 #include "Milieu.h"
 #include "Bestiole.h"
-#include "Test/GregaireTest.h"
+
+#include <iostream>
+
+#include "Test/FearfulTest.h"
 
 using namespace std;
 
 
 int main()
 {
-    GregaireTest test;
-    test.testGregaire_NoNeighbors();
-    test.testGregaire_WithNeighbors();
+    FearfulTest test;
+    test.testDoBehaviour_NoNeighbors();
+    test.testDoBehaviour_WithNeighborsAboveDensity();
+    test.testDoBehaviour_WithNeighborsBelowDensity();
 
     return 0;
 

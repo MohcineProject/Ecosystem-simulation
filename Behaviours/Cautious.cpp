@@ -7,7 +7,7 @@
 
 #include <cmath>
 
-// Find the closest bestiole in a vector of Bestiole objects
+// Find the closest bestiole in a set of Bestiole objects
 
 // Calculate the new direction to avoid collision
 double Cautious::calculateNewDirection(const Bestiole& bestiole, const Bestiole* closestBestiolePtr) {
@@ -22,7 +22,7 @@ double Cautious::calculateNewDirection(const Bestiole& bestiole, const Bestiole*
 }
 
 // Override doBehaviour to adjust trajectory dynamically
-void Cautious::doBehaviour(Bestiole& bestiole, const std::vector<Bestiole>& neighbors) {
+void Cautious::doBehaviour(Bestiole& bestiole, const std::set<Bestiole>& neighbors) {
     if (neighbors.empty()) {
         return; // No neighbors, no behavior to execute
     }

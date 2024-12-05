@@ -16,7 +16,7 @@ class Cautious : public Behaviour {
 
     public:
     Cautious() = default;
-    void doBehaviour(Bestiole &bestiole, const std::vector<Bestiole> &neighbors) override;
+    void doBehaviour(Bestiole &bestiole, const std::set<Bestiole> &neighbors) override;
 };
 
 #endif //CAUTIOUS_H

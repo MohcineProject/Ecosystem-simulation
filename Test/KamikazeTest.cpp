@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include <cmath>
-#include <vector>
+#include <set>
 #include "Behaviours/Kamikaze.h"
 #include "../Bestiole.h"
 #include "KamikazeTest.h"
@@ -15,7 +15,7 @@ void KamikazeTest::testDoBehaviour_NoNeighbors() {
     Bestiole testBestiole = createBestiole(0.0, 0.0, M_PI / 4); // Initial orientation: 45 degrees
 
     // Test with no neighbors
-    std::vector<Bestiole> neighbors;
+    std::set<Bestiole> neighbors;
     kamikaze.doBehaviour(testBestiole, neighbors);
 
     if (testBestiole.getOrientation() == M_PI / 4) {
@@ -32,7 +32,7 @@ void KamikazeTest::testDoBehaviour_WithNeighbors() {
     Bestiole neighbor2 = createBestiole(2.0, 2.0, 0.0);         // Positioned at (2,2)
 
     // Test with neighbors
-    std::vector<Bestiole> neighbors = {neighbor1, neighbor2};
+    std::set<Bestiole> neighbors = {neighbor1, neighbor2};
     kamikaze.doBehaviour(testBestiole, neighbors);
 
     // Compute expected direction

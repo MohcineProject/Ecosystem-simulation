@@ -6,7 +6,7 @@
 #define BEHAVIOUR_H
 
 #include <cmath>
-#include <vector>
+#include <set>
 
 
 class Bestiole;
@@ -14,10 +14,10 @@ class Bestiole;
 class Behaviour
 {
     protected:
-    static Bestiole* closestBestiole(const Bestiole &bestiole, const std::vector<Bestiole>& neighbors);
+    static Bestiole* closestBestiole(const Bestiole &bestiole, const std::set<Bestiole>& neighbors);
     public:
         virtual ~Behaviour() = default;
-        virtual void doBehaviour(Bestiole& me, const std::vector<Bestiole>& neighbors) = 0;
+        virtual void doBehaviour(Bestiole& me, const std::set<Bestiole>& neighbors) = 0;
 };
 
 #endif //BEHAVIOUR_H

@@ -19,7 +19,7 @@ double Kamikaze::calculateNewDirection(const Bestiole &bestiole, const Bestiole 
     return nouvelleOrientation + M_PI; // Reverse direction
 }
 
-void Kamikaze::doBehaviour(Bestiole &bestiole, const std::vector<Bestiole> &neighbors) {
+void Kamikaze::doBehaviour(Bestiole &bestiole, const std::set<Bestiole> &neighbors) {
     if (neighbors.empty()) {
         return; // No neighbors, no behavior to execute
     }

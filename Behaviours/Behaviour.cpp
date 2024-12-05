@@ -5,7 +5,7 @@
 #include "Behaviour.h"
 #include "../Bestiole.h"
 
-Bestiole* Behaviour::closestBestiole(const Bestiole &bestiole, const std::vector<Bestiole>& neighbors) {
+Bestiole* Behaviour::closestBestiole(const Bestiole &bestiole, const std::set<Bestiole>& neighbors) {
     double minDistanceSquared = 1000000000;
     Bestiole* closestBestiolePtr = nullptr;
 

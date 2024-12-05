@@ -6,11 +6,13 @@
 
 #include <iostream>
 #include "Behaviours/Behaviour.h"
+#include "Behaviours/Behaviour.h"
 
 using namespace std;
 
 
 class Milieu;
+class Behaviour;
 class Behaviour;
 
 
@@ -39,6 +41,7 @@ private :
    void bouge( int xLim, int yLim );
 
 public :                                           // Forme canonique :
+
    Bestiole( void );                               // Constructeur par defaut
    Bestiole( const Bestiole & b );                 // Constructeur de copies
    ~Bestiole( void );                              // Destructeur
@@ -62,10 +65,19 @@ public :                                           // Forme canonique :
 
    void initCoords( int xLim, int yLim );
 
+   int getIdentite() const {
+      return identite;
+   }
+
    friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
 
    void setOrientation( double orientation );
    double getOrientation() const;
+
+   friend bool operator==(const Bestiole &b1, const Bestiole &b2);
+   bool operator<(const Bestiole& other) const {
+      return identite < other.identite;
+   }
 
 };
 
