@@ -9,13 +9,6 @@
 #include "KamikazeTest.h"
 
 // Helper function to create a Bestiole
-Bestiole createBestiole(double x, double y, double orientation) {
-    Bestiole bestiole;
-    bestiole.setCoordx(x);
-    bestiole.setCoordy(y);
-    bestiole.setOrientation(orientation);
-    return bestiole;
-}
 
 void KamikazeTest::testDoBehaviour_NoNeighbors() {
     Kamikaze kamikaze;

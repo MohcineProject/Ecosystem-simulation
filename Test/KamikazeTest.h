@@ -4,8 +4,9 @@
 
 #ifndef KAMIKAZETEST_H
 #define KAMIKAZETEST_H
+#include "CreateBestioleForTest.h"
 
-class KamikazeTest {
+class KamikazeTest : public CreateBestioleForTest {
     public:
     KamikazeTest() = default;
 

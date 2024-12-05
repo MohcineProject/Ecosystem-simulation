@@ -1,21 +1,16 @@
 #include "Aquarium.h"
 #include "Milieu.h"
 #include "Bestiole.h"
-
-#include <iostream>
+#include "Test/GregaireTest.h"
 
 using namespace std;
 
 
 int main()
 {
-
-    Aquarium       ecosysteme( 640, 480, 30 );
-
-    for ( int i = 1; i <= 20; ++i )
-        ecosysteme.getMilieu().addMember( Bestiole() );
-    ecosysteme.run();
-
+    GregaireTest test;
+    test.testGregaire_NoNeighbors();
+    test.testGregaire_WithNeighbors();
 
     return 0;
 
