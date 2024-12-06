@@ -57,7 +57,7 @@ public:
        void bouge( int xLim, int yLim );
 
 public:
-   Bestiole(void);                               // Default constructor
+   Bestiole(double baseSpeed);                               // Default constructor
    Bestiole(const Bestiole &b);                  // Copy constructor
    ~Bestiole(void);                              // Destructor
    void action(Milieu &monMilieu);

@@ -149,15 +149,16 @@ void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix,
     std::set<Bestiole*> detected = sound;
     detected.insert(vision.begin(), vision.end());
     this->detected = detected;
-    float Bestiole::getDetectionCapability() const {
+}
+float Bestiole::getDetectionCapability() const {
         return detectionCapability;
-    }
+}
 
-    float Bestiole::getResistance() const {
+float Bestiole::getResistance() const {
         return resistance;
-    }
+}
 
-    ostream& operator<<(ostream& os, const Bestiole& b) {
+ostream& operator<<(ostream& os, const Bestiole& b) {
         os << "Bestiole ID: " << b.identite
            << ", Base Speed: " << b.baseSpeed
            << ", Actual Speed: " << b.getActualSpeed()
@@ -168,4 +169,12 @@ void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix,
         }
         os << ")";
         return os;
+}
+
+double Bestiole::getActualSpeed() const {
+    double speedFactor = 1.0;
+    for (const auto& acc : accessoires) {
+        speedFactor = acc->getSpeedFactor();
     }
+    return baseSpeed * speedFactor;
+}
