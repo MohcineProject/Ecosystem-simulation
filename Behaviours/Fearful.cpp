@@ -35,12 +35,15 @@ double Fearful::calculateNewDirection(Bestiole& bestiole, const std::set<Bestiol
 
 
 void Fearful::doBehaviour(Bestiole& bestiole, const std::set<Bestiole>& neighbors){
-    if (neighbors.size() >= DENSITE_BESTIOLE) {
-        bestiole.setOrientation(calculateNewDirection(bestiole, neighbors));
-        bestiole.setVitesse(bestiole.getVitesse() * COEF_FPEUR);
+    if (neighbors.size() < DENSITE_BESTIOLE) {
+        // If the density is low, reset to base speed
+        bestiole.setVitesse(bestiole.getBaseSpeed());
+        return;
     }
-    else {
-        bestiole.setVitesse(bestiole.getVitesse());
-    }
+    // If the density is high, calculate new direction and adjust speed
+    bestiole.setOrientation(calculateNewDirection(bestiole, neighbors));
+
+    double adjustedSpeed = bestiole.getBaseSpeed() * COEF_FPEUR;
+    bestiole.setVitesse(std::min(adjustedSpeed, bestiole.getMaxSpeed()));
   }
 

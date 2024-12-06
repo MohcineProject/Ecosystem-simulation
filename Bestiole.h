@@ -32,6 +32,7 @@ private :
    double            cumulX, cumulY;
    double            orientation;
    double            vitesse;
+   double baseSpeed;
 
    Behaviour *behaviour;
 
@@ -41,7 +42,7 @@ private :
    void bouge( int xLim, int yLim );
 
 public :                                           // Forme canonique :
-
+   Bestiole( double baseSpeed );
    Bestiole( void );                               // Constructeur par defaut
    Bestiole( const Bestiole & b );                 // Constructeur de copies
    ~Bestiole( void );                              // Destructeur
@@ -59,7 +60,11 @@ public :                                           // Forme canonique :
 
    void setCoordy(int newy);
 
-   double getVitesse();
+   double getActualSpeed() const;
+
+   double getBaseSpeed() const;
+
+   double getMaxSpeed() const;
 
    void setVitesse(double newv);
 

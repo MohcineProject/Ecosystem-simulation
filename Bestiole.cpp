@@ -33,6 +33,10 @@ Bestiole::Bestiole( void )
 
 }
 
+Bestiole::Bestiole(double baseSpeed) : Bestiole() {
+   this->baseSpeed = baseSpeed;
+}
+
 
 Bestiole::Bestiole( const Bestiole & b )
 {
@@ -170,8 +174,16 @@ void Bestiole::setCoordy(int newy)
    y = newy;
 }
 
-double Bestiole::getVitesse() {
+double Bestiole::getActualSpeed() const {
    return vitesse;
+}
+
+double Bestiole::getBaseSpeed() const {
+   return this -> baseSpeed;
+}
+
+double Bestiole::getMaxSpeed() const {
+   return MAX_VITESSE;
 }
 
 void Bestiole::setVitesse(double newv) {
