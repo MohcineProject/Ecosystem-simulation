@@ -5,14 +5,14 @@
 #include "Gregaire.h"
 #include "../Bestiole.h"
 
-void Gregaire::doBehaviour(Bestiole& me, const std::set<Bestiole>& neighbors){
+void Gregaire::doBehaviour(Bestiole& me, const std::set<Bestiole*>& neighbors){
     if (neighbors.empty())
         return;
 
     double avgDirection = 0.0;
     for (const auto& neighbor : neighbors)
     {
-        avgDirection += neighbor.getOrientation();
+        avgDirection += neighbor -> getOrientation();
     }
     avgDirection /= neighbors.size();
 

@@ -22,7 +22,7 @@ double Cautious::calculateNewDirection(const Bestiole& bestiole, const Bestiole*
 }
 
 // Override doBehaviour to adjust trajectory dynamically
-void Cautious::doBehaviour(Bestiole& bestiole, const std::set<Bestiole>& neighbors) {
+void Cautious::doBehaviour(Bestiole& bestiole, const std::set<Bestiole*>& neighbors) {
     if (neighbors.empty()) {
         return; // No neighbors, no behavior to execute
     }

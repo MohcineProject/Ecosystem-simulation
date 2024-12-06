@@ -9,7 +9,7 @@
 
 class Gregaire : public Behaviour{
 public:
-  void doBehaviour(Bestiole& self, const std::set<Bestiole>& neighbors) override;
+  void doBehaviour(Bestiole& self, const std::set<Bestiole*>& neighbors) override;
   Gregaire() = default;
   ~Gregaire() = default;
   };

@@ -13,7 +13,7 @@ class Kamikaze : public Behaviour {
     public:
     Kamikaze() = default;
     ~Kamikaze() = default;
-    void doBehaviour(Bestiole &bestiole, const std::set<Bestiole> &neighbors) override;
+    void doBehaviour(Bestiole &bestiole, const std::set<Bestiole*> &neighbors) override;
 
 };
 

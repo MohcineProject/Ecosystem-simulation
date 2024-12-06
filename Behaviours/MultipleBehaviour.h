@@ -26,7 +26,7 @@ class MultipleBehaviour : public Behaviour {
 public:
     // Constructor: takes a list of behaviours and a switch interval
     MultipleBehaviour(const std::vector<std::shared_ptr<Behaviour>>& availableBehaviours, int interval);
-    void doBehaviour(Bestiole& bestiole, const std::set<Bestiole>& neighbors) override;
+    void doBehaviour(Bestiole& bestiole, const std::set<Bestiole*>& neighbors) override;
 };
 
 #endif //MULTIPLEBEHAVIOUR_H

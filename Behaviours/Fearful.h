@@ -13,10 +13,10 @@ class Fearful : public Behaviour{
   static const int DENSITE_BESTIOLE;
   static const double COEF_FPEUR;
 
-  static double calculateNewDirection(Bestiole& bestiole, const std::set<Bestiole>& neighbors) ;
+  static double calculateNewDirection(Bestiole& bestiole, const std::set<Bestiole*>& neighbors) ;
 
   public:
-  void doBehaviour(Bestiole& bestiole, const std::set<Bestiole>& neighbors) override;
+  void doBehaviour(Bestiole& bestiole, const std::set<Bestiole*>& neighbors) override;
   Fearful() = default;
 
   };

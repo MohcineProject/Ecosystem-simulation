@@ -8,15 +8,15 @@
 const int Fearful::DENSITE_BESTIOLE = 2;
 const double Fearful::COEF_FPEUR = 3. ;
 
-double Fearful::calculateNewDirection(Bestiole& bestiole, const std::set<Bestiole>& neighbors) {
+double Fearful::calculateNewDirection(Bestiole& bestiole, const std::set<Bestiole*>& neighbors) {
     if (neighbors.empty())
         return bestiole.getOrientation();
 
     // Calcul du barycentre des neighbors proches
     double sumX = 0.0, sumY = 0.0;
     for (const auto& neighbor : neighbors) {
-        sumX += neighbor.getCoordx();
-        sumY += neighbor.getCoordy();
+        sumX += neighbor -> getCoordx();
+        sumY += neighbor -> getCoordy();
     }
     double meanX = sumX / neighbors.size();
     double meanY = sumY / neighbors.size();
@@ -34,7 +34,7 @@ double Fearful::calculateNewDirection(Bestiole& bestiole, const std::set<Bestiol
 }
 
 
-void Fearful::doBehaviour(Bestiole& bestiole, const std::set<Bestiole>& neighbors){
+void Fearful::doBehaviour(Bestiole& bestiole, const std::set<Bestiole*>& neighbors){
     if (neighbors.size() < DENSITE_BESTIOLE) {
         // If the density is low, reset to base speed
         bestiole.setVitesse(bestiole.getBaseSpeed());
