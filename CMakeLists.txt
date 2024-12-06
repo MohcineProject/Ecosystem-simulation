@@ -13,6 +13,9 @@ add_executable(BEproject main.cpp
         CapteurS.h
         CapteurV.cpp
         CapteurV.h
-)
-
-
+        Carapace.cpp
+        Carapace.h
+        Fins.cpp
+        Fins.h
+        Camouflage.cpp
+        Camouflage.h)

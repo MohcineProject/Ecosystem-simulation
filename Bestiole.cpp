@@ -7,22 +7,27 @@
 #include <cmath>
 #include <iostream>
 
-const double Bestiole::AFF_SIZE = 8.;
-const double Bestiole::MAX_VITESSE = 10.;
-const double Bestiole::LIMITE_VUE = 30.;
+#include "Carapace.h"
+#include "Accessoire.h"
+
+
+const double      Bestiole::AFF_SIZE = 8.;
+const double      Bestiole::MAX_VITESSE = 10.;
+const double      Bestiole::LIMITE_VUE = 30.;
 
 int Bestiole::next = 0;
 
-Bestiole::Bestiole(void)
+Bestiole::Bestiole(double baseSpeed)
+: identite(++next),
+  x(0), y(0),
+  cumulX(0.0), cumulY(0.0),
+  orientation(static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI),
+  vitesse(static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE),
+  baseSpeed(baseSpeed),
+  accessoires(),
+  detectionCapability(1.0),
+  resistance(1.0)
 {
-    identite = ++next;
-
-    std::cout << "const Bestiole (" << identite << ") par defaut" << std::endl;
-
-    x = y = 0;
-    cumulX = cumulY = 0.;
-    orientation = static_cast<double>(rand()) / RAND_MAX * 2. * M_PI;
-    vitesse = static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE;
 
     couleur = new T[3];
     couleur[0] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
@@ -33,22 +38,21 @@ Bestiole::Bestiole(void)
     captorV = new CapteurV();
 }
 
-Bestiole::Bestiole(const Bestiole &b)
+Bestiole::Bestiole(const Bestiole& b)
+    : identite(++next),
+      x(b.x), y(b.y),
+      cumulX(b.cumulX), cumulY(b.cumulY),
+      orientation(b.orientation),
+      vitesse(b.vitesse),
+      baseSpeed(b.baseSpeed),
+      accessoires(b.accessoires),
+      detectionCapability(b.detectionCapability),
+      resistance(b.resistance)
 {
-    identite = ++next;
-
-    std::cout << "const Bestiole (" << identite << ") par copie" << std::endl;
-
-    x = b.x;
-    y = b.y;
-    cumulX = cumulY = 0.;
-    orientation = b.orientation;
-    vitesse = b.vitesse;
+    captor = new CapteurS(*b.captor);captorV = new CapteurV(*b.captorV);
     couleur = new T[3];
-    std::memcpy(couleur, b.couleur, 3 * sizeof(T));
-
-    captor = new CapteurS(*b.captor);
-    captorV = new CapteurV(*b.captorV);
+    memcpy(couleur, b.couleur, 3 * sizeof(T));
+    std::cout << "Copy Construct Bestiole (" << identite << ") from (" << b.identite << ")" << std::endl;
 }
 
 Bestiole::~Bestiole(void)
@@ -56,7 +60,6 @@ Bestiole::~Bestiole(void)
     delete[] couleur;  // Delete color array
     delete captor;     // Delete the dynamically allocated CapteurS object
     delete captorV;    // Delete the dynamically allocated CapteurV object
-
     std::cout << "dest Bestiole" << std::endl;
 }
 
@@ -131,6 +134,13 @@ bool Bestiole::jeTeVois(const Bestiole &b) const
     return (dist <= LIMITE_VUE);
 }
 
+void Bestiole::addAccessory(shared_ptr<Accessoire> accessoire) {
+   accessoires.push_back(accessoire);
+   if (auto carapace = dynamic_pointer_cast<Carapace>(accessoire)) {
+      detectionCapability *= carapace->getCapDetect();
+      resistance *= carapace->getResistanceFactor();
+   }
+}
 
 void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix, int i, std::vector<Bestiole> &listeBestioles) {
     this->coordvector = &coordmatrix;
@@ -139,4 +149,23 @@ void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix,
     std::set<Bestiole*> detected = sound;
     detected.insert(vision.begin(), vision.end());
     this->detected = detected;
-}
+    float Bestiole::getDetectionCapability() const {
+        return detectionCapability;
+    }
+
+    float Bestiole::getResistance() const {
+        return resistance;
+    }
+
+    ostream& operator<<(ostream& os, const Bestiole& b) {
+        os << "Bestiole ID: " << b.identite
+           << ", Base Speed: " << b.baseSpeed
+           << ", Actual Speed: " << b.getActualSpeed()
+           << ", Detection Capability: " << b.getDetectionCapability()
+           << ", Resistance: " << b.getResistance() << " (";
+        for (const auto& acc : b.accessoires) {
+            os << acc->getType() << " ";
+        }
+        os << ")";
+        return os;
+    }

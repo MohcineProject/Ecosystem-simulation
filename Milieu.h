@@ -5,6 +5,7 @@
 #include "UImg.h"
 #include "Bestiole.h"
 
+#include <iostream>
 #include <vector>
 
 #include "CapteurS.h"
