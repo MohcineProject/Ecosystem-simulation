@@ -18,4 +18,17 @@ add_executable(BEproject main.cpp
         Fins.cpp
         Fins.h
         Camouflage.cpp
-        Camouflage.h)
+        Camouflage.h
+        Behaviours/Behaviour.h
+        Behaviours/Behaviour.cpp
+        Behaviours/Gregaire.h
+        Behaviours/Gregaire.cpp
+        Behaviours/Fearful.h
+        Behaviours/Fearful.cpp
+        Behaviours/Cautious.h
+        Behaviours/Cautious.cpp
+        Behaviours/MultipleBehaviour.h
+        Behaviours/MultipleBehaviour.cpp)
+
+
+target_link_libraries(BEproject X11)

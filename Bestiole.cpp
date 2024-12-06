@@ -1,4 +1,5 @@
 #include "Bestiole.h"
+
 #include "Milieu.h"
 #include "CapteurS.h"  // Include CapteurS definition
 #include "CapteurV.h"  // Include CapteurV definition
@@ -11,11 +12,12 @@
 #include "Accessoire.h"
 
 
+
 const double      Bestiole::AFF_SIZE = 8.;
 const double      Bestiole::MAX_VITESSE = 10.;
 const double      Bestiole::LIMITE_VUE = 30.;
 
-int Bestiole::next = 0;
+int               Bestiole::next = 0;
 
 Bestiole::Bestiole(double baseSpeed)
 : identite(++next),
@@ -29,14 +31,24 @@ Bestiole::Bestiole(double baseSpeed)
   resistance(1.0)
 {
 
-    couleur = new T[3];
-    couleur[0] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
-    couleur[1] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
-    couleur[2] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
+   identite = ++next;
+
+   cout << "const Bestiole (" << identite << ") par defaut" << endl;
+
+   x = y = 0;
+   cumulX = cumulY = 0.;
+   orientation = static_cast<double>( rand() )/RAND_MAX*2.*M_PI;
+   vitesse = static_cast<double>( rand() )/RAND_MAX*MAX_VITESSE;
+
+   couleur = new T[ 3 ];
+   couleur[ 0 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
+   couleur[ 1 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
+   couleur[ 2 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
 
     captor = new CapteurS();
     captorV = new CapteurV();
 }
+
 
 Bestiole::Bestiole(const Bestiole& b)
     : identite(++next),
@@ -55,6 +67,7 @@ Bestiole::Bestiole(const Bestiole& b)
     std::cout << "Copy Construct Bestiole (" << identite << ") from (" << b.identite << ")" << std::endl;
 }
 
+
 Bestiole::~Bestiole(void)
 {
     delete[] couleur;  // Delete color array
@@ -63,11 +76,13 @@ Bestiole::~Bestiole(void)
     std::cout << "dest Bestiole" << std::endl;
 }
 
+
 void Bestiole::initCoords(int xLim, int yLim)
 {
     x = rand() % xLim;
     y = rand() % yLim;
 }
+
 
 void Bestiole::bouge(int xLim, int yLim)
 {
@@ -107,10 +122,19 @@ void Bestiole::bouge(int xLim, int yLim)
     }
 }
 
-void Bestiole::action(Milieu &monMilieu)
+
+
+bool Bestiole::jeTeVois(const Bestiole& b) const {
+   return false;
+}
+
+
+
+void Bestiole::action( Milieu & monMilieu )
 {
     bouge(monMilieu.getWidth(), monMilieu.getHeight());
 }
+
 
 void Bestiole::draw(UImg &support)
 {
@@ -121,18 +145,34 @@ void Bestiole::draw(UImg &support)
     support.draw_circle(xt, yt, AFF_SIZE / 2., couleur);
 }
 
+
 bool operator==(const Bestiole &b1, const Bestiole &b2)
 {
     return (b1.identite == b2.identite);
 }
 
-bool Bestiole::jeTeVois(const Bestiole &b) const
+int Bestiole::getCoordx() const
+{
+   return x;
+}
+
+int Bestiole::getCoordy() const
+{
+   return y;
+}
+
+void Bestiole::setCoordx(int newx)
 {
     double dist;
-
-    dist = std::sqrt((x - b.x) * (x - b.x) + (y - b.y) * (y - b.y));
-    return (dist <= LIMITE_VUE);
+   x = newx;
 }
+
+void Bestiole::setCoordy(int newy)
+{
+   y = newy;
+}
+
+
 
 void Bestiole::addAccessory(shared_ptr<Accessoire> accessoire) {
    accessoires.push_back(accessoire);
@@ -159,16 +199,24 @@ float Bestiole::getResistance() const {
 }
 
 ostream& operator<<(ostream& os, const Bestiole& b) {
-        os << "Bestiole ID: " << b.identite
-           << ", Base Speed: " << b.baseSpeed
-           << ", Actual Speed: " << b.getActualSpeed()
-           << ", Detection Capability: " << b.getDetectionCapability()
-           << ", Resistance: " << b.getResistance() << " (";
-        for (const auto& acc : b.accessoires) {
-            os << acc->getType() << " ";
-        }
-        os << ")";
-        return os;
+    os << "Bestiole ID: " << b.identite
+       << ", Base Speed: " << b.baseSpeed
+       << ", Actual Speed: " << b.getActualSpeed()
+       << ", Detection Capability: " << b.getDetectionCapability()
+       << ", Resistance: " << b.getResistance() << " (";
+    for (const auto& acc : b.accessoires) {
+        os << acc->getType() << " ";
+    }
+    os << ")";
+    return os;
+}
+
+double Bestiole::getMaxSpeed() const {
+   return MAX_VITESSE;
+}
+
+void Bestiole::setVitesse(double newv) {
+   vitesse = newv;
 }
 
 double Bestiole::getActualSpeed() const {

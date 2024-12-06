@@ -1,6 +1,7 @@
 #ifndef _BESTIOLES_H_
 #define _BESTIOLES_H_
 
+
 #include "UImg.h"
 
 #include "Accessoire.h"
@@ -11,10 +12,15 @@
 #include "CapteurV.h"
 #include <memory>
 #include <iostream>
+#include "Behaviours/Behaviour.h"
+#include "Behaviours/Behaviour.h"
 
 using namespace std;
 
+
 class Milieu;
+class Behaviour;
+class Behaviour;
 
 
 class CapteurS;
@@ -23,19 +29,19 @@ class CapteurV;
 
 class Bestiole
 {
-private:
-   static const double AFF_SIZE;
-   static const double MAX_VITESSE;
-   static const double LIMITE_VUE;
 
-   static int next;
+private :
+   static const double     AFF_SIZE;
+   static const double     MAX_VITESSE;
+   static const double     LIMITE_VUE;
 
-private:
-   int identite;
+   static int              next;
 
-   double cumulX, cumulY;
-   double orientation;
-   double vitesse;
+private :
+   int               identite;
+   double            cumulX, cumulY;
+   double            orientation;
+   double            vitesse;
 
    CapteurS* captor;
    CapteurV* captorV;
@@ -63,9 +69,24 @@ public:
    void action(Milieu &monMilieu);
    void draw(UImg &support);
 
-   bool jeTeVois(const Bestiole &b) const;
+   bool jeTeVois( const Bestiole & b ) const;
 
-   void initCoords(int xLim, int yLim);
+   int getCoordx() const;
+
+   int getCoordy() const;
+
+   void setCoordx(int newx);
+
+   void setCoordy(int newy);
+
+
+   double getBaseSpeed() const;
+
+   double getMaxSpeed() const;
+
+   void setVitesse(double newv);
+
+   void initCoords( int xLim, int yLim );
 
     double getActualSpeed() const;
     void addAccessory( shared_ptr<Accessoire> accessoire );
@@ -76,7 +97,18 @@ public:
 
    friend bool operator==(const Bestiole &b1, const Bestiole &b2);
    friend ostream& operator<<(ostream& os, const Bestiole& b);
+   int getIdentite() const {
+      return identite;
+   }
+   void setOrientation( double orientation );
+   double getOrientation() const;
+
+   friend bool operator==(const Bestiole &b1, const Bestiole &b2);
+   bool operator<(const Bestiole& other) const {
+      return identite < other.identite;
+   }
 
 };
 
-#endif // _BESTIOLES_H_
+
+#endif

@@ -1,0 +1,3 @@
+/home/mouha1505/CLionProjects/BE-aquarium/cmake-build-debug/CMakeFiles/BE-aquarium.dir
+/home/mouha1505/CLionProjects/BE-aquarium/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/mouha1505/CLionProjects/BE-aquarium/cmake-build-debug/CMakeFiles/rebuild_cache.dir
