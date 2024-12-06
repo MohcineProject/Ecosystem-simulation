@@ -12,7 +12,7 @@
 #include <vector>
 
 #include "Behaviour.h"
-#include "Bestiole.h"
+#include "../Bestiole.h"
 
 class MultipleBehaviour : public Behaviour {
 

@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.29)
 project(BEproject)
 
+
 set(CMAKE_CXX_STANDARD 11)
 
 add_executable(BEproject main.cpp
         Aquarium.cpp
         Bestiole.cpp
+        Bestiole.h
         CImg.h
         Milieu.cpp
         ICapteur.h
@@ -28,7 +30,8 @@ add_executable(BEproject main.cpp
         Behaviours/Cautious.h
         Behaviours/Cautious.cpp
         Behaviours/MultipleBehaviour.h
-        Behaviours/MultipleBehaviour.cpp)
+        Behaviours/MultipleBehaviour.cpp
+        Behaviours/Kamikaze.cpp)
 
 
-target_link_libraries(BEproject X11)
+

@@ -10,8 +10,10 @@
 
 #include "Carapace.h"
 #include "Accessoire.h"
-
-
+#include "Behaviours/Fearful.h"
+#include "Behaviours/Kamikaze.h"
+#include "Behaviours/Cautious.h"
+#include "Behaviours/Gregaire.h"
 
 const double      Bestiole::AFF_SIZE = 8.;
 const double      Bestiole::MAX_VITESSE = 10.;
@@ -73,6 +75,7 @@ Bestiole::~Bestiole(void)
     delete[] couleur;  // Delete color array
     delete captor;     // Delete the dynamically allocated CapteurS object
     delete captorV;    // Delete the dynamically allocated CapteurV object
+    delete behaviour;
     std::cout << "dest Bestiole" << std::endl;
 }
 
@@ -186,9 +189,9 @@ void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix,
     this->coordvector = &coordmatrix;
     std::set<Bestiole*> sound = this->captor->update(*this->coordvector, i, listeBestioles);  // Use pointer dereferencing
     std::set<Bestiole*> vision = this->captorV->update(*this->coordvector, i, listeBestioles); // Use pointer dereferencing
-    std::set<Bestiole*> detected = sound;
-    detected.insert(vision.begin(), vision.end());
-    this->detected = detected;
+    std::set<Bestiole*> detectedptr = sound;
+    detectedptr.insert(vision.begin(), vision.end());
+    this->detected = detectedptr;
 }
 float Bestiole::getDetectionCapability() const {
         return detectionCapability;
@@ -225,4 +228,36 @@ double Bestiole::getActualSpeed() const {
         speedFactor = acc->getSpeedFactor();
     }
     return baseSpeed * speedFactor;
+}
+
+double Bestiole::getOrientation() const {
+    return orientation;
+}
+
+void Bestiole::setOrientation(double o) {
+
+    orientation = o;
+}
+
+double Bestiole::getBaseSpeed() const {
+    return this -> baseSpeed;
+}
+
+void Bestiole::setBehaviour(std::string s) {
+    if (s == "Fearful") {
+        behaviour = new Fearful();
+    }
+    else if (s == "Kamikaze") {
+        behaviour = new Kamikaze();
+    }
+    else if (s == "Gregaire") {
+        behaviour = new Gregaire();
+    }
+    else if (s == "Cautious") {
+        behaviour = new Cautious();
+    }
+}
+
+void Bestiole::doBehavour() {
+    //behaviour->doBehaviour(*this, detected);
 }

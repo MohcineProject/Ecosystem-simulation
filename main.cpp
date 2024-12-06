@@ -17,6 +17,8 @@ int main() {
 
     // Create Bestioles with different accessories
     Bestiole b1(5.0); // Without accessories
+    b1.setBehaviour("Fearful");
+    b1.doBehavour();
 
     Bestiole b2(5.0); // With fins
     shared_ptr<Accessoire> finsPtr = make_shared<Fins>(1.5);

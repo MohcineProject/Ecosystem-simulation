@@ -1,6 +1,3 @@
-//
-// Created by mouha1505 on 05/12/24.
-//
 
 #include "MultipleBehaviour.h"
 

@@ -50,6 +50,7 @@ private :
 
     double baseSpeed;
 
+    Behaviour* behaviour;
 
     std :: vector <std::shared_ptr<Accessoire> > accessoires;
     float detectionCapability;
@@ -88,6 +89,10 @@ public:
 
    void initCoords( int xLim, int yLim );
 
+   void setBehaviour(std::string s);
+
+   void doBehavour();
+
     double getActualSpeed() const;
     void addAccessory( shared_ptr<Accessoire> accessoire );
     float getDetectionCapability() const;
@@ -107,6 +112,7 @@ public:
    bool operator<(const Bestiole& other) const {
       return identite < other.identite;
    }
+
 
 };
 
