@@ -24,4 +24,5 @@ void Gregaire::doBehaviour(std::set<Bestiole*>& neighbors){
 
 Gregaire::Gregaire(Bestiole *bestiole) {
     this->bestiole = bestiole;
+    this -> type = "Gregaire";
 }

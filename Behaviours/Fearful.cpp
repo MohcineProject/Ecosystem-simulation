@@ -7,6 +7,7 @@ const double Fearful::COEF_FPEUR = 3. ;
 
 Fearful::Fearful(Bestiole *bestiole) {
     this->bestiole = bestiole;
+    this -> type = "Fearful";
 }
 
 

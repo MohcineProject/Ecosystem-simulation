@@ -17,6 +17,9 @@ public:
     CapteurS();
     ~CapteurS() ;
     std::set<Bestiole*> update(std::vector<std::pair<double, double>>& coordvector, int i, std::vector<Bestiole>& listeBestioles);
+    int getR() const {
+        return r;
+    }
 };
 
 #endif // CAPTEURS_H

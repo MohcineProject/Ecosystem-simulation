@@ -74,6 +74,8 @@ public:
    void action(Milieu &monMilieu);
    void draw(UImg &support);
 
+   void setColor(Behaviour *behaviour);
+
    bool jeTeVois( const Bestiole & b ) const;
 
    int getCoordx() const;

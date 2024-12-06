@@ -20,6 +20,11 @@ const double      Bestiole::AFF_SIZE = 8.;
 const double      Bestiole::MAX_VITESSE = 10.;
 const double      Bestiole::LIMITE_VUE = 30.;
 
+static T RED[3] = {255, 0, 0};
+static T PURPLE[3] = {0, 255, 255};
+static T BLUE[3] = {0, 0, 255};
+static T GREEN[3] = {0, 255, 0};
+
 int               Bestiole::next = 0;
 
 Bestiole::Bestiole(double baseSpeed)
@@ -158,14 +163,46 @@ void Bestiole::action( Milieu & monMilieu )
 }
 
 
-void Bestiole::draw(UImg &support)
-{
+void Bestiole::draw(UImg &support) {
+    // Assign color based on the behavior type
+    if (behaviour) {
+        if (auto *multiBehaviour = dynamic_cast<MultipleBehaviour *>(behaviour)) {
+            setColor(multiBehaviour->getBehaviour());
+        }else {
+            setColor(this-> behaviour);
+        }
+    }
+
+    // Calculate head position
     double xt = x + cos(orientation) * AFF_SIZE / 2.1;
     double yt = y - sin(orientation) * AFF_SIZE / 2.1;
 
-    support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5., -orientation / M_PI * 180., couleur);
-    support.draw_circle(xt, yt, AFF_SIZE / 2., couleur);
+    // Draw body and head
+    support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5.0, -orientation / M_PI * 180.0, couleur);
+    support.draw_circle(xt, yt, AFF_SIZE / 2.0, couleur);
+
+    if (captorV) {
+
+    }
+
+    if (captor) {
+        support.draw_circle(x, y, captor->getR(), couleur, 0.2);  // Draw ears with partial opacity
+    }
+
 }
+
+void Bestiole::setColor(Behaviour *behaviour) {
+    if (dynamic_cast<Kamikaze *>(behaviour)) {
+        couleur =  RED ;
+    } else if (dynamic_cast<Cautious *>(behaviour)) {
+        couleur =  PURPLE;
+    } else if (dynamic_cast<Fearful *>(behaviour)) {
+        couleur =  BLUE;
+    } else if (dynamic_cast<Gregaire *>(behaviour)) {
+        couleur =  GREEN;
+    }
+}
+
 
 
 bool operator==(const Bestiole &b1, const Bestiole &b2)

@@ -23,6 +23,12 @@ private:
     CapteurV();
     ~CapteurV();
     std::set<Bestiole*> update(std::vector<std::pair<double, double>>& coordvector, int i, std::vector<Bestiole>& listeBestioles);
+    int getAngle() const {
+        return angle;
+    }
+    float getR() const {
+        return r;
+    }
 
 };
 

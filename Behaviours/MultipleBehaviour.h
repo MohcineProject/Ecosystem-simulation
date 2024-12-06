@@ -29,6 +29,8 @@ public:
     MultipleBehaviour(Bestiole *bestiole, const std::vector<std::string> &behaviourNames);
     MultipleBehaviour(Bestiole *bestiole);
     void doBehaviour(std::set<Bestiole*>& neighbors) override;
+
+    Behaviour *getBehaviour() const;
 };
 
 #endif //MULTIPLEBEHAVIOUR_H

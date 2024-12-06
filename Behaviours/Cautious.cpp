@@ -23,6 +23,7 @@ double Cautious::calculateNewDirection( const Bestiole* closestBestiolePtr) {
 
 Cautious::Cautious(Bestiole *bestiole) {
     this -> bestiole = bestiole;
+    this -> type = "Cautious";
 }
 
 // Override doBehaviour to adjust trajectory dynamically

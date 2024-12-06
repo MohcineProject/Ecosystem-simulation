@@ -7,6 +7,7 @@
 
 Kamikaze::Kamikaze(Bestiole *bestiole) {
     this->bestiole = bestiole;
+    this -> type = "Kamikaze";
 }
 
 

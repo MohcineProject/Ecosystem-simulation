@@ -28,6 +28,7 @@ MultipleBehaviour::MultipleBehaviour(Bestiole *bestiole, const std::vector<std::
         behaviours.push_back(std::make_shared<Gregaire>(bestiole));
     }
     currentBehaviour = behaviours.front();
+    this -> type = "MultipleBehaviour";
 }
 
 MultipleBehaviour::MultipleBehaviour(Bestiole *bestiole)
@@ -55,4 +56,8 @@ void MultipleBehaviour::doBehaviour(std::set<Bestiole*> &neighbors) {
         switchToRandomBehaviour();
         stepCounter = 0; // Reset the counter
     }
+}
+
+Behaviour * MultipleBehaviour::getBehaviour() const {
+    return this -> currentBehaviour.get();
 }
