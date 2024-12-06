@@ -32,10 +32,9 @@ void Milieu::step( void )
    detectCollisions();
    for ( std::vector<Bestiole>::iterator it = listeBestioles.begin() ; it != listeBestioles.end() ; ++it )
    {
-
       it->action( *this );
       it->draw( *this );
-   } // for
+   }
 
 }
 

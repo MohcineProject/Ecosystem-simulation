@@ -16,7 +16,7 @@ std::set<Bestiole *> CapteurV::update(std::vector<std::pair<double, double> > &c
     std::set<Bestiole *> bestioles;
     for (int i = 0; i < coordvector.size(); i++) {
         if (i != k && - angle < coordvector[i].second < angle && coordvector[i].first < r * r) {
-            std::cout << k << "  sees    " << i << std::endl;
+            //std::cout << k << "  sees    " << i << std::endl;
             bestioles.insert(&listeBestioles[i]);
         }
     }

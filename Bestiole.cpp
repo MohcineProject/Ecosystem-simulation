@@ -22,7 +22,7 @@ const double      Bestiole::LIMITE_VUE = 30.;
 int               Bestiole::next = 0;
 
 Bestiole::Bestiole(double baseSpeed)
-: identite(++next),
+:
   x(0), y(0),
   cumulX(0.0), cumulY(0.0),
   orientation(static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI),
@@ -63,6 +63,9 @@ Bestiole::Bestiole(const Bestiole& b)
       detectionCapability(b.detectionCapability),
       resistance(b.resistance)
 {
+    if (b.fear != nullptr) {
+        fear = new Fearful(this);
+    }
     captor = new CapteurS(*b.captor);captorV = new CapteurV(*b.captorV);
     couleur = new T[3];
     memcpy(couleur, b.couleur, 3 * sizeof(T));
@@ -75,7 +78,6 @@ Bestiole::~Bestiole(void)
     delete[] couleur;  // Delete color array
     delete captor;     // Delete the dynamically allocated CapteurS object
     delete captorV;    // Delete the dynamically allocated CapteurV object
-    delete behaviour;
     std::cout << "dest Bestiole" << std::endl;
 }
 
@@ -136,6 +138,7 @@ bool Bestiole::jeTeVois(const Bestiole& b) const {
 void Bestiole::action( Milieu & monMilieu )
 {
     bouge(monMilieu.getWidth(), monMilieu.getHeight());
+    this->doBehaviour();
 }
 
 
@@ -245,7 +248,8 @@ double Bestiole::getBaseSpeed() const {
 
 void Bestiole::setBehaviour(std::string s) {
     if (s == "Fearful") {
-        behaviour = new Fearful();
+        this->fear = new Fearful(this);
+        std::cout<< "fearful" << std::endl;
     }
     else if (s == "Kamikaze") {
         behaviour = new Kamikaze();
@@ -258,6 +262,8 @@ void Bestiole::setBehaviour(std::string s) {
     }
 }
 
-void Bestiole::doBehavour() {
-    //behaviour->doBehaviour(*this, detected);
+void Bestiole::doBehaviour() {
+    if (this->fear != nullptr) {
+        this->fear->doBehaviour(detected);
+    }
 }

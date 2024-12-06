@@ -14,6 +14,7 @@
 #include <iostream>
 #include "Behaviours/Behaviour.h"
 #include "Behaviours/Behaviour.h"
+#include "Behaviours/Fearful.h"
 
 using namespace std;
 
@@ -52,10 +53,12 @@ private :
 
     Behaviour* behaviour;
 
+
     std :: vector <std::shared_ptr<Accessoire> > accessoires;
     float detectionCapability;
     float resistance;
 public:
+   Fearful* fear = nullptr;
    int x, y;
    std::vector<std::pair<double, double>>* coordvector;
    std::set<Bestiole*> detected;
@@ -91,7 +94,7 @@ public:
 
    void setBehaviour(std::string s);
 
-   void doBehavour();
+   void doBehaviour();
 
     double getActualSpeed() const;
     void addAccessory( shared_ptr<Accessoire> accessoire );
@@ -108,11 +111,30 @@ public:
    void setOrientation( double orientation );
    double getOrientation() const;
 
-   friend bool operator==(const Bestiole &b1, const Bestiole &b2);
    bool operator<(const Bestiole& other) const {
       return identite < other.identite;
    }
 
+   Bestiole& operator=(const Bestiole& b) {
+      if (this != &b) {
+         this->x = b.x;
+         this->y = b.y;
+         this->identite = b.identite;
+         this->orientation = b.orientation;
+         this->cumulX = b.cumulX;
+         this->cumulY = b.cumulY;
+         this->vitesse = b.vitesse;
+         this->fear = b.fear;
+         this->accessoires = b.accessoires;
+         this->detectionCapability = b.detectionCapability;
+         this->resistance = b.resistance;
+         this->captor = b.captor;
+         this->captorV = b.captorV;
+         this->couleur = new T[3];
+         memcpy(couleur, b.couleur, 3 * sizeof(T));
+      }
+      return *this;
+   }
 
 };
 

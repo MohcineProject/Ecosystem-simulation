@@ -16,7 +16,7 @@ class Bestiole;
 class CapteurV {
 private:
     int r = 80;
-    int angle = 20;
+    int angle = 30;
     float cap_detec = 1;
 
     public:

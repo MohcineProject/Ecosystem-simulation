@@ -16,25 +16,16 @@ int main() {
     Aquarium ecosysteme(640, 480, 30);
 
     // Create Bestioles with different accessories
-    Bestiole b1(5.0); // Without accessories
+    Bestiole b1(10.0); // Without accessories
     b1.setBehaviour("Fearful");
-    b1.doBehavour();
 
-    Bestiole b2(5.0); // With fins
-    shared_ptr<Accessoire> finsPtr = make_shared<Fins>(1.5);
-    b2.addAccessory(finsPtr);
+    Bestiole b2(5.0);
 
-    Bestiole b3(5.0); // With carapace
-    shared_ptr<Accessoire> carapacePtr = make_shared<Carapace>(1.2, 1.5, 0.8);
-    b3.addAccessory(carapacePtr);
+    Bestiole b3(5.0);
 
-    Bestiole b4(5.0); // With camouflage
-    shared_ptr<Accessoire> camouflagePtr = make_shared<Camouflage>(0.8);
-    b4.addAccessory(camouflagePtr);
+    Bestiole b4(5.0);
 
-    Bestiole b5(5.0); // With carapace and camouflage
-    b5.addAccessory(carapacePtr);
-    b5.addAccessory(camouflagePtr);
+    Bestiole b5(5.0);;
 
     // Add the Bestioles to the Milieu
     Milieu& milieu = ecosysteme.getMilieu();
