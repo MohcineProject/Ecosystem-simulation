@@ -32,7 +32,7 @@ double Fearful::calculateNewDirection(const std::set<Bestiole*>& neighbors) {
         return bestiole->getOrientation();
     }
 
-    return atan2(-dy, -dx);
+    return M_PI - atan2(dy, dx);
 }
 
 

@@ -14,6 +14,7 @@
 #include "Behaviours/Kamikaze.h"
 #include "Behaviours/Cautious.h"
 #include "Behaviours/Gregaire.h"
+#include "Behaviours/MultipleBehaviour.h"
 
 const double      Bestiole::AFF_SIZE = 8.;
 const double      Bestiole::MAX_VITESSE = 10.;
@@ -75,6 +76,10 @@ Bestiole::Bestiole(const Bestiole& b)
         }
         else if (type == "Cautious") {
             behaviour = new Cautious(this);
+        }
+        else {
+            behaviour = new MultipleBehaviour(this); // you can also give to the constructor a vector of the behaviour name.
+            // know that if none of the behaviour name is not valid, the bestiole will have all possible behaviours
         }
     }
     captor = new CapteurS(*b.captor);captorV = new CapteurV(*b.captorV);
@@ -273,6 +278,10 @@ void Bestiole::setBehaviour(std::string s) {
     else if (s == "Cautious") {
         behaviour = new Cautious(this);
         this->type = "Cautious";
+    }
+    else {
+        behaviour = new MultipleBehaviour(this);// you can also give to the constructor a vector of the behaviour name.
+        // know that if none of the behaviour name is not valid, the bestiole will have all possible behaviours
     }
 }
 

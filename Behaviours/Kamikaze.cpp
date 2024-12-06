@@ -19,9 +19,9 @@ double Kamikaze::calculateNewDirection(const Bestiole *closestBestiolePtr) {
     double dy = closestBestiolePtr->getCoordy() - bestiole->getCoordy();
 
     // Compute the orientation
-    double nouvelleOrientation = M_PI / 2 + (dy != 0 ? atan2(dy, dx) : (dx > 0 ? 0 : M_PI));
+    double nouvelleOrientation = -atan2(dy, dx);
 
-    return nouvelleOrientation + M_PI; // Reverse direction
+    return nouvelleOrientation ; // Reverse direction
 }
 
 void Kamikaze::doBehaviour(std::set<Bestiole*> &neighbors) {

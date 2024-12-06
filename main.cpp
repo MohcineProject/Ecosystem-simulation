@@ -17,7 +17,7 @@ int main() {
 
     // Create Bestioles with different accessories
     Bestiole b1(10.0); // Without accessories
-    b1.setBehaviour("Kamikaze");
+    b1.setBehaviour("Multiple");
 
     Bestiole b2(5.0);
 
