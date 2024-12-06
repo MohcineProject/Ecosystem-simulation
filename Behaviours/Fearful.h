@@ -9,8 +9,7 @@
 
 class Bestiole;
 
-class Fearful {
-  Bestiole* bestiole;
+class Fearful : public Behaviour {
   static const int DENSITE_BESTIOLE;
   static const double COEF_FPEUR;
 

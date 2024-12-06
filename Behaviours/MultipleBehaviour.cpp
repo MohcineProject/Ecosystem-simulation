@@ -2,10 +2,11 @@
 #include "MultipleBehaviour.h"
 
 
-MultipleBehaviour::MultipleBehaviour(const std::vector<std::shared_ptr<Behaviour>> &availableBehaviours, int interval): behaviours(availableBehaviours),
+MultipleBehaviour::MultipleBehaviour(Bestiole *bestiole,const std::vector<std::shared_ptr<Behaviour>> &availableBehaviours, int interval): behaviours(availableBehaviours),
                                                                                                                         currentBehaviour(availableBehaviours.front()),
                                                                                                                         switchInterval(interval),
                                                                                                                         stepCounter(0) {
+    this->bestiole = bestiole;
 }
 
 void MultipleBehaviour::switchToRandomBehaviour() {
@@ -18,9 +19,9 @@ void MultipleBehaviour::switchToRandomBehaviour() {
     }
 }
 
-void MultipleBehaviour::doBehaviour(Bestiole &bestiole, const std::set<Bestiole*> &neighbors) {
+void MultipleBehaviour::doBehaviour(std::set<Bestiole*> &neighbors) {
     // Perform the current behaviour
-    currentBehaviour->doBehaviour(bestiole, neighbors);
+    currentBehaviour->doBehaviour(neighbors);
 
     // Increment the step counter
     stepCounter++;

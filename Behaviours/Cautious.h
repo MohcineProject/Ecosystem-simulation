@@ -12,12 +12,12 @@ class Bestiole;
 
 class Cautious : public Behaviour {
 
-    static double calculateNewDirection(const Bestiole& bestiole, const Bestiole* closestBestiolePtr);
+    double calculateNewDirection(const Bestiole* closestBestiolePtr);
 
     public:
-    Cautious() = default;
+    Cautious(Bestiole* bestiole);
     ~Cautious() = default;
-    void doBehaviour(Bestiole &bestiole, const std::set<Bestiole*> &neighbors) override;
+    void doBehaviour(std::set<Bestiole*> &neighbors) override;
 };
 
 #endif //CAUTIOUS_H

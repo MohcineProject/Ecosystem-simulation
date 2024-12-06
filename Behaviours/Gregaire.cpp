@@ -5,7 +5,7 @@
 #include "Gregaire.h"
 #include "../Bestiole.h"
 
-void Gregaire::doBehaviour(Bestiole& me, const std::set<Bestiole*>& neighbors){
+void Gregaire::doBehaviour(std::set<Bestiole*>& neighbors){
     if (neighbors.empty())
         return;
 
@@ -18,6 +18,10 @@ void Gregaire::doBehaviour(Bestiole& me, const std::set<Bestiole*>& neighbors){
 
     double newDirection = fmod(avgDirection, 2*M_PI);
 
-    me.setOrientation(newDirection);
+    bestiole->setOrientation(newDirection);
 
+}
+
+Gregaire::Gregaire(Bestiole *bestiole) {
+    this->bestiole = bestiole;
 }

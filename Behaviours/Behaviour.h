@@ -14,10 +14,12 @@ class Bestiole;
 class Behaviour
 {
     protected:
-    static Bestiole* closestBestiole(const Bestiole &bestiole, const std::set<Bestiole*>& neighbors);
+    Bestiole *bestiole = nullptr;
+
     public:
         virtual ~Behaviour() = default;
-        virtual void doBehaviour(Bestiole& me, const std::set<Bestiole*>& neighbors) = 0;
+        virtual void doBehaviour(std::set<Bestiole*>& neighbors) = 0;
+        Bestiole* closestBestiole(const std::set<Bestiole*>& neighbors);
 };
 
 #endif //BEHAVIOUR_H

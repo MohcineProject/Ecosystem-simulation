@@ -8,12 +8,12 @@
 #include "Behaviour.h"
 
 class Kamikaze : public Behaviour {
-    static double calculateNewDirection(const Bestiole& bestiole, const Bestiole* closestBestiolePtr);
+    double calculateNewDirection(const Bestiole* closestBestiolePtr);
 
     public:
-    Kamikaze() = default;
+    Kamikaze(Bestiole *bestiole) ;
     ~Kamikaze() = default;
-    void doBehaviour(Bestiole &bestiole, const std::set<Bestiole*> &neighbors) override;
+    void doBehaviour(std::set<Bestiole*> &neighbors) override;
 
 };
 
