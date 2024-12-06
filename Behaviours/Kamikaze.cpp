@@ -5,6 +5,11 @@
 #include "Kamikaze.h"
 #include "../Bestiole.h"
 
+Kamikaze::Kamikaze(Bestiole *bestiole) {
+    this->bestiole = bestiole;
+}
+
+
 double Kamikaze::calculateNewDirection(const Bestiole *closestBestiolePtr) {
     if (!closestBestiolePtr) {
         return bestiole->getOrientation(); // Keep current orientation if no close bestiole

@@ -61,10 +61,21 @@ Bestiole::Bestiole(const Bestiole& b)
       baseSpeed(b.baseSpeed),
       accessoires(b.accessoires),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance)
+      resistance(b.resistance), type(b.type)
 {
-    if (b.fear != nullptr) {
-        fear = new Fearful(this);
+    if (b.behaviour != nullptr) {
+        if (type == "Fearful") {
+            behaviour = new Fearful(this);
+        }
+        else if (type == "Kamikaze") {
+            behaviour = new Kamikaze(this);
+        }
+        else if (type == "Gregaire") {
+            behaviour = new Gregaire(this);
+        }
+        else if (type == "Cautious") {
+            behaviour = new Cautious(this);
+        }
     }
     captor = new CapteurS(*b.captor);captorV = new CapteurV(*b.captorV);
     couleur = new T[3];
@@ -248,22 +259,25 @@ double Bestiole::getBaseSpeed() const {
 
 void Bestiole::setBehaviour(std::string s) {
     if (s == "Fearful") {
-        this->fear = new Fearful(this);
-        std::cout<< "fearful" << std::endl;
+        this->behaviour = new Fearful(this);
+        this->type = "Fearful";
     }
     else if (s == "Kamikaze") {
-        behaviour = new Kamikaze();
+        behaviour = new Kamikaze(this);
+        this->type = "Kamikaze";
     }
     else if (s == "Gregaire") {
-        behaviour = new Gregaire();
+        behaviour = new Gregaire(this);
+        this->type = "Gregaire";
     }
     else if (s == "Cautious") {
-        behaviour = new Cautious();
+        behaviour = new Cautious(this);
+        this->type = "Cautious";
     }
 }
 
 void Bestiole::doBehaviour() {
-    if (this->fear != nullptr) {
-        this->fear->doBehaviour(detected);
+    if (this->behaviour != nullptr) {
+        this->behaviour->doBehaviour(detected);
     }
 }

@@ -13,10 +13,8 @@ class Bestiole;
 
 class Behaviour
 {
-    protected:
-    Bestiole *bestiole = nullptr;
-
     public:
+        Bestiole *bestiole = nullptr;
         virtual ~Behaviour() = default;
         virtual void doBehaviour(std::set<Bestiole*>& neighbors) = 0;
         Bestiole* closestBestiole(const std::set<Bestiole*>& neighbors);

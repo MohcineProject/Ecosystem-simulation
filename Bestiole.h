@@ -51,14 +51,15 @@ private :
 
     double baseSpeed;
 
-    Behaviour* behaviour;
+    Behaviour* behaviour = nullptr;
+
+    std::string type = "";
 
 
     std :: vector <std::shared_ptr<Accessoire> > accessoires;
     float detectionCapability;
     float resistance;
 public:
-   Fearful* fear = nullptr;
    int x, y;
    std::vector<std::pair<double, double>>* coordvector;
    std::set<Bestiole*> detected;
@@ -124,7 +125,7 @@ public:
          this->cumulX = b.cumulX;
          this->cumulY = b.cumulY;
          this->vitesse = b.vitesse;
-         this->fear = b.fear;
+         this->behaviour = b.behaviour;
          this->accessoires = b.accessoires;
          this->detectionCapability = b.detectionCapability;
          this->resistance = b.resistance;

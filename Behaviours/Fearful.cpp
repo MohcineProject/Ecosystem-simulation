@@ -2,7 +2,7 @@
 #include "Fearful.h"
 #include "../Bestiole.h"
 
-const int Fearful::DENSITE_BESTIOLE = 2;
+const int Fearful::DENSITE_BESTIOLE = 1;
 const double Fearful::COEF_FPEUR = 3. ;
 
 Fearful::Fearful(Bestiole *bestiole) {
