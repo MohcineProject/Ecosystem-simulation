@@ -15,8 +15,8 @@ class Bestiole;
 
 class CapteurV {
 private:
-    int r = 80;
-    int angle = 30;
+    int r = 100;
+    int angle = 60;
     float cap_detec = 1;
 
     public:
@@ -28,6 +28,10 @@ private:
     }
     float getR() const {
         return r;
+    }
+
+    int getTheta() const {
+        return angle;
     }
 
 };

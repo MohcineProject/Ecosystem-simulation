@@ -64,6 +64,8 @@ public:
    std::vector<std::pair<double, double>>* coordvector;
    std::set<Bestiole*> detected;
 
+   boolean seeCaptorsBool = true;
+
     private :
        void bouge( int xLim, int yLim );
 
@@ -103,6 +105,8 @@ public:
     void addAccessory( shared_ptr<Accessoire> accessoire );
     float getDetectionCapability() const;
     float getResistance() const;
+
+   void seeCaptors(UImg &support);
 
    void updatematrix(std::vector<std::pair<double, double>>&, int, std::vector<Bestiole>&);
 

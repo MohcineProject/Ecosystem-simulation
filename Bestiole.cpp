@@ -181,12 +181,8 @@ void Bestiole::draw(UImg &support) {
     support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5.0, -orientation / M_PI * 180.0, couleur);
     support.draw_circle(xt, yt, AFF_SIZE / 2.0, couleur);
 
-    if (captorV) {
-
-    }
-
-    if (captor) {
-        support.draw_circle(x, y, captor->getR(), couleur, 0.2);  // Draw ears with partial opacity
+    if (seeCaptorsBool) {
+        seeCaptors(support);
     }
 
 }
@@ -325,5 +321,38 @@ void Bestiole::setBehaviour(std::string s) {
 void Bestiole::doBehaviour() {
     if (this->behaviour != nullptr) {
         this->behaviour->doBehaviour(detected);
+    }
+}
+
+void Bestiole::seeCaptors(UImg &support) {
+    if (captorV) {
+        double angle = captorV->getTheta() * M_PI / 180; // Convert degrees to radians
+        int radius = captorV->getR();
+        int num_segments = 100; // Number of segments to approximate the arc
+
+        std::vector<int> coords = {x, y};
+
+        for (int i = 0; i <= num_segments; ++i) {
+            double current_angle = orientation + angle * i / num_segments - angle / 2;
+            int px = x + static_cast<int>(radius * cos(current_angle));
+            int py = y - static_cast<int>(radius * sin(current_angle));
+            coords.push_back(px);
+            coords.push_back(py);
+        }
+
+        // Convert the vector to a CImg object
+        CImg<int> points(coords.size() / 2, 2); // 2 columns (x, y) and as many rows as needed
+
+        for (size_t i = 0; i < coords.size(); i += 2) {
+            points(i / 2, 0) = coords[i];     // x coordinate
+            points(i / 2, 1) = coords[i + 1]; // y coordinate
+        }
+
+        // Draw the sector (filled area)
+        support.draw_polygon(points, couleur, 0.2);
+    }
+
+    if (captor) {
+        support.draw_circle(x, y, captor->getR(), couleur, 0.2);  // Draw ears with partial opacity
     }
 }
