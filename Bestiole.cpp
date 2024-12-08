@@ -24,6 +24,8 @@ static T RED[3] = {255, 0, 0};
 static T PURPLE[3] = {0, 255, 255};
 static T BLUE[3] = {0, 0, 255};
 static T GREEN[3] = {0, 255, 0};
+static  T GRAY[3] = {128, 128, 128};    // RGB for Brown
+static  T LIGHT_BLUE[3] = {180, 0, 255};
 
 int               Bestiole::next = 0;
 
@@ -184,6 +186,21 @@ void Bestiole::draw(UImg &support) {
     if (seeCaptorsBool) {
         seeCaptors(support);
     }
+    for (const auto &accessoire : accessoires) {
+        if (!accessoire) continue; // Skip null pointers
+
+        if (accessoire->getType() == "Carapace") {
+            // Draw a circle
+            support.draw_circle(x, y, AFF_SIZE * 2 , GRAY,0.4);
+        } else if (accessoire->getType() == "Fins") {
+            // Draw two lines representing fins
+            int angle = 10;
+            int r = 10;
+            support.draw_line(x, y, x + cos(orientation + angle) * r, y - sin(orientation + angle) * r, LIGHT_BLUE);
+            support.draw_line(x, y, x + cos(orientation - angle) * r, y - sin(orientation - angle) * r, LIGHT_BLUE);
+        }
+    }
+
 
 }
 

@@ -64,7 +64,7 @@ public:
    std::vector<std::pair<double, double>>* coordvector;
    std::set<Bestiole*> detected;
 
-   boolean seeCaptorsBool = true;
+   bool seeCaptorsBool = true;
 
     private :
        void bouge( int xLim, int yLim );

@@ -19,7 +19,11 @@ int main() {
     Bestiole b1(10.0); // Without accessories
     b1.setBehaviour("Multiple");
 
+    Carapace *c = new Carapace(1,1,1);
+    Fins *f = new Fins(2);
     Bestiole b2(5.0);
+    b2.addAccessory(shared_ptr<Accessoire>(c));
+    b2.addAccessory(shared_ptr<Accessoire>(f));
 
     Bestiole b3(5.0);
 
@@ -45,6 +49,8 @@ int main() {
 
     // Run the simulation
     ecosysteme.run();
+    delete c;
+    delete f;
 
    return 0;
 }
