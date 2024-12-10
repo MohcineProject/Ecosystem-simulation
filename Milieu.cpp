@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <algorithm>
 
 std::vector<std::vector<std::pair<double, double>>> Milieu::coordmatrix;
 
@@ -30,12 +31,20 @@ void Milieu::step( void )
 
    cimg_forXY( *this, x, y ) fillC( x, y, 0, white[0], white[1], white[2] );
    detectCollisions();
+   std::vector<Bestiole*> toDie;
    for ( std::vector<Bestiole>::iterator it = listeBestioles.begin() ; it != listeBestioles.end() ; ++it )
    {
       it->action( *this );
       it->draw( *this );
    }
 
+   for (auto& it : listeBestioles) {
+      if (it.deathflag) toDie.push_back(&it);
+   }
+   for (auto b : toDie) {
+      kill(*b);
+   }
+   toDie.clear();
 }
 
 
@@ -53,8 +62,20 @@ int Milieu::nbVoisins( const Bestiole & b )
 
 }
 
+void Milieu::kill(const Bestiole& b) {
+   if (!b.deathflag) return;
+
+   auto it = std::find(listeBestioles.begin(), listeBestioles.end(), b);
+   if (it != listeBestioles.end()) {
+      it->deathflag = false;
+      listeBestioles.erase(it);
+      n--;
+   }
+}
+
+
 void Milieu::detectCollisions() {
-   // Resize the matrix to n x n before starting
+   coordmatrix.clear();
    coordmatrix.resize(n);
    for (int i = 0; i < n; ++i) {
       coordmatrix[i].resize(n);
@@ -95,6 +116,9 @@ void Milieu::detectCollisions() {
             if (coordmatrix[k][l-1].first < r * r) {
                T color[3] = {255, 0, 0};
                draw_circle(i.x, i.y, 6, color);
+               if (true) {
+                  it.die();
+               }
             }
          }
       }

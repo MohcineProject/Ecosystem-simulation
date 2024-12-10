@@ -17,7 +17,7 @@ int main() {
 
     // Create Bestioles with different accessories
     Bestiole b1(10.0); // Without accessories
-    b1.setBehaviour("Multiple");
+    b1.setBehaviour("Kamikaze");
 
     Carapace *c = new Carapace(1,1,1);
     Fins *f = new Fins(2);
@@ -29,7 +29,9 @@ int main() {
 
     Bestiole b4(5.0);
 
-    Bestiole b5(5.0);;
+    Bestiole b5(5.0);
+
+    Bestiole b6(5.0);
 
     // Add the Bestioles to the Milieu
     Milieu& milieu = ecosysteme.getMilieu();
@@ -38,6 +40,7 @@ int main() {
     milieu.addMember(b3);
     milieu.addMember(b4);
     milieu.addMember(b5);
+    milieu.addMember(b6);
 
 
     cout << b1 << endl;
@@ -45,6 +48,7 @@ int main() {
     cout << b3 << endl;
     cout << b4 << endl;
     cout << b5 << endl;
+    cout << b6 << endl;
 
 
     // Run the simulation

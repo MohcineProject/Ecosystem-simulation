@@ -44,6 +44,7 @@ private :
    double            orientation;
    double            vitesse;
 
+
    CapteurS* captor;
    CapteurV* captorV;
 
@@ -51,9 +52,7 @@ private :
 
     double baseSpeed;
 
-    Behaviour* behaviour = nullptr;
 
-    std::string type = "";
 
 
     std :: vector <std::shared_ptr<Accessoire> > accessoires;
@@ -63,8 +62,13 @@ public:
    int x, y;
    std::vector<std::pair<double, double>>* coordvector;
    std::set<Bestiole*> detected;
+   bool deathflag = false;
 
    bool seeCaptorsBool = true;
+
+   Behaviour* behaviour = nullptr;
+
+   std::string type = "";
 
     private :
        void bouge( int xLim, int yLim );
@@ -100,6 +104,8 @@ public:
    void setBehaviour(std::string s);
 
    void doBehaviour();
+
+   void die() { this->deathflag = true; }
 
     double getActualSpeed() const;
     void addAccessory( shared_ptr<Accessoire> accessoire );

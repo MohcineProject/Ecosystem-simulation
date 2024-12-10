@@ -84,9 +84,8 @@ Bestiole::Bestiole(const Bestiole& b)
         else if (type == "Cautious") {
             behaviour = new Cautious(this);
         }
-        else {
-            behaviour = new MultipleBehaviour(this); // you can also give to the constructor a vector of the behaviour name.
-            // know that if none of the behaviour name is not valid, the bestiole will have all possible behaviours
+        else if (type == "Multiple"){
+            behaviour = new MultipleBehaviour(this);
         }
     }
     captor = new CapteurS(*b.captor);captorV = new CapteurV(*b.captorV);
@@ -98,10 +97,8 @@ Bestiole::Bestiole(const Bestiole& b)
 
 Bestiole::~Bestiole(void)
 {
-    delete[] couleur;  // Delete color array
-    delete captor;     // Delete the dynamically allocated CapteurS object
-    delete captorV;    // Delete the dynamically allocated CapteurV object
-    std::cout << "dest Bestiole" << std::endl;
+    delete[] couleur;
+    std::cout << "dest Bestiole (" << identite << ")" << std::endl;
 }
 
 
@@ -255,12 +252,14 @@ void Bestiole::addAccessory(shared_ptr<Accessoire> accessoire) {
 }
 
 void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix, int i, std::vector<Bestiole> &listeBestioles) {
+    this->detected.clear();
     this->coordvector = &coordmatrix;
     std::set<Bestiole*> sound = this->captor->update(*this->coordvector, i, listeBestioles);  // Use pointer dereferencing
     std::set<Bestiole*> vision = this->captorV->update(*this->coordvector, i, listeBestioles); // Use pointer dereferencing
     std::set<Bestiole*> detectedptr = sound;
     detectedptr.insert(vision.begin(), vision.end());
     this->detected = detectedptr;
+    detectedptr.clear();
 }
 float Bestiole::getDetectionCapability() const {
         return detectionCapability;
@@ -329,9 +328,8 @@ void Bestiole::setBehaviour(std::string s) {
         behaviour = new Cautious(this);
         this->type = "Cautious";
     }
-    else {
-        behaviour = new MultipleBehaviour(this);// you can also give to the constructor a vector of the behaviour name.
-        // know that if none of the behaviour name is not valid, the bestiole will have all possible behaviours
+    else if (s == "Multiple"){
+        behaviour = new MultipleBehaviour(this);
     }
 }
 
@@ -339,6 +337,7 @@ void Bestiole::doBehaviour() {
     if (this->behaviour != nullptr) {
         this->behaviour->doBehaviour(detected);
     }
+
 }
 
 void Bestiole::seeCaptors(UImg &support) {
