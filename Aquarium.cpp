@@ -19,7 +19,7 @@ Aquarium::Aquarium( const int width, const int height, const int _delay) : CImgD
 
    // Get parameters from user
    const function<bool(float , float , float )> condition = [](const float value , const float a , const float b) {return (value <=a && value >=b); }  ;
-   /*
+   
    this->cap_detection_v_max =  query_parameter("max vision capacity" , &condition , 1 , 0 ) ;
    this->cap_detection_v_min =  query_parameter("min vision capacity" , &condition , this->cap_detection_v_max , 0 ) ;
    this->angle_vision_max =  query_parameter("max vision angle" , &condition ,  2 * M_PI , 0 ) ;
@@ -35,7 +35,7 @@ Aquarium::Aquarium( const int width, const int height, const int _delay) : CImgD
    this->multi_speed_max =  query_parameter("max speed multiplier" , &condition ,  3 , 1 ) ;
    this->red_speed_max = query_parameter("max speed reductor" , &condition , 3 , 1 ) ;
    this->resistance_max = query_parameter("max resistance" , &condition , 3 , 1 ) ;
-   */
+   /*
    this->cap_detection_v_max =  0.8;
    this->cap_detection_v_min =  0.4 ;
    this->angle_vision_max =  180 ;
@@ -51,7 +51,7 @@ Aquarium::Aquarium( const int width, const int height, const int _delay) : CImgD
    this->multi_speed_max =  1.5 ;
    this->red_speed_max = 2 ;
    this->resistance_max = 1.5 ;
-
+*/
 
     cout << "Constructing the Aquarium" << endl;
 
