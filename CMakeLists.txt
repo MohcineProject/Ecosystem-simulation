@@ -31,7 +31,8 @@ add_executable(BEproject main.cpp
         Behaviours/Cautious.cpp
         Behaviours/MultipleBehaviour.h
         Behaviours/MultipleBehaviour.cpp
-        Behaviours/Kamikaze.cpp)
+        Behaviours/Kamikaze.cpp
+)
 
 
 

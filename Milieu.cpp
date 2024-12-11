@@ -13,7 +13,7 @@ const T    Milieu::white[] = { (T)255, (T)255, (T)255 };
 Milieu::Milieu( int _width, int _height ) : UImg(_width, _height, 1, 3),
                                             width(_width), height(_height) {
    cout << "const Milieu" << endl;
-   listeBestioles.reserve(20);
+   listeBestioles.reserve(500);
 
    std::srand(time(NULL));
 }
@@ -120,7 +120,7 @@ void Milieu::detectCollisions() {
          if (&it != &i) {
             if (coordmatrix[k][l-1].first < r * r) {
                T color[3] = {255, 0, 0};
-               draw_circle(i.x, i.y, 10, color);
+               draw_circle(i.x, i.y, 5, color);
                float randDraw = static_cast<float>(std::rand()) / RAND_MAX;
                float iOrientation = i.getOrientation();
                it.setOrientation(M_PI - iOrientation);

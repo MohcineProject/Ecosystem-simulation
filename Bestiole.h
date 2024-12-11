@@ -121,6 +121,10 @@ public:
 
    void seeCaptors(UImg &support);
 
+   void attachCaptorV(float capVMax, float capVMin, float AngleMax, float AngleMin, float distMax, float distMin);
+
+   void attachCaptorS(float capSMax, float capSMin, float distMax, float distMin);
+
    void updatematrix(std::vector<std::pair<double, double>>&, int, std::vector<Bestiole>&);
 
    friend bool operator==(const Bestiole &b1, const Bestiole &b2) { return (b1.identite == b2.identite); }

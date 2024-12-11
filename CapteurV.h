@@ -15,12 +15,12 @@ class Bestiole;
 
 class CapteurV {
 private:
-    int r = 100;
-    int angle = 60;
-    float cap_detec = 1;
+    int r;
+    int angle;
+    float cap_detec;
 
     public:
-    CapteurV();
+    CapteurV(float capVMax, float capVMin, float AngleMax, float AngleMin, float distMax, float distMin);
     ~CapteurV();
     std::set<Bestiole*> update(std::vector<std::pair<double, double>>& coordvector, int i, std::vector<Bestiole>& listeBestioles);
     int getAngle() const {

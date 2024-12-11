@@ -10,11 +10,12 @@ class Bestiole;
 
 class CapteurS {
 private:
-    int r = 50;
-    float cap_detec = 1;
+    int r;
+    float cap_detec;
+
 
 public:
-    CapteurS();
+    CapteurS(float capSMax, float capSMin, float distMax, float distMin);
     ~CapteurS() ;
     std::set<Bestiole*> update(std::vector<std::pair<double, double>>& coordvector, int i, std::vector<Bestiole>& listeBestioles);
     int getR() const {

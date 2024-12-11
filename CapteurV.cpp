@@ -3,7 +3,13 @@
 
 #include <iostream>
 
-CapteurV::CapteurV() {
+CapteurV::CapteurV(float capVMax, float capVMin, float AngleMax, float AngleMin, float distMax, float distMin) {
+    int randomDraw = floor(std::rand() / RAND_MAX);
+    this->r = distMin + randomDraw * (distMax - distMin);
+    float randomDraw2 = static_cast<float>(std::rand() / RAND_MAX);
+    this->cap_detec = capVMin + randomDraw2 * (capVMax - capVMin);
+    int randomDraw3 = floor(std::rand() / RAND_MAX);
+    this->angle = AngleMin + randomDraw3 * (AngleMax - AngleMin);
 
 }
 

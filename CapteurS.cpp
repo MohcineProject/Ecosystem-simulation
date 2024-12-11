@@ -3,7 +3,11 @@
 
 #include <iostream>
 
-CapteurS::CapteurS() {
+CapteurS::CapteurS(float capSMax, float capSMin, float distMax, float distMin) {
+    int randomDraw = static_cast<int>(std::rand() / RAND_MAX);
+    this->r = distMin + randomDraw * (distMax - distMin);
+    float randomDraw2 = static_cast<float>(std::rand() / RAND_MAX);
+    this->cap_detec = capSMin + randomDraw2 * (capSMax - capSMin);
 }
 
 CapteurS::~CapteurS() = default;

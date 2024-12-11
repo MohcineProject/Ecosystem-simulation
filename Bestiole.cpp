@@ -60,8 +60,6 @@ Bestiole::Bestiole(double baseSpeed)
     couleur[ 1 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
     couleur[ 2 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
 
-    captor = new CapteurS();
-    captorV = new CapteurV();
 }
 
 Bestiole::Bestiole(const Bestiole& b)
@@ -141,8 +139,14 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
 
 Bestiole::~Bestiole() {
     delete behaviour;
-    delete captor;
-    delete captorV;
+    /*
+    if (captor) {
+        delete captor;
+    }
+    if (captorV) {
+        delete captorV;
+    }
+    */
     std::cout << "dest Bestiole (" << identite << ")" << std::endl;
 }
 
@@ -289,8 +293,15 @@ void Bestiole::addAccessory(shared_ptr<Accessoire> accessoire) {
 void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix, int i, std::vector<Bestiole> &listeBestioles) {
     this->detected.clear();
     this->coordvector = &coordmatrix;
-    std::set<Bestiole*> sound = this->captor->update(*this->coordvector, i, listeBestioles);  // Use pointer dereferencing
-    std::set<Bestiole*> vision = this->captorV->update(*this->coordvector, i, listeBestioles); // Use pointer dereferencing
+    std::set<Bestiole*> sound;
+    std::set<Bestiole*> vision;
+    if (captor) {
+        sound = this->captor->update(*this->coordvector, i, listeBestioles);  // Use pointer dereferencing
+    }
+    if (captorV) {
+        vision = this->captorV->update(*this->coordvector, i, listeBestioles); // Use pointer dereferencing
+    }
+
     std::set<Bestiole*> detectedptr = sound;
     detectedptr.insert(vision.begin(), vision.end());
     this->detected = detectedptr;
@@ -527,3 +538,17 @@ void Bestiole::seeCaptors(UImg &support) {
         support.draw_circle(x, y, captor->getR(), couleur.get(), 0.2);  // Draw ears with partial opacity
     }
 }
+
+
+void Bestiole::attachCaptorS(float capSMax, float capSMin, float distMax, float distMin) {
+    if (captor == nullptr) {
+        this->captor = new CapteurS(capSMax, capSMin, distMax, distMin);
+    }
+}
+
+void Bestiole::attachCaptorV(float capVMax, float capVMin, float AngleMax, float AngleMin, float distMax, float distMin) {
+    if (captorV == nullptr) {
+        this->captorV = new CapteurV(capVMax, capVMin, AngleMax, AngleMin, distMax, distMin);
+    }
+}
+
