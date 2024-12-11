@@ -22,7 +22,7 @@ Aquarium::Aquarium( const int width, const int height, const int _delay) : CImgD
    
    this->cap_detection_v_max =  query_parameter("max vision capacity" , &condition , 1 , 0 ) ;
    this->cap_detection_v_min =  query_parameter("min vision capacity" , &condition , this->cap_detection_v_max , 0 ) ;
-   this->angle_vision_max =  query_parameter("max vision angle" , &condition ,  2 * M_PI , 0 ) ;
+   this->angle_vision_max =  query_parameter("max vision angle" , &condition ,  360 , 0 ) ;
    this->angle_vision_min =  query_parameter("min vision angle" , &condition ,  this->angle_vision_max , 0 ) ;
    this->distance_vision_max =  query_parameter("max vision distance" , &condition ,  200 , 0 ) ;
    this->distance_vision_min =  query_parameter("min vision distance" , &condition ,  this->distance_vision_max , 0 ) ;
