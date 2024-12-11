@@ -23,8 +23,8 @@ add_executable(BEproject main.cpp
         Camouflage.h
         Behaviours/Behaviour.h
         Behaviours/Behaviour.cpp
-        Behaviours/Gregaire.h
-        Behaviours/Gregaire.cpp
+        Behaviours/Gregarious.h
+        Behaviours/Gregarious.cpp
         Behaviours/Fearful.h
         Behaviours/Fearful.cpp
         Behaviours/Cautious.h

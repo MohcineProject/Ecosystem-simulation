@@ -19,13 +19,13 @@ int main() {
     Bestiole b1(5.0); // Without accessories
     b1.setBehaviour("Multiple");
 
-    //Carapace *c = new Carapace(1,1,1);
-    //Fins *f = new Fins(2);
+    Carapace *c = new Carapace(1,1,1);
+    Fins *f = new Fins(2);
     Bestiole b2(5.0);
     b2.setBehaviour("Cautious");
 
-    //b2.addAccessory(shared_ptr<Accessoire>(c));
-    //b2.addAccessory(shared_ptr<Accessoire>(f));
+    b2.addAccessory(shared_ptr<Accessoire>(c));
+    b2.addAccessory(shared_ptr<Accessoire>(f));
 
     Bestiole b3(5.0);
     b3.setBehaviour("Fearful");
@@ -36,7 +36,7 @@ int main() {
     b5.setBehaviour("Kamikaze");
 
     Bestiole b6(5.0);
-    b6.setBehaviour("Gregaire");
+    b6.setBehaviour("Gregarious");
     // Add the Bestioles to the Milieu
     Milieu& milieu = ecosysteme.getMilieu();
     milieu.addMember(b1);
@@ -59,8 +59,6 @@ int main() {
 
     // Run the simulation
     ecosysteme.run();
-    //delete c;
-    //delete f;
 
    return 0;
 }
