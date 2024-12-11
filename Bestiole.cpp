@@ -53,7 +53,7 @@ Bestiole::Bestiole(double baseSpeed)
    x = y = 0;
    cumulX = cumulY = 0.;
    orientation = static_cast<double>( rand() )/RAND_MAX*2.*M_PI;
-   vitesse = static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI;
+   vitesse = static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI + 1;
 
    couleur = new T[ 3 ];
    couleur[ 0 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
@@ -73,7 +73,7 @@ Bestiole::Bestiole(const Bestiole& b)
       baseSpeed(b.baseSpeed),
       accessoires(b.accessoires),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance), type(b.type), deathflag(false) // Reset deathflag for the copy
+      resistance(b.resistance), type(b.type), deathflag(false)
 {
     // Deep copy behaviour
     if (b.behaviour != nullptr) {
@@ -87,8 +87,6 @@ Bestiole::Bestiole(const Bestiole& b)
             behaviour = new Cautious(this);
         } else if (type == "Multiple") {
             behaviour = new MultipleBehaviour(this);
-        } else {
-            behaviour = nullptr;
         }
     }
 
@@ -118,16 +116,30 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
       orientation(b.orientation), vitesse(b.vitesse),
       baseSpeed(b.baseSpeed), accessoires(std::move(b.accessoires)),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance), deathflag(b.deathflag), type(std::move(b.type)) {
+      resistance(b.resistance), deathflag(b.deathflag) {
 
+    type = b.type;
     couleur = b.couleur;
     captor = b.captor;
     captorV = b.captorV;
-    behaviour = b.behaviour;
+    if (b.behaviour != nullptr) {
+        if (type == "Fearful") {
+            behaviour = new Fearful(this);
+        } else if (type == "Kamikaze") {
+            behaviour = new Kamikaze(this);
+        } else if (type == "Gregaire") {
+            behaviour = new Gregaire(this);
+        } else if (type == "Cautious") {
+            behaviour = new Cautious(this);
+        } else if (type == "Multiple") {
+            behaviour = new MultipleBehaviour(this);
+        }
+    }
 
 }
 
 Bestiole::~Bestiole() {
+    delete behaviour;
     std::cout << "dest Bestiole (" << identite << ")" << std::endl;
 }
 
@@ -152,7 +164,7 @@ void Bestiole::bouge(int xLim, int yLim)
     nx = x + dx + cx;
     ny = y + dy + cy;
 
-    if ((nx < 0) || (nx > xLim - 1))
+    if ((nx < 1) || (nx > xLim - 1))
     {
         orientation = M_PI - orientation;
         cumulX = 0.;
@@ -163,7 +175,7 @@ void Bestiole::bouge(int xLim, int yLim)
         cumulX += nx - x;
     }
 
-    if ((ny < 0) || (ny > yLim - 1))
+    if ((ny < 1) || (ny > yLim - 1))
     {
         orientation = -orientation;
         cumulY = 0.;
@@ -351,16 +363,17 @@ void Bestiole::setBehaviour(std::string s) {
     }
     else if (s == "Multiple"){
         behaviour = new MultipleBehaviour(this);
+        this->type = "Multiple";
     }
 }
 
 void Bestiole::doBehaviour() {
     if (this->behaviour != nullptr) {
-        ///*
+        /*
         for (Bestiole* it : detected) {
             std::cout <<this->type << " " << this->identite << " sees " << it->identite << std::endl;
         }
-        //*/
+        */
         this->behaviour->doBehaviour(detected);
     }
 

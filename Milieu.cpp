@@ -67,14 +67,14 @@ int Milieu::nbVoisins( const Bestiole & b )
 
 void Milieu::kill(Bestiole& b) {
    if (!b.deathflag) return;
-   /*
+   ///*
    std::cout << "Bestiole to kill " << b.getIdentite() << std::endl;
    std::cout << "liste bestioles ";
    for (auto& it : listeBestioles) {
-      std::cout << it.getIdentite() << "_" << it.deathflag << " ";
+      std::cout << it.getIdentite() << "_" << it.behaviour->getType() << " ";
    }
    std::cout << std::endl;
-   */
+   //*/
    // Remove the Bestiole from the list
    listeBestioles.erase(
        std::remove_if(listeBestioles.begin(), listeBestioles.end(),
@@ -86,13 +86,13 @@ void Milieu::kill(Bestiole& b) {
    n--;
 
    b.deathflag = false;
-   /*
+   ///*
    std::cout << "after death   ";
    for (auto& it : listeBestioles) {
-      std::cout << it.getIdentite() << "_" << it.deathflag << " ";
+      std::cout << it.getIdentite() << "_" << it.behaviour->getType() << " ";
    }
    std::cout << std::endl;
-   */
+   //*/
 }
 
 void Milieu::detectCollisions() {
@@ -139,6 +139,8 @@ void Milieu::detectCollisions() {
                T color[3] = {255, 0, 0};
                draw_circle(i.x, i.y, 10, color);
                float randDraw = static_cast<float>(std::rand()) / RAND_MAX;
+               float iOrientation = i.getOrientation();
+               it.setOrientation(M_PI - iOrientation);
                if (randDraw < 0.1) {
                   i.die();
                   //std::cout << i.getIdentite() << " collided with " << it.getIdentite() << std::endl;

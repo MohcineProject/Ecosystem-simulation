@@ -22,7 +22,7 @@ private :
    int                     width, height;
    std::vector<Bestiole>   listeBestioles;
    int n = 0;
-   int r=15;
+   int r=20;
    static std::vector<std::vector<std::pair<double, double>>> coordmatrix;
 
 public :

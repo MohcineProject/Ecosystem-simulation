@@ -29,6 +29,9 @@ void Kamikaze::doBehaviour(std::set<Bestiole*> &neighbors) {
     if (neighbors.empty()) {
         return; // No neighbors, no behavior to execute
     }
+    for (Bestiole* it : neighbors) {
+        std::cout <<this->type << " " << bestiole->getIdentite() << " sees " << it->getIdentite() << std::endl;
+    }
 
     // Find the closest bestiole
     const Bestiole* closestBestiolePtr = closestBestiole(neighbors);

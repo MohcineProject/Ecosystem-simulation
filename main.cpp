@@ -22,7 +22,7 @@ int main() {
     //Carapace *c = new Carapace(1,1,1);
     //Fins *f = new Fins(2);
     Bestiole b2(5.0);
-    b2.setBehaviour("Gregaire");
+    b2.setBehaviour("Cautious");
 
     //b2.addAccessory(shared_ptr<Accessoire>(c));
     //b2.addAccessory(shared_ptr<Accessoire>(f));
@@ -30,13 +30,13 @@ int main() {
     Bestiole b3(5.0);
     b3.setBehaviour("Fearful");
     Bestiole b4(5.0);
-    b4.setBehaviour("Cautious");
+    b4.setBehaviour("Fearful");
 
     Bestiole b5(5.0);
-    b5.setBehaviour("Multiple");
+    b5.setBehaviour("Kamikaze");
 
     Bestiole b6(5.0);
-    b6.setBehaviour("Multiple");
+    b6.setBehaviour("Gregaire");
     // Add the Bestioles to the Milieu
     Milieu& milieu = ecosysteme.getMilieu();
     milieu.addMember(b1);

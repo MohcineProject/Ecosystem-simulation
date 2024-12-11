@@ -28,7 +28,7 @@ MultipleBehaviour::MultipleBehaviour(Bestiole *bestiole, const std::vector<std::
         behaviours.push_back(std::make_shared<Gregaire>(bestiole));
     }
     currentBehaviour = behaviours.front();
-    this -> type = "MultipleBehaviour";
+    this -> type = "Multiple";
 }
 
 MultipleBehaviour::MultipleBehaviour(Bestiole *bestiole)
