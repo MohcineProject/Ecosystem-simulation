@@ -13,6 +13,7 @@ const T    Milieu::white[] = { (T)255, (T)255, (T)255 };
 Milieu::Milieu( int _width, int _height ) : UImg(_width, _height, 1, 3),
                                             width(_width), height(_height) {
    cout << "const Milieu" << endl;
+   listeBestioles.reserve(20);
 
    std::srand(time(NULL));
 }
@@ -36,6 +37,7 @@ void Milieu::step( void )
    {
       it->action( *this );
       it->draw( *this );
+
    }
 
    for (auto& it : listeBestioles) {
@@ -62,22 +64,42 @@ int Milieu::nbVoisins( const Bestiole & b )
 
 }
 
-void Milieu::kill(const Bestiole& b) {
+
+void Milieu::kill(Bestiole& b) {
    if (!b.deathflag) return;
-
-   auto it = std::find(listeBestioles.begin(), listeBestioles.end(), b);
-   if (it != listeBestioles.end()) {
-      it->deathflag = false;
-      listeBestioles.erase(it);
-      n--;
+   /*
+   std::cout << "Bestiole to kill " << b.getIdentite() << std::endl;
+   std::cout << "liste bestioles ";
+   for (auto& it : listeBestioles) {
+      std::cout << it.getIdentite() << "_" << it.deathflag << " ";
    }
-}
+   std::cout << std::endl;
+   */
+   // Remove the Bestiole from the list
+   listeBestioles.erase(
+       std::remove_if(listeBestioles.begin(), listeBestioles.end(),
+                      [&b](const Bestiole& other) { return other.getIdentite() == b.getIdentite(); }),
+       listeBestioles.end()
+   );
 
+   // Reduce the count after removal
+   n--;
+
+   b.deathflag = false;
+   /*
+   std::cout << "after death   ";
+   for (auto& it : listeBestioles) {
+      std::cout << it.getIdentite() << "_" << it.deathflag << " ";
+   }
+   std::cout << std::endl;
+   */
+}
 
 void Milieu::detectCollisions() {
    coordmatrix.clear();
    coordmatrix.resize(n);
    for (int i = 0; i < n; ++i) {
+      coordmatrix[i].clear();
       coordmatrix[i].resize(n);
    }
 
@@ -115,9 +137,11 @@ void Milieu::detectCollisions() {
          if (&it != &i) {
             if (coordmatrix[k][l-1].first < r * r) {
                T color[3] = {255, 0, 0};
-               draw_circle(i.x, i.y, 6, color);
-               if (true) {
-                  it.die();
+               draw_circle(i.x, i.y, 10, color);
+               float randDraw = static_cast<float>(std::rand()) / RAND_MAX;
+               if (randDraw < 0.1) {
+                  i.die();
+                  //std::cout << i.getIdentite() << " collided with " << it.getIdentite() << std::endl;
                }
             }
          }

@@ -7,6 +7,7 @@
 #include "Accessoire.h"
 #include <vector>
 #include <set>
+#include <memory>
 
 #include "CapteurS.h"
 #include "CapteurV.h"
@@ -76,6 +77,7 @@ public:
 public:
    Bestiole(double baseSpeed);                               // Default constructor
    Bestiole(const Bestiole &b);                  // Copy constructor
+   Bestiole(Bestiole&& b) noexcept;
    ~Bestiole(void);                              // Destructor
    void action(Milieu &monMilieu);
    void draw(UImg &support);
@@ -116,7 +118,7 @@ public:
 
    void updatematrix(std::vector<std::pair<double, double>>&, int, std::vector<Bestiole>&);
 
-   friend bool operator==(const Bestiole &b1, const Bestiole &b2);
+   friend bool operator==(const Bestiole &b1, const Bestiole &b2) { return (b1.identite == b2.identite); }
    friend ostream& operator<<(ostream& os, const Bestiole& b);
    int getIdentite() const {
       return identite;
@@ -148,6 +150,39 @@ public:
       }
       return *this;
    }
+
+   Bestiole& operator=(Bestiole&& b) noexcept {
+      if (this != &b) {
+         // Transfer ownership from source
+         identite = b.identite;
+         x = b.x;
+         y = b.y;
+         cumulX = b.cumulX;
+         cumulY = b.cumulY;
+         orientation = b.orientation;
+         vitesse = b.vitesse;
+         baseSpeed = b.baseSpeed;
+         accessoires = std::move(b.accessoires);
+         detectionCapability = b.detectionCapability;
+         resistance = b.resistance;
+         deathflag = b.deathflag;
+         type = std::move(b.type);
+
+         couleur = b.couleur;
+         captor = b.captor;
+         captorV = b.captorV;
+         behaviour = b.behaviour;
+
+         // Nullify the source object
+         b.couleur = nullptr;
+         b.captor = nullptr;
+         b.captorV = nullptr;
+         b.behaviour = nullptr;
+
+      }
+      return *this;
+   }
+
 
 };
 

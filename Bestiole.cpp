@@ -29,6 +29,10 @@ static  T LIGHT_BLUE[3] = {180, 0, 255};
 
 int               Bestiole::next = 0;
 
+void debug_couleur(const char* context, T* ptr) {
+    std::cout << context << ": couleur address = " << ptr << std::endl;
+}
+
 Bestiole::Bestiole(double baseSpeed)
 :
   x(0), y(0),
@@ -38,17 +42,18 @@ Bestiole::Bestiole(double baseSpeed)
   baseSpeed(baseSpeed),
   accessoires(),
   detectionCapability(1.0),
-  resistance(1.0)
+  resistance(1.0), deathflag(false)
 {
 
-   identite = ++next;
+
+    identite = ++next;
 
    cout << "const Bestiole (" << identite << ") par defaut" << endl;
 
    x = y = 0;
    cumulX = cumulY = 0.;
    orientation = static_cast<double>( rand() )/RAND_MAX*2.*M_PI;
-   vitesse = static_cast<double>( rand() )/RAND_MAX*MAX_VITESSE;
+   vitesse = static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI;
 
    couleur = new T[ 3 ];
    couleur[ 0 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
@@ -59,7 +64,6 @@ Bestiole::Bestiole(double baseSpeed)
     captorV = new CapteurV();
 }
 
-
 Bestiole::Bestiole(const Bestiole& b)
     : identite(++next),
       x(b.x), y(b.y),
@@ -69,45 +73,69 @@ Bestiole::Bestiole(const Bestiole& b)
       baseSpeed(b.baseSpeed),
       accessoires(b.accessoires),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance), type(b.type)
+      resistance(b.resistance), type(b.type), deathflag(false) // Reset deathflag for the copy
 {
+    // Deep copy behaviour
     if (b.behaviour != nullptr) {
         if (type == "Fearful") {
             behaviour = new Fearful(this);
-        }
-        else if (type == "Kamikaze") {
+        } else if (type == "Kamikaze") {
             behaviour = new Kamikaze(this);
-        }
-        else if (type == "Gregaire") {
+        } else if (type == "Gregaire") {
             behaviour = new Gregaire(this);
-        }
-        else if (type == "Cautious") {
+        } else if (type == "Cautious") {
             behaviour = new Cautious(this);
-        }
-        else if (type == "Multiple"){
+        } else if (type == "Multiple") {
             behaviour = new MultipleBehaviour(this);
+        } else {
+            behaviour = nullptr;
         }
     }
-    captor = new CapteurS(*b.captor);captorV = new CapteurV(*b.captorV);
+
+    // Allocate captor and captorV using new
+    if (b.captor) {
+        captor = new CapteurS(*b.captor);
+    } else {
+        captor = nullptr;
+    }
+
+    if (b.captorV) {
+        captorV = new CapteurV(*b.captorV);
+    } else {
+        captorV = nullptr;
+    }
+
+    // Allocate and copy couleur
     couleur = new T[3];
-    memcpy(couleur, b.couleur, 3 * sizeof(T));
+    std::copy(b.couleur, b.couleur + 3, couleur);
+
     std::cout << "Copy Construct Bestiole (" << identite << ") from (" << b.identite << ")" << std::endl;
 }
 
+Bestiole::Bestiole(Bestiole&& b) noexcept
+    : identite(b.identite), x(b.x), y(b.y),
+      cumulX(b.cumulX), cumulY(b.cumulY),
+      orientation(b.orientation), vitesse(b.vitesse),
+      baseSpeed(b.baseSpeed), accessoires(std::move(b.accessoires)),
+      detectionCapability(b.detectionCapability),
+      resistance(b.resistance), deathflag(b.deathflag), type(std::move(b.type)) {
 
-Bestiole::~Bestiole(void)
-{
-    delete[] couleur;
-    std::cout << "dest Bestiole (" << identite << ")" << std::endl;
+    couleur = b.couleur;
+    captor = b.captor;
+    captorV = b.captorV;
+    behaviour = b.behaviour;
+
 }
 
+Bestiole::~Bestiole() {
+    std::cout << "dest Bestiole (" << identite << ")" << std::endl;
+}
 
 void Bestiole::initCoords(int xLim, int yLim)
 {
     x = rand() % xLim;
     y = rand() % yLim;
 }
-
 
 void Bestiole::bouge(int xLim, int yLim)
 {
@@ -147,20 +175,15 @@ void Bestiole::bouge(int xLim, int yLim)
     }
 }
 
-
-
 bool Bestiole::jeTeVois(const Bestiole& b) const {
    return false;
 }
-
-
 
 void Bestiole::action( Milieu & monMilieu )
 {
     bouge(monMilieu.getWidth(), monMilieu.getHeight());
     this->doBehaviour();
 }
-
 
 void Bestiole::draw(UImg &support) {
     // Assign color based on the behavior type
@@ -213,13 +236,6 @@ void Bestiole::setColor(Behaviour *behaviour) {
     }
 }
 
-
-
-bool operator==(const Bestiole &b1, const Bestiole &b2)
-{
-    return (b1.identite == b2.identite);
-}
-
 int Bestiole::getCoordx() const
 {
    return x;
@@ -259,6 +275,11 @@ void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix,
     std::set<Bestiole*> detectedptr = sound;
     detectedptr.insert(vision.begin(), vision.end());
     this->detected = detectedptr;
+    /*
+    for (Bestiole* it : detected) {
+        std::cout << this->identite << " sees " << it->identite << std::endl;
+    }
+    */
     detectedptr.clear();
 }
 float Bestiole::getDetectionCapability() const {
@@ -335,8 +356,14 @@ void Bestiole::setBehaviour(std::string s) {
 
 void Bestiole::doBehaviour() {
     if (this->behaviour != nullptr) {
+        ///*
+        for (Bestiole* it : detected) {
+            std::cout <<this->type << " " << this->identite << " sees " << it->identite << std::endl;
+        }
+        //*/
         this->behaviour->doBehaviour(detected);
     }
+
 
 }
 

@@ -51,91 +51,91 @@ build cmake_object_order_depends_target_BEproject: phony || .
 
 build CMakeFiles/BEproject.dir/main.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/main.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\main.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/Aquarium.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Aquarium.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Aquarium.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/Bestiole.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Bestiole.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Bestiole.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/Milieu.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Milieu.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Milieu.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/CapteurS.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/CapteurS.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\CapteurS.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/CapteurV.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/CapteurV.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\CapteurV.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/Carapace.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Carapace.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Carapace.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/Fins.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Fins.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Fins.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/Camouflage.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Camouflage.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Camouflage.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir
 
 build CMakeFiles/BEproject.dir/Behaviours/Behaviour.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Behaviours/Behaviour.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Behaviours\Behaviour.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir\Behaviours
 
 build CMakeFiles/BEproject.dir/Behaviours/Gregaire.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Behaviours/Gregaire.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Behaviours\Gregaire.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir\Behaviours
 
 build CMakeFiles/BEproject.dir/Behaviours/Fearful.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Behaviours/Fearful.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Behaviours\Fearful.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir\Behaviours
 
 build CMakeFiles/BEproject.dir/Behaviours/Cautious.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Behaviours/Cautious.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Behaviours\Cautious.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir\Behaviours
 
 build CMakeFiles/BEproject.dir/Behaviours/MultipleBehaviour.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Behaviours/MultipleBehaviour.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Behaviours\MultipleBehaviour.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir\Behaviours
 
 build CMakeFiles/BEproject.dir/Behaviours/Kamikaze.cpp.obj: CXX_COMPILER__BEproject_unscanned_Debug C$:/Users/pc/Documents/A2/DCL/CPP/BE$ aquarium/BE-aquarium/Behaviours/Kamikaze.cpp || cmake_object_order_depends_target_BEproject
   DEP_FILE = CMakeFiles\BEproject.dir\Behaviours\Kamikaze.cpp.obj.d
-  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\BEproject.dir
   OBJECT_FILE_DIR = CMakeFiles\BEproject.dir\Behaviours
 

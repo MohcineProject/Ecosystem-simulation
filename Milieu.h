@@ -42,7 +42,7 @@ public :
    int nbVoisins( const Bestiole & b );
    void detectCollisions();
    void printMatrix();
-   void kill(const Bestiole & b);
+   void kill(Bestiole & b);
 };
 
 

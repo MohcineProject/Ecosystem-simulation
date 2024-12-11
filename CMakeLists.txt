@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.29)
 project(BEproject)
 
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 add_executable(BEproject main.cpp
         Aquarium.cpp
