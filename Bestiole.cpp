@@ -42,23 +42,23 @@ Bestiole::Bestiole(double baseSpeed)
   baseSpeed(baseSpeed),
   accessoires(),
   detectionCapability(1.0),
-  resistance(1.0), deathflag(false)
+  resistance(1.0), deathflag(false),
+  deathProbability(static_cast<double>(rand()) / RAND_MAX)
 {
 
 
     identite = ++next;
-
-   cout << "const Bestiole (" << identite << ") par defaut" << endl;
-
-   x = y = 0;
-   cumulX = cumulY = 0.;
-   orientation = static_cast<double>( rand() )/RAND_MAX*2.*M_PI;
-   vitesse = static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI + 1;
+    cout << "const Bestiole (" << identite << ") par defaut" << endl;
+    x = y = 0;
+    cumulX = cumulY = 0.;
+    orientation = static_cast<double>( rand() )/RAND_MAX*2.*M_PI;
+    vitesse = static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI + 1;
+    deathProbability = static_cast<double>(rand()) / RAND_MAX;
 
     couleur = std::make_unique<T[]>(3);
-   couleur[ 0 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
-   couleur[ 1 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
-   couleur[ 2 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
+    couleur[ 0 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
+    couleur[ 1 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
+    couleur[ 2 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
 
     captor = new CapteurS();
     captorV = new CapteurV();
@@ -73,7 +73,7 @@ Bestiole::Bestiole(const Bestiole& b)
       baseSpeed(b.baseSpeed),
       accessoires(b.accessoires),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance), type(b.type), deathflag(false)
+      resistance(b.resistance), type(b.type), deathflag(false), deathProbability(b.deathProbability)
 {
     // Deep copy behaviour
     if (b.behaviour != nullptr) {
@@ -116,7 +116,7 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
       orientation(b.orientation), vitesse(b.vitesse),
       baseSpeed(b.baseSpeed), accessoires(std::move(b.accessoires)),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance), deathflag(b.deathflag) {
+      resistance(b.resistance), deathflag(b.deathflag), deathProbability(b.deathProbability) {
 
     type = b.type;
     couleur = std::move(b.couleur);

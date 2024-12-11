@@ -70,6 +70,8 @@ public:
 
    bool seeCaptorsBool = true;
 
+   float deathProbability;
+
    Behaviour* behaviour = nullptr;
 
    std::string type = "";
@@ -113,7 +115,7 @@ public:
    void die() { this->deathflag = true; }
 
     double getActualSpeed() const;
-    void addAccessory( shared_ptr<Accessoire> accessoire );
+    void addAccessory( shared_ptr<Accessoire> accessoire);
     float getDetectionCapability() const;
     float getResistance() const;
 
