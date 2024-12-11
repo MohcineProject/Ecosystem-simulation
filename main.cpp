@@ -12,8 +12,8 @@
 using namespace std;
 
 int main() {
-   Aquarium       ecosystem( 1020, 720, 30 );
-   ecosystem.createBestioles(0.1, 0.1, 0.2, 0.5, 0.1, 30);
+   Aquarium       ecosystem( 1020, 640, 30 );
+   ecosystem.createBestioles(0.1, 0.1, 0.2, 0.2, 0.4, 30);
    ecosystem.run();
 
    return 0;

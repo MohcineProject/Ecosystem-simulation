@@ -49,8 +49,8 @@ private :
    double            vitesse;
 
 
-   CapteurS* captor;
-   CapteurV* captorV;
+   CapteurS* captor = nullptr;
+   CapteurV* captorV = nullptr;
 
    std::unique_ptr<T[]> couleur;
 
@@ -60,7 +60,6 @@ private :
 
 
     std :: vector <std::shared_ptr<Accessoire> > accessoires;
-    float detectionCapability;
     float resistance;
 public:
    int x, y;
@@ -68,7 +67,9 @@ public:
    std::set<Bestiole*> detected;
    bool deathflag = false;
 
-   bool seeCaptorsBool = true;
+   float detectionCapability = 0;
+
+   bool seeCaptorsBool = false;
 
    float deathProbability;
 

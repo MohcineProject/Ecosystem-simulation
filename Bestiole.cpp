@@ -105,6 +105,8 @@ Bestiole::Bestiole(const Bestiole& b)
     couleur = std::make_unique<T[]>(3);
     std::copy(b.couleur.get(), b.couleur.get() + 3, couleur.get());
 
+    detectionCapability = b.detectionCapability;
+
     std::cout << "Copy Construct Bestiole (" << identite << ") from (" << b.identite << ")" << std::endl;
 }
 
@@ -118,6 +120,8 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
 
     type = b.type;
     couleur = std::move(b.couleur);
+
+    detectionCapability = b.detectionCapability;
 
     captor = b.captor;
     captorV = b.captorV;
@@ -139,14 +143,14 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
 
 Bestiole::~Bestiole() {
     delete behaviour;
-    /*
+
     if (captor) {
         delete captor;
     }
     if (captorV) {
         delete captorV;
     }
-    */
+
     std::cout << "dest Bestiole (" << identite << ")" << std::endl;
 }
 
@@ -365,6 +369,7 @@ Bestiole & Bestiole::operator=(const Bestiole &b) {
         this->cumulX = b.cumulX;
         this->cumulY = b.cumulY;
         this->vitesse = b.vitesse;
+        this->detectionCapability = b.detectionCapability;
 
         // Deep copy behaviour
         if (b.behaviour != nullptr) {
@@ -418,6 +423,7 @@ Bestiole & Bestiole::operator=(Bestiole &&b) noexcept {
         detectionCapability = b.detectionCapability;
         resistance = b.resistance;
         deathflag = b.deathflag;
+        detectionCapability = b.detectionCapability;
         type = std::move(b.type);
 
         // Allocate and copy couleur

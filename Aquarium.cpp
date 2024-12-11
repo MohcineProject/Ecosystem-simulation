@@ -7,6 +7,9 @@
 #include <iostream>
 #include <numbers>
 
+#include "Carapace.h"
+#include "Fins.h"
+
 
 Aquarium::Aquarium( const int width, const int height, const int _delay) : CImgDisplay(), delay( _delay )
 {
@@ -37,9 +40,9 @@ Aquarium::Aquarium( const int width, const int height, const int _delay) : CImgD
    this->cap_detection_v_min =  0.4 ;
    this->angle_vision_max =  180 ;
    this->angle_vision_min =  30 ;
-   this->distance_vision_max =  200 ;
-   this->distance_vision_min =  100 ;
-   this->distance_hearing_max =  100 ;
+   this->distance_vision_max =  150 ;
+   this->distance_vision_min =  100;
+   this->distance_hearing_max =  80 ;
    this->distance_hearing_min =  40 ;
    this->cap_detection_h_max =  1 ;
    this->cap_detection_h_min =  0.1 ;
@@ -175,17 +178,37 @@ void Aquarium::createBestioles(const float per_fear, const float per_greg, const
    }
 
    // Loop over the bestiole types and add the members
+   float randomizer = 0.3;
    for (int i = 0; i < 5; ++i) {
       for (int j = 0; j < numBestioles[i]; ++j) {
          Bestiole b = Bestiole(5.0);
          b.setBehaviour(bestioleTypes[i]);
+         float camouflageDraw = static_cast<float>(std::rand()) / RAND_MAX;
+         float camouflage = cap_camouflage_min + camouflageDraw * (cap_camouflage_max - cap_camouflage_min);
+         b.detectionCapability = camouflage;
          float captorSDraw = static_cast<float>(std::rand()) / RAND_MAX;
-         if (captorSDraw >= 0.5) {
+         if (captorSDraw <= randomizer) {
             b.attachCaptorS(this->cap_detection_h_max, this->cap_detection_h_min, this->distance_hearing_max, this->distance_hearing_min);
          }
          float captorVDraw = static_cast<float>(std::rand()) / RAND_MAX;
-         if (captorVDraw >= 0.5) {
+         if (captorVDraw <= randomizer) {
             b.attachCaptorV(this->cap_detection_v_max, this->cap_detection_v_min,this->angle_vision_max, this->angle_vision_min, this->distance_vision_max, this->distance_vision_min);
+         }
+         float finDraw = static_cast<float>(std::rand()) / RAND_MAX;
+         if (finDraw <= randomizer) {
+            float finMultDraw = static_cast<float>(std::rand()) / RAND_MAX;
+            shared_ptr<Accessoire> f = make_shared<Fins>(1 + finMultDraw * (this->multi_speed_max - 1));
+            b.addAccessory(f);
+         }
+         float shellDraw = static_cast<float>(std::rand()) / RAND_MAX;
+         if (shellDraw <= randomizer) {
+            float shellRedDraw = static_cast<float>(std::rand()) / RAND_MAX;
+            float shellRed = 1 + shellRedDraw * (this->red_speed_max - 1);
+            float shellResDraw = static_cast<float>(std::rand()) / RAND_MAX;
+            float shellRes = 1 + shellResDraw * (this->resistance_max - 1);
+            shared_ptr<Accessoire> s = make_shared<Carapace>(1, shellRes, shellRed);
+            b.addAccessory(s);
+            b.detectionCapability *= 0.5;
          }
          this->flotte->addMember(b);
       }
