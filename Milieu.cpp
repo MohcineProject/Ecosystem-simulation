@@ -35,13 +35,17 @@ void Milieu::step( void )
    std::vector<Bestiole*> toDie;
    for ( std::vector<Bestiole>::iterator it = listeBestioles.begin() ; it != listeBestioles.end() ; ++it )
    {
+      it -> grow();
       it->action( *this );
       it->draw( *this );
 
    }
 
    for (auto& it : listeBestioles) {
-      if (it.deathflag) toDie.push_back(&it);
+      if (it.deathflag || it.amIOld()) {
+         it.die();
+         toDie.push_back(&it);
+      }
    }
    for (auto b : toDie) {
       kill(*b);

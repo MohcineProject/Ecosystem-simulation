@@ -39,6 +39,8 @@ private :
    static const double     AFF_SIZE;
    static const double     MAX_VITESSE;
    static const double     LIMITE_VUE;
+   static const int        AGE_LIMIT_MAX;
+   static const int        AGE_LIMIT_MIN;
 
    static int              next;
 
@@ -72,6 +74,8 @@ public:
    bool seeCaptorsBool = false;
 
    float deathProbability;
+   int myAgeLimit;
+   int myAge;
 
    Behaviour* behaviour = nullptr;
 
@@ -143,6 +147,9 @@ public:
    Bestiole& operator=(const Bestiole& b);
 
    Bestiole& operator=(Bestiole&& b) noexcept;
+
+   bool amIOld() const;
+   void grow();
 };
 
 

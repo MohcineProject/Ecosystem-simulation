@@ -19,6 +19,8 @@
 const double      Bestiole::AFF_SIZE = 8.;
 const double      Bestiole::MAX_VITESSE = 10.;
 const double      Bestiole::LIMITE_VUE = 30.;
+const int         Bestiole::AGE_LIMIT_MAX = 100;
+const int         Bestiole::AGE_LIMIT_MIN = 10;
 
 static T RED[3] = {255, 0, 0};
 static T PURPLE[3] = {0, 255, 255};
@@ -35,15 +37,17 @@ void debug_couleur(const char* context, T* ptr) {
 
 Bestiole::Bestiole(double baseSpeed)
 :
-  x(0), y(0),
   cumulX(0.0), cumulY(0.0),
-  orientation(static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI),
-  vitesse(static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE),
+  orientation(static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI), vitesse(static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE),
   baseSpeed(baseSpeed),
   accessoires(),
   detectionCapability(1.0),
-  resistance(1.0), deathflag(false),
-  deathProbability(static_cast<double>(rand()) / RAND_MAX)
+  resistance(1.0),
+  x(0),
+  y(0), deathflag(false),
+  deathProbability(static_cast<double>(rand()) / RAND_MAX),
+  myAgeLimit(AGE_LIMIT_MIN + std::rand() % (AGE_LIMIT_MAX - AGE_LIMIT_MIN + 1)),
+  myAge(0)
 {
 
 
@@ -71,7 +75,8 @@ Bestiole::Bestiole(const Bestiole& b)
       baseSpeed(b.baseSpeed),
       accessoires(b.accessoires),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance), type(b.type), deathflag(false), deathProbability(b.deathProbability)
+      resistance(b.resistance), type(b.type), deathflag(false), deathProbability(b.deathProbability),
+      myAgeLimit(b.myAgeLimit), myAge(b.myAge)
 {
     // Deep copy behaviour
     if (b.behaviour != nullptr) {
@@ -116,7 +121,8 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
       orientation(b.orientation), vitesse(b.vitesse),
       baseSpeed(b.baseSpeed), accessoires(std::move(b.accessoires)),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance), deathflag(b.deathflag), deathProbability(b.deathProbability) {
+      resistance(b.resistance), deathflag(b.deathflag), deathProbability(b.deathProbability),
+      myAgeLimit(b.myAgeLimit), myAge(b.myAge){
 
     type = b.type;
     couleur = std::move(b.couleur);
@@ -362,6 +368,9 @@ Bestiole & Bestiole::operator=(const Bestiole &b) {
         // Delete old behaviour if it exists
         delete this -> behaviour;
 
+        this -> myAgeLimit = b.myAgeLimit;
+        this -> myAge = b.myAge;
+
         this->x = b.x;
         this->y = b.y;
         this->identite = b.identite;
@@ -411,6 +420,8 @@ Bestiole & Bestiole::operator=(const Bestiole &b) {
 Bestiole & Bestiole::operator=(Bestiole &&b) noexcept {
     if (this != &b) {
         // Transfer ownership from source
+        this -> myAgeLimit = b.myAgeLimit;
+        this -> myAge = b.myAge;
         identite = b.identite;
         x = b.x;
         y = b.y;
@@ -466,6 +477,7 @@ Bestiole & Bestiole::operator=(Bestiole &&b) noexcept {
     }
     return *this;
 }
+
 
 void Bestiole::setOrientation(double o) {
 
@@ -544,6 +556,22 @@ void Bestiole::seeCaptors(UImg &support) {
         support.draw_circle(x, y, captor->getR(), couleur.get(), 0.2);  // Draw ears with partial opacity
     }
 }
+
+bool Bestiole::amIOld()const {
+    if (myAge <myAgeLimit) {
+        return false;
+    }
+    return true;
+}
+
+void Bestiole::grow() {
+    if (myAge <myAgeLimit) {
+        myAge++;
+    }else {
+        myAge = myAgeLimit;
+    }
+}
+
 
 
 void Bestiole::attachCaptorS(float capSMax, float capSMin, float distMax, float distMin) {
