@@ -18,7 +18,7 @@ class Fearful : public Behaviour {
   public:
   Fearful(Bestiole* bestiole);
   void doBehaviour(std::set<Bestiole*>& neighbors);
-
+  std::string getType() override{return type;}
 
   };
 

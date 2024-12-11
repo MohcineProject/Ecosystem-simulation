@@ -21,7 +21,7 @@ protected:
         virtual ~Behaviour() = default;
         virtual void doBehaviour(std::set<Bestiole*>& neighbors) = 0;
         Bestiole* closestBestiole(const std::set<Bestiole*>& neighbors);
-        std::string getType(){return type;}
+        virtual std::string getType() = 0;
 };
 
 #endif //BEHAVIOUR_H

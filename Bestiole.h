@@ -14,8 +14,11 @@
 #include <memory>
 #include <iostream>
 #include "Behaviours/Behaviour.h"
-#include "Behaviours/Behaviour.h"
+#include "Behaviours/Cautious.h"
 #include "Behaviours/Fearful.h"
+#include "Behaviours/Gregarious.h"
+#include "Behaviours/Kamikaze.h"
+#include "Behaviours/MultipleBehaviour.h"
 
 using namespace std;
 
@@ -49,7 +52,7 @@ private :
    CapteurS* captor;
    CapteurV* captorV;
 
-   T *couleur;
+   std::unique_ptr<T[]> couleur;
 
     double baseSpeed;
 
@@ -130,60 +133,9 @@ public:
       return identite < other.identite;
    }
 
-   Bestiole& operator=(const Bestiole& b) {
-      if (this != &b) {
-         this->x = b.x;
-         this->y = b.y;
-         this->identite = b.identite;
-         this->orientation = b.orientation;
-         this->cumulX = b.cumulX;
-         this->cumulY = b.cumulY;
-         this->vitesse = b.vitesse;
-         this->behaviour = b.behaviour;
-         this->accessoires = b.accessoires;
-         this->detectionCapability = b.detectionCapability;
-         this->resistance = b.resistance;
-         this->captor = b.captor;
-         this->captorV = b.captorV;
-         this->couleur = new T[3];
-         memcpy(couleur, b.couleur, 3 * sizeof(T));
-      }
-      return *this;
-   }
+   Bestiole& operator=(const Bestiole& b);
 
-   Bestiole& operator=(Bestiole&& b) noexcept {
-      if (this != &b) {
-         // Transfer ownership from source
-         identite = b.identite;
-         x = b.x;
-         y = b.y;
-         cumulX = b.cumulX;
-         cumulY = b.cumulY;
-         orientation = b.orientation;
-         vitesse = b.vitesse;
-         baseSpeed = b.baseSpeed;
-         accessoires = std::move(b.accessoires);
-         detectionCapability = b.detectionCapability;
-         resistance = b.resistance;
-         deathflag = b.deathflag;
-         type = std::move(b.type);
-
-         couleur = b.couleur;
-         captor = b.captor;
-         captorV = b.captorV;
-         behaviour = b.behaviour;
-
-         // Nullify the source object
-         b.couleur = nullptr;
-         b.captor = nullptr;
-         b.captorV = nullptr;
-         b.behaviour = nullptr;
-
-      }
-      return *this;
-   }
-
-
+   Bestiole& operator=(Bestiole&& b) noexcept;
 };
 
 

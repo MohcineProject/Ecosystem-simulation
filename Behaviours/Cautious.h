@@ -18,6 +18,7 @@ class Cautious : public Behaviour {
     Cautious(Bestiole* bestiole);
     ~Cautious() = default;
     void doBehaviour(std::set<Bestiole*> &neighbors) override;
+    std::string getType() override{return type;}
 };
 
 #endif //CAUTIOUS_H

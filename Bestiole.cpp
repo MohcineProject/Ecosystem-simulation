@@ -13,7 +13,7 @@
 #include "Behaviours/Fearful.h"
 #include "Behaviours/Kamikaze.h"
 #include "Behaviours/Cautious.h"
-#include "Behaviours/Gregaire.h"
+#include "Behaviours/Gregarious.h"
 #include "Behaviours/MultipleBehaviour.h"
 
 const double      Bestiole::AFF_SIZE = 8.;
@@ -55,7 +55,7 @@ Bestiole::Bestiole(double baseSpeed)
    orientation = static_cast<double>( rand() )/RAND_MAX*2.*M_PI;
    vitesse = static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI + 1;
 
-   couleur = new T[ 3 ];
+    couleur = std::make_unique<T[]>(3);
    couleur[ 0 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
    couleur[ 1 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
    couleur[ 2 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
@@ -81,8 +81,8 @@ Bestiole::Bestiole(const Bestiole& b)
             behaviour = new Fearful(this);
         } else if (type == "Kamikaze") {
             behaviour = new Kamikaze(this);
-        } else if (type == "Gregaire") {
-            behaviour = new Gregaire(this);
+        } else if (type == "Gregarious") {
+            behaviour = new Gregarious(this);
         } else if (type == "Cautious") {
             behaviour = new Cautious(this);
         } else if (type == "Multiple") {
@@ -104,8 +104,8 @@ Bestiole::Bestiole(const Bestiole& b)
     }
 
     // Allocate and copy couleur
-    couleur = new T[3];
-    std::copy(b.couleur, b.couleur + 3, couleur);
+    couleur = std::make_unique<T[]>(3);
+    std::copy(b.couleur.get(), b.couleur.get() + 3, couleur.get());
 
     std::cout << "Copy Construct Bestiole (" << identite << ") from (" << b.identite << ")" << std::endl;
 }
@@ -119,7 +119,8 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
       resistance(b.resistance), deathflag(b.deathflag) {
 
     type = b.type;
-    couleur = b.couleur;
+    couleur = std::move(b.couleur);
+
     captor = b.captor;
     captorV = b.captorV;
     if (b.behaviour != nullptr) {
@@ -127,8 +128,8 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
             behaviour = new Fearful(this);
         } else if (type == "Kamikaze") {
             behaviour = new Kamikaze(this);
-        } else if (type == "Gregaire") {
-            behaviour = new Gregaire(this);
+        } else if (type == "Gregarious") {
+            behaviour = new Gregarious(this);
         } else if (type == "Cautious") {
             behaviour = new Cautious(this);
         } else if (type == "Multiple") {
@@ -140,6 +141,8 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
 
 Bestiole::~Bestiole() {
     delete behaviour;
+    delete captor;
+    delete captorV;
     std::cout << "dest Bestiole (" << identite << ")" << std::endl;
 }
 
@@ -212,8 +215,8 @@ void Bestiole::draw(UImg &support) {
     double yt = y - sin(orientation) * AFF_SIZE / 2.1;
 
     // Draw body and head
-    support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5.0, -orientation / M_PI * 180.0, couleur);
-    support.draw_circle(xt, yt, AFF_SIZE / 2.0, couleur);
+    support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5.0, -orientation / M_PI * 180.0, couleur.get());
+    support.draw_circle(xt, yt, AFF_SIZE / 2.0, couleur.get());
 
     if (seeCaptorsBool) {
         seeCaptors(support);
@@ -238,13 +241,17 @@ void Bestiole::draw(UImg &support) {
 
 void Bestiole::setColor(Behaviour *behaviour) {
     if (dynamic_cast<Kamikaze *>(behaviour)) {
-        couleur =  RED ;
+        couleur = std::make_unique<T[]>(3);
+        std::copy(std::begin(RED), std::end(RED), couleur.get());
     } else if (dynamic_cast<Cautious *>(behaviour)) {
-        couleur =  PURPLE;
+        couleur = std::make_unique<T[]>(3);
+        std::copy(std::begin(PURPLE), std::end(PURPLE), couleur.get());
     } else if (dynamic_cast<Fearful *>(behaviour)) {
-        couleur =  BLUE;
-    } else if (dynamic_cast<Gregaire *>(behaviour)) {
-        couleur =  GREEN;
+        couleur = std::make_unique<T[]>(3);
+        std::copy(std::begin(BLUE), std::end(BLUE), couleur.get());
+    } else if (dynamic_cast<Gregarious *>(behaviour)) {
+        couleur = std::make_unique<T[]>(3);
+        std::copy(std::begin(GREEN), std::end(GREEN), couleur.get());
     }
 }
 
@@ -335,6 +342,114 @@ double Bestiole::getOrientation() const {
     return orientation;
 }
 
+Bestiole & Bestiole::operator=(const Bestiole &b) {
+    if (this != &b) {
+        // Delete old behaviour if it exists
+        delete this -> behaviour;
+
+        this->x = b.x;
+        this->y = b.y;
+        this->identite = b.identite;
+        this->orientation = b.orientation;
+        this->cumulX = b.cumulX;
+        this->cumulY = b.cumulY;
+        this->vitesse = b.vitesse;
+
+        // Deep copy behaviour
+        if (b.behaviour != nullptr) {
+            if (b.type == "Fearful") {
+                this -> behaviour = new Fearful(this);
+            } else if (b.type == "Kamikaze") {
+                this -> behaviour = new Kamikaze(this);
+            } else if (b.type == "Gregarious") {
+                this -> behaviour = new Gregarious(this);
+            } else if (b.type == "Cautious") {
+                this -> behaviour = new Cautious(this);
+            } else if (b.type == "Multiple") {
+                this -> behaviour = new MultipleBehaviour(this);
+            }
+        }
+
+        this->accessoires = b.accessoires;
+        this->detectionCapability = b.detectionCapability;
+        this->resistance = b.resistance;
+
+        // Allocate captor and captorV using new
+        if (b.captor) {
+            this -> captor = new CapteurS(*b.captor);
+        } else {
+            this -> captor = nullptr;
+        }
+
+        if (b.captorV) {
+            this -> captorV = new CapteurV(*b.captorV);
+        } else {
+            this -> captorV = nullptr;
+        }
+        couleur = std::make_unique<T[]>(3);
+        memcpy(couleur.get(), b.couleur.get(), 3 * sizeof(T));
+    }
+    return *this;
+}
+
+Bestiole & Bestiole::operator=(Bestiole &&b) noexcept {
+    if (this != &b) {
+        // Transfer ownership from source
+        identite = b.identite;
+        x = b.x;
+        y = b.y;
+        cumulX = b.cumulX;
+        cumulY = b.cumulY;
+        orientation = b.orientation;
+        vitesse = b.vitesse;
+        baseSpeed = b.baseSpeed;
+        accessoires = std::move(b.accessoires);
+        detectionCapability = b.detectionCapability;
+        resistance = b.resistance;
+        deathflag = b.deathflag;
+        type = std::move(b.type);
+
+        // Allocate and copy couleur
+        couleur = std::make_unique<T[]>(3);
+        std::copy(b.couleur.get(), b.couleur.get() + 3, couleur.get());
+
+        // Allocate captor and captorV using new
+        if (b.captor) {
+            captor = new CapteurS(*b.captor);
+        } else {
+            captor = nullptr;
+        }
+
+        if (b.captorV) {
+            captorV = new CapteurV(*b.captorV);
+        } else {
+            captorV = nullptr;
+        }
+        // Deep copy behaviour
+        if (b.behaviour != nullptr) {
+            if (type == "Fearful") {
+                behaviour = new Fearful(this);
+            } else if (type == "Kamikaze") {
+                behaviour = new Kamikaze(this);
+            } else if (type == "Gregarious") {
+                behaviour = new Gregarious(this);
+            } else if (type == "Cautious") {
+                behaviour = new Cautious(this);
+            } else if (type == "Multiple") {
+                behaviour = new MultipleBehaviour(this);
+            }
+        }
+
+        // Nullify the source object
+        b.couleur = nullptr;
+        b.captor = nullptr;
+        b.captorV = nullptr;
+        b.behaviour = nullptr;
+
+    }
+    return *this;
+}
+
 void Bestiole::setOrientation(double o) {
 
     orientation = o;
@@ -353,9 +468,9 @@ void Bestiole::setBehaviour(std::string s) {
         behaviour = new Kamikaze(this);
         this->type = "Kamikaze";
     }
-    else if (s == "Gregaire") {
-        behaviour = new Gregaire(this);
-        this->type = "Gregaire";
+    else if (s == "Gregarious") {
+        behaviour = new Gregarious(this);
+        this->type = "Gregarious";
     }
     else if (s == "Cautious") {
         behaviour = new Cautious(this);
@@ -405,10 +520,10 @@ void Bestiole::seeCaptors(UImg &support) {
         }
 
         // Draw the sector (filled area)
-        support.draw_polygon(points, couleur, 0.2);
+        support.draw_polygon(points, couleur.get(), 0.2);
     }
 
     if (captor) {
-        support.draw_circle(x, y, captor->getR(), couleur, 0.2);  // Draw ears with partial opacity
+        support.draw_circle(x, y, captor->getR(), couleur.get(), 0.2);  // Draw ears with partial opacity
     }
 }

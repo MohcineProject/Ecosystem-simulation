@@ -7,10 +7,11 @@
 
 #include "Behaviour.h"
 
-class Gregaire : public Behaviour{
+class Gregarious : public Behaviour{
 public:
   void doBehaviour(std::set<Bestiole*>& neighbors) override;
-  Gregaire(Bestiole *bestiole) ;
+  Gregarious(Bestiole *bestiole) ;
+  std::string getType() override{return type;}
   };
 
 #endif //GREGAIRE_H

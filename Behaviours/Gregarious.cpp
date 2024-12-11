@@ -2,10 +2,10 @@
 // Created by mouha1505 on 28/11/24.
 //
 
-#include "Gregaire.h"
+#include "Gregarious.h"
 #include "../Bestiole.h"
 
-void Gregaire::doBehaviour(std::set<Bestiole*>& neighbors){
+void Gregarious::doBehaviour(std::set<Bestiole*>& neighbors){
     if (neighbors.empty())
         return;
 
@@ -22,7 +22,7 @@ void Gregaire::doBehaviour(std::set<Bestiole*>& neighbors){
 
 }
 
-Gregaire::Gregaire(Bestiole *bestiole) {
+Gregarious::Gregarious(Bestiole *bestiole) {
     this->bestiole = bestiole;
     this -> type = "Gregaire";
 }
