@@ -71,7 +71,7 @@ void Milieu::kill(Bestiole& b) {
    std::cout << "Bestiole to kill " << b.getIdentite() << std::endl;
    std::cout << "liste bestioles ";
    for (auto& it : listeBestioles) {
-      std::cout << it.getIdentite() << "_" << it.behaviour->getType() << " ";
+      //std::cout << it.getIdentite() << "_" << it.behaviour->getType() << " ";
    }
    std::cout << std::endl;
    //*/
@@ -89,7 +89,7 @@ void Milieu::kill(Bestiole& b) {
    ///*
    std::cout << "after death   ";
    for (auto& it : listeBestioles) {
-      std::cout << it.getIdentite() << "_" << it.behaviour->getType() << " ";
+      //std::cout << it.getIdentite() << "_" << it.behaviour->getType() << " ";
    }
    std::cout << std::endl;
    //*/

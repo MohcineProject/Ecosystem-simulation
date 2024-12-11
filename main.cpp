@@ -17,7 +17,7 @@ int main() {
 
     // Create Bestioles with different accessories
     Bestiole b1(5.0); // Without accessories
-    b1.setBehaviour("Kamikaze");
+    b1.setBehaviour("Multiple");
 
     //Carapace *c = new Carapace(1,1,1);
     //Fins *f = new Fins(2);
