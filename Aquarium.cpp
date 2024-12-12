@@ -11,7 +11,8 @@
 #include "Fins.h"
 
 
-Aquarium::Aquarium( const int width, const int height, const int _delay) : CImgDisplay(), delay( _delay )
+Aquarium::Aquarium( const int width, const int height, const int _delay) :
+CImgDisplay(), delay( _delay ), stepCount(0), stepsBeforeStats(1000)
 {
    constexpr int screenWidth = 1280; //screen_width();
    constexpr int screenHeight = 1024; //screen_height();
@@ -134,29 +135,32 @@ float Aquarium::get_distance_vision_min() const {
 
 
 
-void Aquarium::run()
-{
+void Aquarium::run() {
+   cout << "running Aquarium" << endl;
 
-    cout << "running Aquarium" << endl;
-
-    while ( ! is_closed() )
-    {
-
-        // cout << "iteration de la simulation" << endl;
-
-        if ( is_key() ) {
+   while ( ! is_closed() )
+   {
+      flotte->step();
+      display(*flotte);
+      wait(delay);
+      stepCount++;
+      if (stepCount >= stepsBeforeStats) {
+         collectAndPrintStatistics();
+         stepCount = 0;
+         if ( is_key() ) {
             cout << "Vous avez presse la touche " << static_cast<unsigned char>( key() );
             cout << " (" << key() << ")" << endl;
             if ( is_keyESC() ) close();
-        }
+         }
 
-        flotte->step();
-        display( *flotte );
+         flotte->step();
+         display( *flotte );
 
-        wait( delay );
+         wait( delay );
 
-    } // while
+      } // while
 
+   }
 }
 
 
@@ -213,4 +217,68 @@ void Aquarium::createBestioles(const float per_fear, const float per_greg, const
          this->flotte->addMember(b);
       }
    }
+}
+
+void Aquarium::collectAndPrintStatistics() const {
+    const Milieu& milieu = getMilieu();
+    const std::vector<Bestiole>& bestioles = milieu.getBestioles();
+
+    // Containers to hold counts
+    int totalSurvived = 0;
+    int survivedFearful = 0;
+    int survivedGregarious = 0;
+    int survivedCautious = 0;
+    int survivedKamikaze = 0;
+    int survivedMultiple = 0;
+
+    int finsCount = 0;
+    int carapaceCount = 0;
+    int camouflageCount = 0;
+    int captorSCount = 0;
+    int captorVCount = 0;
+
+    for (const Bestiole& b : bestioles) {
+        if (!b.deathflag) {
+            totalSurvived++;
+            // Count behaviors
+            if (b.type == "Fearful") survivedFearful++;
+            else if (b.type == "Gregarious") survivedGregarious++;
+            else if (b.type == "Cautious") survivedCautious++;
+            else if (b.type == "Kamikaze") survivedKamikaze++;
+            else if (b.type == "Multiple") survivedMultiple++;
+
+            // Count accessories
+            for (const auto& acc : b.accessoires) {
+                if (acc && acc->getType() == "Fins") finsCount++;
+                else if (acc && acc->getType() == "Carapace") carapaceCount++;
+                else if (acc && acc->getType() == "Camouflage") camouflageCount++;
+            }
+
+            // Count captors
+            if (b.captor) captorSCount++;
+            if (b.captorV) captorVCount++;
+        }
+    }
+
+    // Calculate survival rates
+    float totalBestioles = static_cast<float>(bestioles.size());
+    float survivalRate = (totalSurvived / 100.0) * 100.0f;
+
+    // Print statistics
+    cout << "Statistics after " << stepsBeforeStats << " steps:" << endl;
+    cout << "Total Bestioles: " << totalBestioles << endl;
+    cout << "Total Survived: " << totalSurvived << " (" << survivalRate << "%)" << endl;
+    cout << "Survived by Behavior:" << endl;
+    cout << " - Fearful: " << survivedFearful << endl;
+    cout << " - Gregarious: " << survivedGregarious << endl;
+    cout << " - Cautious: " << survivedCautious << endl;
+    cout << " - Kamikaze: " << survivedKamikaze << endl;
+    cout << " - Multiple: " << survivedMultiple << endl;
+    cout << "Accessories in Survivors:" << endl;
+    cout << " - Fins: " << finsCount << endl;
+    cout << " - Carapace: " << carapaceCount << endl;
+    cout << " - Camouflage: " << camouflageCount << endl;
+    cout << "Captors in Survivors:" << endl;
+    cout << " - CaptorS: " << captorSCount << endl;
+    cout << " - CaptorV: " << captorVCount << endl;
 }

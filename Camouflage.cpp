@@ -23,3 +23,5 @@ float Camouflage::getResistanceModifier() const {
 std::string Camouflage::getType() const {
     return "Camouflage";
 }
+
+

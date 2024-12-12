@@ -15,3 +15,5 @@ std::string Fins::getType() const {
 void Fins::setSpeedMultiplier(double multiplier) {
     speedMultiplier = multiplier;
 }
+
+

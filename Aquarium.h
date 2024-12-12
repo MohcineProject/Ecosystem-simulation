@@ -34,6 +34,9 @@ class Aquarium : public CImgDisplay
     float         cap_detection_v_max;
     float         cap_detection_v_min;
     static float query_parameter(const char user_query[] , const function<bool(float , float , float )> *condition , float a , float b  ) ;
+    int stepsBeforeStats;
+    int stepCount;
+
 
     public :
 
@@ -59,6 +62,8 @@ class Aquarium : public CImgDisplay
     float get_angle_vision_max() const;
     void run();
     void createBestioles(float per_fear, float per_greg, float per_caut, float per_kami, float per_mult, int total) const;
+    void collectAndPrintStatistics() const;
+
 };
 
 

@@ -6,6 +6,9 @@
 #include <algorithm>
 
 std::vector<std::vector<std::pair<double, double>>> Milieu::coordmatrix;
+const std::vector<Bestiole>& Milieu::getBestioles() const {
+   return listeBestioles;
+}
 
 const T    Milieu::white[] = { (T)255, (T)255, (T)255 };
 

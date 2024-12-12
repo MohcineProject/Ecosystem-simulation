@@ -19,8 +19,8 @@
 const double      Bestiole::AFF_SIZE = 8.;
 const double      Bestiole::MAX_VITESSE = 10.;
 const double      Bestiole::LIMITE_VUE = 30.;
-const int         Bestiole::AGE_LIMIT_MAX = 100;
-const int         Bestiole::AGE_LIMIT_MIN = 10;
+const int         Bestiole::AGE_LIMIT_MAX = 20000;
+const int         Bestiole::AGE_LIMIT_MIN = 10000;
 
 static T RED[3] = {255, 0, 0};
 static T PURPLE[3] = {0, 255, 255};

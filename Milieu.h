@@ -26,6 +26,8 @@ private :
    static std::vector<std::vector<std::pair<double, double>>> coordmatrix;
 
 public :
+   const std::vector<Bestiole> &getBestioles() const;
+
    Milieu( int _width, int _height );
    ~Milieu( void );
 
@@ -38,7 +40,10 @@ public :
       listeBestioles.push_back(b);
       listeBestioles.back().initCoords(width, height);
       n++;
+
    }
+
+
    int nbVoisins( const Bestiole & b );
    void detectCollisions();
    void printMatrix();
