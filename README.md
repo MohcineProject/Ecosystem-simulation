@@ -51,6 +51,6 @@ To adapt to the ecosystem, the creatures have evolved, for example by developing
 
 The creatures' colors correspond to their behaviors.
 
-To modify other  parameters of Bestioles such as the number of Bestioles or others, access and edit the corresponding values directly in the appropriate .cpp files.
+To modify other  parameters of Bestioles such as the number of Bestioles or other parameters, access and edit the corresponding values directly in the appropriate .cpp files.
 
 
