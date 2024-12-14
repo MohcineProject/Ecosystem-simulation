@@ -5,9 +5,15 @@
 
 class Bestiole;
 
+
+/**
+ * Represents the Camouflage accessory for a Bestiole.
+ * Modifies the detection capabilities based on its camouflage capacity.
+ */
 class Camouflage : public Accessoire {
 private:
-    float camouflage_capacity;
+    float camouflage_capacity; ///< Capacity of camouflage, affects detection modifier.
+
 
 public:
     Camouflage(float camouflage_capacity);

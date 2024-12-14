@@ -4,6 +4,11 @@
 #include "Accessoire.h"
 class Bestiole;
 
+
+/**
+ * Represents the Carapace accessory for a Bestiole.
+ * Modifies detection, resistance, and speed characteristics.
+ */
 class Carapace : public Accessoire {
 private:
     float cap_detect; // Increased detectability

@@ -9,6 +9,8 @@
 
 class Bestiole;
 
+// Fearful class inherits from Behaviour. Represents a behaviour where the Bestiole
+// reacts out of fear, fleeing from other Bestioles.
 class Fearful : public Behaviour {
   static const int DENSITE_BESTIOLE;
   static const double COEF_FPEUR;

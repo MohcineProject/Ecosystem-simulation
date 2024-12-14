@@ -3,9 +3,14 @@
 #include "Accessoire.h"
 #include <string>
 
+
+/**
+ * Represents the Fins accessory for a Bestiole.
+ * Modifies the speed of a Bestiole based on a multiplier.
+ */
 class Fins : public Accessoire {
 private:
-    double  speedMultiplier;
+    double  speedMultiplier; ///< Multiplier to increase the speed of the Bestiole.
 
 public:
     Fins(double multiplier);

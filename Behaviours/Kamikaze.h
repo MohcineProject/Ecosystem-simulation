@@ -7,6 +7,8 @@
 
 #include "Behaviour.h"
 
+// Kamikaze class that inherits from Behaviour. Represents a behaviour where the Bestiole
+// takes a reckless approach towards a target, typically moving directly towards it.
 class Kamikaze : public Behaviour {
     double calculateNewDirection(const Bestiole* closestBestiolePtr);
 

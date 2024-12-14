@@ -7,6 +7,8 @@
 
 #include "Behaviour.h"
 
+// Gregarious class inherits from Behaviour. Represents a behaviour where the Bestiole
+//exhibits social behavior.
 class Gregarious : public Behaviour{
 public:
   void doBehaviour(std::set<Bestiole*>& neighbors) override;
