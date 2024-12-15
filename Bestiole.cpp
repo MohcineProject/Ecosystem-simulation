@@ -1,20 +1,20 @@
 #include "Bestiole.h"
 
 #include "Milieu.h"
-#include "CapteurS.h"  // Include CapteurS definition
-#include "CapteurV.h"  // Include CapteurV definition
+#include "CapteurS.h"
+#include "CapteurV.h"
 
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
-
+#include "Behaviours/Cautious.h"
+#include "Behaviours/Fearful.h"
+#include "Behaviours/Gregarious.h"
+#include "Behaviours/Kamikaze.h"
+#include "Behaviours/MultipleBehaviour.h"
 #include "Carapace.h"
 #include "Accessoire.h"
-#include "Behaviours/Fearful.h"
-#include "Behaviours/Kamikaze.h"
-#include "Behaviours/Cautious.h"
-#include "Behaviours/Gregarious.h"
-#include "Behaviours/MultipleBehaviour.h"
+
 
 const double      Bestiole::AFF_SIZE = 8.;
 const double      Bestiole::MAX_VITESSE = 10.;
@@ -31,39 +31,31 @@ static  T LIGHT_BLUE[3] = {180, 0, 255};
 
 int               Bestiole::next = 0;
 
-void debug_couleur(const char* context, T* ptr) {
+
+// A helper function to debug bestioles colors
+void debug_couleur(const char* context, const T* ptr) {
     std::cout << context << ": couleur address = " << ptr << std::endl;
 }
 
-Bestiole::Bestiole(double baseSpeed)
-:
-  cumulX(0.0), cumulY(0.0),
-  orientation(static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI), vitesse(static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE),
-  baseSpeed(baseSpeed),
-  accessoires(),
-  detectionCapability(1.0),
-  resistance(1.0),
-  x(0),
-  y(0), deathflag(false),
-  deathProbability(static_cast<double>(rand()) / RAND_MAX),
-  myAgeLimit(AGE_LIMIT_MIN + std::rand() % (AGE_LIMIT_MAX - AGE_LIMIT_MIN + 1)),
-  myAge(0)
-{
-
-
+Bestiole::Bestiole(const double baseSpeed)
+    : cumulX(0.0), cumulY(0.0),
+      orientation(static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI),
+      vitesse(static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE),
+      baseSpeed(baseSpeed),
+      resistance(1.0),
+      x(0),
+      y(0),
+      coordvector(nullptr), detectionCapability(1.0),
+      deathProbability(static_cast<double>(rand()) / RAND_MAX),
+      myAgeLimit(AGE_LIMIT_MIN + std::rand() % (AGE_LIMIT_MAX - AGE_LIMIT_MIN + 1)),
+      myAge(0) {
     identite = ++next;
     cout << "const Bestiole (" << identite << ") par defaut" << endl;
-    x = y = 0;
-    cumulX = cumulY = 0.;
-    orientation = static_cast<double>( rand() )/RAND_MAX*2.*M_PI;
-    vitesse = static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI + 1;
-    deathProbability = static_cast<double>(rand()) / RAND_MAX;
 
     couleur = std::make_unique<T[]>(3);
-    couleur[ 0 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
-    couleur[ 1 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
-    couleur[ 2 ] = static_cast<int>( static_cast<double>( rand() )/RAND_MAX*230. );
-
+    couleur[0] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
+    couleur[1] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
+    couleur[2] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
 }
 
 Bestiole::Bestiole(const Bestiole& b)
@@ -75,10 +67,10 @@ Bestiole::Bestiole(const Bestiole& b)
       baseSpeed(b.baseSpeed),
       accessoires(b.accessoires),
       detectionCapability(b.detectionCapability),
-      resistance(b.resistance), type(b.type), deathflag(false), deathProbability(b.deathProbability),
+      resistance(b.resistance), type(b.type), deathProbability(b.deathProbability),
       myAgeLimit(b.myAgeLimit), myAge(b.myAge)
 {
-    // Deep copy behaviour
+    // Use a deep copy to assign the behaviour attribute
     if (b.behaviour != nullptr) {
         if (type == "Fearful") {
             behaviour = new Fearful(this);
@@ -110,8 +102,6 @@ Bestiole::Bestiole(const Bestiole& b)
     couleur = std::make_unique<T[]>(3);
     std::copy(b.couleur.get(), b.couleur.get() + 3, couleur.get());
 
-    detectionCapability = b.detectionCapability;
-
     std::cout << "Copy Construct Bestiole (" << identite << ") from (" << b.identite << ")" << std::endl;
 }
 
@@ -123,14 +113,13 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
       detectionCapability(b.detectionCapability),
       resistance(b.resistance), deathflag(b.deathflag), deathProbability(b.deathProbability),
       myAgeLimit(b.myAgeLimit), myAge(b.myAge){
-
     type = b.type;
     couleur = std::move(b.couleur);
-
     detectionCapability = b.detectionCapability;
-
     captor = b.captor;
     captorV = b.captorV;
+
+    // Use a deep copy to assign the behaviour attribute
     if (b.behaviour != nullptr) {
         if (type == "Fearful") {
             behaviour = new Fearful(this);
@@ -148,8 +137,10 @@ Bestiole::Bestiole(Bestiole&& b) noexcept
 }
 
 Bestiole::~Bestiole() {
-    delete behaviour;
-
+    // Delete all captors and accessories associated with the bestiole
+    if (behaviour) {
+        delete behaviour;
+    }
     if (captor) {
         delete captor;
     }
@@ -157,11 +148,13 @@ Bestiole::~Bestiole() {
         delete captorV;
     }
 
+
     std::cout << "dest Bestiole (" << identite << ")" << std::endl;
 }
 
 void Bestiole::initCoords(int xLim, int yLim)
 {
+    // Use rand to randomly initialize the cooridnates x and y
     x = rand() % xLim;
     y = rand() % yLim;
 }
@@ -204,12 +197,11 @@ void Bestiole::bouge(int xLim, int yLim)
     }
 }
 
-bool Bestiole::jeTeVois(const Bestiole& b) const {
-   return false;
-}
 
-void Bestiole::action( Milieu & monMilieu )
+
+void Bestiole::action(const Milieu & monMilieu )
 {
+    // Move the bestiole and execute its behaviour
     bouge(monMilieu.getWidth(), monMilieu.getHeight());
     this->doBehaviour();
 }
@@ -232,9 +224,12 @@ void Bestiole::draw(UImg &support) {
     support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5.0, -orientation / M_PI * 180.0, couleur.get());
     support.draw_circle(xt, yt, AFF_SIZE / 2.0, couleur.get());
 
+    // If seeCaptors is true, draw the captors visuals as well
     if (seeCaptorsBool) {
         seeCaptors(support);
     }
+
+    // Loop trough available accessories and draw them
     for (const auto &accessoire : accessoires) {
         if (!accessoire) continue; // Skip null pointers
 
@@ -254,6 +249,7 @@ void Bestiole::draw(UImg &support) {
 }
 
 void Bestiole::setColor(Behaviour *behaviour) {
+    // Set the color attribute of the bestiole based its behaviour
     if (dynamic_cast<Kamikaze *>(behaviour)) {
         couleur = std::make_unique<T[]>(3);
         std::copy(std::begin(RED), std::end(RED), couleur.get());
@@ -281,7 +277,6 @@ int Bestiole::getCoordy() const
 
 void Bestiole::setCoordx(int newx)
 {
-    double dist;
    x = newx;
 }
 
@@ -292,17 +287,23 @@ void Bestiole::setCoordy(int newy)
 
 
 
-void Bestiole::addAccessory(shared_ptr<Accessoire> accessoire) {
+void Bestiole::addAccessory(const shared_ptr<Accessoire>& accessoire) {
+    // Adds an accessory to the bestiole and modify its attributes accordingly
    accessoires.push_back(accessoire);
-   if (auto carapace = dynamic_pointer_cast<Carapace>(accessoire)) {
+   if (const auto carapace = dynamic_pointer_cast<Carapace>(accessoire)) {
       detectionCapability *= carapace->getCapDetect();
       resistance *= carapace->getResistanceFactor();
    }
 }
 
-void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix, int i, std::vector<Bestiole> &listeBestioles) {
+void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordvector, int i, std::vector<Bestiole> &listeBestioles) {
+    // Clear the detected attribute from previous detected bestioles
     this->detected.clear();
-    this->coordvector = &coordmatrix;
+
+    // Update the coordinates vector of the bestiole that holds distances and angles between it and all other bestioles
+    this->coordvector = &coordvector;
+
+    // Capture all detected bestioles from the attached captors
     std::set<Bestiole*> sound;
     std::set<Bestiole*> vision;
     if (captor) {
@@ -312,14 +313,10 @@ void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix,
         vision = this->captorV->update(*this->coordvector, i, listeBestioles); // Use pointer dereferencing
     }
 
+    // Update the detected attribute on the bestiole
     std::set<Bestiole*> detectedptr = sound;
     detectedptr.insert(vision.begin(), vision.end());
     this->detected = detectedptr;
-    /*
-    for (Bestiole* it : detected) {
-        std::cout << this->identite << " sees " << it->identite << std::endl;
-    }
-    */
     detectedptr.clear();
 }
 float Bestiole::getDetectionCapability() const {
@@ -331,6 +328,7 @@ float Bestiole::getResistance() const {
 }
 
 ostream& operator<<(ostream& os, const Bestiole& b) {
+    // Defining the stream operator to print the bestiole to the console
     os << "Bestiole ID: " << b.identite
        << ", Base Speed: " << b.baseSpeed
        << ", Actual Speed: " << b.getActualSpeed()
@@ -343,15 +341,16 @@ ostream& operator<<(ostream& os, const Bestiole& b) {
     return os;
 }
 
-double Bestiole::getMaxSpeed() const {
+double Bestiole::getMaxSpeed()  {
    return MAX_VITESSE;
 }
 
-void Bestiole::setVitesse(double newv) {
+void Bestiole::setVitesse(const double newv) {
    vitesse = newv;
 }
 
 double Bestiole::getActualSpeed() const {
+    // Return the modified speed depending on the existence of the fins
     double speedFactor = 1.0;
     for (const auto& acc : accessoires) {
         speedFactor = acc->getSpeedFactor();
@@ -359,7 +358,7 @@ double Bestiole::getActualSpeed() const {
     return baseSpeed * speedFactor;
 }
 
-double Bestiole::getOrientation() const {
+float Bestiole::getOrientation() const {
     return orientation;
 }
 
@@ -479,7 +478,7 @@ Bestiole & Bestiole::operator=(Bestiole &&b) noexcept {
 }
 
 
-void Bestiole::setOrientation(double o) {
+void Bestiole::setOrientation(float o) {
 
     orientation = o;
 }
@@ -488,7 +487,8 @@ double Bestiole::getBaseSpeed() const {
     return this -> baseSpeed;
 }
 
-void Bestiole::setBehaviour(std::string s) {
+void Bestiole::setBehaviour(const std::string &s) {
+    // Set behaviour according to the passed string
     if (s == "Fearful") {
         this->behaviour = new Fearful(this);
         this->type = "Fearful";
@@ -512,19 +512,15 @@ void Bestiole::setBehaviour(std::string s) {
 }
 
 void Bestiole::doBehaviour() {
+    // Check if behaviour is attached to the bestiole and executes it
     if (this->behaviour != nullptr) {
-        /*
-        for (Bestiole* it : detected) {
-            std::cout <<this->type << " " << this->identite << " sees " << it->identite << std::endl;
-        }
-        */
         this->behaviour->doBehaviour(detected);
     }
 
 
 }
 
-void Bestiole::seeCaptors(UImg &support) {
+void Bestiole::seeCaptors(UImg &support) const {
     if (captorV) {
         double angle = captorV->getTheta() * M_PI / 180; // Convert degrees to radians
         int radius = captorV->getR();
@@ -553,11 +549,13 @@ void Bestiole::seeCaptors(UImg &support) {
     }
 
     if (captor) {
+        // Draw a circle around the bestiole to visualize the sound captor
         support.draw_circle(x, y, captor->getR(), couleur.get(), 0.2);  // Draw ears with partial opacity
     }
 }
 
 bool Bestiole::amIOld()const {
+    // Check if the bestiole has reached its age limit
     if (myAge <myAgeLimit) {
         return false;
     }
@@ -565,6 +563,7 @@ bool Bestiole::amIOld()const {
 }
 
 void Bestiole::grow() {
+    // Increment the age of the bestiole by 1
     if (myAge <myAgeLimit) {
         myAge++;
     }else {
@@ -574,13 +573,15 @@ void Bestiole::grow() {
 
 
 
-void Bestiole::attachCaptorS(float capSMax, float capSMin, float distMax, float distMin) {
+void Bestiole::attachCaptorS(const float capSMax, const float capSMin, const float distMax, const float distMin) {
+    // Attach a sound captor to the bestiole if the bestiole doesn't already have one
     if (captor == nullptr) {
         this->captor = new CapteurS(capSMax, capSMin, distMax, distMin);
     }
 }
 
-void Bestiole::attachCaptorV(float capVMax, float capVMin, float AngleMax, float AngleMin, float distMax, float distMin) {
+void Bestiole::attachCaptorV(const float capVMax, const float capVMin, const float AngleMax, const float AngleMin, const float distMax, const float distMin) {
+    // Attach a vision captor to the bestiole if the bestiole doesn't already have one
     if (captorV == nullptr) {
         this->captorV = new CapteurV(capVMax, capVMin, AngleMax, AngleMin, distMax, distMin);
     }

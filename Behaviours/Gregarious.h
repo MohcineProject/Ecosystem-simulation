@@ -1,17 +1,36 @@
-//
-// Created by mouha1505 on 28/11/24.
-//
-
 #ifndef GREGAIRE_H
 #define GREGAIRE_H
 
 #include "Behaviour.h"
 
-class Gregarious : public Behaviour{
+/**
+ * @class Gregarious
+ * @brief Represents the "gregarious" behaviour for a Bestiole.
+ *
+ * The Gregarious behavior encourages a Bestiole to follow and align its
+ * movement with that of its neighbors.
+ */
+class Gregarious : public Behaviour {
 public:
-  void doBehaviour(std::set<Bestiole*>& neighbors) override;
-  Gregarious(Bestiole *bestiole) ;
-  std::string getType() override{return type;}
-  };
 
-#endif //GREGAIRE_H
+  /**
+   * @brief Executes the Gregarious behavior.
+   *
+   * This method adjusts the direction of the Bestiole to align with the
+   * average direction of its neighbors.
+   *
+   * @param neighbors A set of pointers to neighboring Bestioles.
+   */
+  void doBehaviour(std::set<Bestiole*>& neighbors) override;
+
+  /**
+   * @brief Constructor for the Gregarious class.
+   *
+   * Initializes a Gregarious behavior for a given Bestiole.
+   *
+   * @param bestiole A pointer to the Bestiole using this behavior.
+   */
+  Gregarious(Bestiole* bestiole);
+};
+
+#endif // GREGAIRE_H

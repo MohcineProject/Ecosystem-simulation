@@ -5,87 +5,77 @@
 #include "CImg.h"
 #include "Milieu.h"
 #include <iostream>
-#include <numbers>
 
 #include "Carapace.h"
 #include "Fins.h"
 
-
-Aquarium::Aquarium( const int width, const int height, const int _delay) :
-CImgDisplay(), delay( _delay ), stepCount(0), stepsBeforeStats(1000)
+// Constructor for the Aquarium class
+Aquarium::Aquarium(const int width, const int height, const int _delay) :
+ delay(_delay), stepsBeforeStats(1000), stepCount(0)
 {
-   constexpr int screenWidth = 1280; //screen_width();
-   constexpr int screenHeight = 1024; //screen_height();
+   // Set screen width and height constants
+   constexpr int screenWidth = 1280;
+   constexpr int screenHeight = 1024;
 
+   // Define a lambda function for validating parameter values within bounds
+   const function<bool(float, float, float)> condition = [](const float value, const float a, const float b) {
+       return (value <= a && value >= b);
+   };
 
-   // Get parameters from user
-   const function<bool(float , float , float )> condition = [](const float value , const float a , const float b) {return (value <=a && value >=b); }  ;
-   
-   this->cap_detection_v_max =  query_parameter("max vision capacity" , &condition , 1 , 0 ) ;
-   this->cap_detection_v_min =  query_parameter("min vision capacity" , &condition , this->cap_detection_v_max , 0 ) ;
-   this->angle_vision_max =  query_parameter("max vision angle" , &condition ,  360 , 0 ) ;
-   this->angle_vision_min =  query_parameter("min vision angle" , &condition ,  this->angle_vision_max , 0 ) ;
-   this->distance_vision_max =  query_parameter("max vision distance" , &condition ,  200 , 0 ) ;
-   this->distance_vision_min =  query_parameter("min vision distance" , &condition ,  this->distance_vision_max , 0 ) ;
-   this->distance_hearing_max =  query_parameter("max hearing distance" , &condition ,  120 , 0 ) ;
-   this->distance_hearing_min =  query_parameter("min hearing distance" , &condition ,  this->distance_hearing_max , 0 ) ;
-   this->cap_detection_h_max =  query_parameter("max hearing capacity" , &condition ,  1 , 0 ) ;
-   this->cap_detection_h_min =  query_parameter("min hearing capacity" , &condition ,  this->cap_detection_h_max , 0 ) ;
-   this->cap_camouflage_max =  query_parameter("max camouflage capacity" , &condition ,  1 , 0 ) ;
-   this->cap_camouflage_min =  query_parameter("min camouflage capacity" , &condition ,  this->cap_camouflage_max, 0 ) ;
-   this->multi_speed_max =  query_parameter("max speed multiplier" , &condition ,  3 , 1 ) ;
-   this->red_speed_max = query_parameter("max speed reductor" , &condition , 3 , 1 ) ;
-   this->resistance_max = query_parameter("max resistance" , &condition , 3 , 1 ) ;
-   /*
-   this->cap_detection_v_max =  0.8;
-   this->cap_detection_v_min =  0.4 ;
-   this->angle_vision_max =  180 ;
-   this->angle_vision_min =  30 ;
-   this->distance_vision_max =  150 ;
-   this->distance_vision_min =  100;
-   this->distance_hearing_max =  80 ;
-   this->distance_hearing_min =  40 ;
-   this->cap_detection_h_max =  1 ;
-   this->cap_detection_h_min =  0.1 ;
-   this->cap_camouflage_max =  1 ;
-   this->cap_camouflage_min =  0.1 ;
-   this->multi_speed_max =  1.5 ;
-   this->red_speed_max = 2 ;
-   this->resistance_max = 1.5 ;
-*/
+   // Query simulation parameters from the user using the defined condition
+   this->cap_detection_v_max = query_parameter("max vision capacity", &condition, 1, 0);
+   this->cap_detection_v_min = query_parameter("min vision capacity", &condition, this->cap_detection_v_max, 0);
+   this->angle_vision_max = query_parameter("max vision angle", &condition, 360, 0);
+   this->angle_vision_min = query_parameter("min vision angle", &condition, this->angle_vision_max, 0);
+   this->distance_vision_max = query_parameter("max vision distance", &condition, 200, 0);
+   this->distance_vision_min = query_parameter("min vision distance", &condition, this->distance_vision_max, 0);
+   this->distance_hearing_max = query_parameter("max hearing distance", &condition, 120, 0);
+   this->distance_hearing_min = query_parameter("min hearing distance", &condition, this->distance_hearing_max, 0);
+   this->cap_detection_h_max = query_parameter("max hearing capacity", &condition, 1, 0);
+   this->cap_detection_h_min = query_parameter("min hearing capacity", &condition, this->cap_detection_h_max, 0);
+   this->cap_camouflage_max = query_parameter("max camouflage capacity", &condition, 1, 0);
+   this->cap_camouflage_min = query_parameter("min camouflage capacity", &condition, this->cap_camouflage_max, 0);
+   this->multi_speed_max = query_parameter("max speed multiplier", &condition, 3, 1);
+   this->red_speed_max = query_parameter("max speed reductor", &condition, 3, 1);
+   this->resistance_max = query_parameter("max resistance", &condition, 3, 1);
 
-    cout << "Constructing the Aquarium" << endl;
+   // Print initialization message
+   cout << "Constructing the Aquarium" << endl;
 
-    flotte = new Milieu( width, height );
-    assign( *flotte, "Simulation d'ecosysteme" );
-    move( static_cast<int>((screenWidth-width)/2), static_cast<int>((screenHeight-height)/2) );
+   // Initialize the Milieu object with specified width and height
+   flotte = new Milieu(width, height);
 
+   // Assign the Milieu instance to the CImgDisplay interface
+   assign(*flotte, "Simulation d'ecosysteme");
+
+   // Center the aquarium display on the screen
+   move(static_cast<int>((screenWidth - width) / 2), static_cast<int>((screenHeight - height) / 2));
 }
 
-float Aquarium::query_parameter(const char user_query[] , const function<bool(float , float , float )> *condition , const float a , const float b   ) {
-   float value ;
-   while ( true ) {
-      std::cout<< "Enter a " <<  user_query <<std::endl;
-      cin>>value;
-      if (not (*condition)(value ,  a , b)) {
-         std::cout<<"Value out of bound, please enter a valid value"<<std::endl;
-      }
-      else {
-        break ;
+// Method to query user for a parameter value and validate it
+float Aquarium::query_parameter(const char user_query[], const function<bool(float, float, float)> *condition, const float a, const float b) {
+   float value;
+   while (true) {
+      std::cout << "Enter a " << user_query << std::endl;
+      cin >> value;
+      // Ensure the value is within the valid range
+      if (!(*condition)(value, a, b)) {
+         std::cout << "Value out of bound, please enter a valid value" << std::endl;
+      } else {
+         break;
       }
    }
-   return value ;
+   return value;
 }
 
-
+// Destructor for the Aquarium class
 Aquarium::~Aquarium()
 {
-
-    delete flotte;
-
-    cout << "Aquarium Removed" << endl;
-
+   // Clean up memory allocated for the ecosystem
+   delete flotte;
+   cout << "Aquarium Removed" << endl;
 }
+
 //implementing getters for each simulation parameter
 float Aquarium::get_detec_v_max() const {
    return(this -> cap_detection_v_max);
@@ -135,37 +125,38 @@ float Aquarium::get_distance_vision_min() const {
 
 
 
+// Main loop to run the simulation
 void Aquarium::run() {
-   cout << "running Aquarium" << endl;
+   cout << "Running Aquarium" << endl;
 
-   while ( ! is_closed() )
-   {
+   while (!is_closed()) {
+      // Update the ecosystem and display it
       flotte->step();
       display(*flotte);
       wait(delay);
       stepCount++;
+
+      // Periodically collect and print statistics
       if (stepCount >= stepsBeforeStats) {
          collectAndPrintStatistics();
          stepCount = 0;
-         if ( is_key() ) {
-            cout << "Vous avez presse la touche " << static_cast<unsigned char>( key() );
+
+         // Check for user key input and close the simulation when escape is pressed
+         if (is_key()) {
+            cout << "You pressed key " << static_cast<unsigned char>(key());
             cout << " (" << key() << ")" << endl;
-            if ( is_keyESC() ) close();
+            if (is_keyESC()) close();
          }
 
          flotte->step();
-         display( *flotte );
-
-         wait( delay );
-
-      } // while
-
+         display(*flotte);
+         wait(delay);
+      }
    }
 }
 
 
-//method for creating the bugs in the beginning of the simulation
-
+// Method for creating the bestioles in the beginning of the simulation
 void Aquarium::createBestioles(const float per_fear, const float per_greg, const float per_caut,
                                const float per_kami, const float per_mult, const int total) const {
 
@@ -182,28 +173,41 @@ void Aquarium::createBestioles(const float per_fear, const float per_greg, const
    }
 
    // Loop over the bestiole types and add the members
+   // Define a threshold for attaching captors and accessories randomly to bestioles
    float randomizer = 0.3;
+
+   // Loop over all types of the bestioles
    for (int i = 0; i < 5; ++i) {
+      // Loop over the number of bestioles of this type
       for (int j = 0; j < numBestioles[i]; ++j) {
+
+         // Creating the bestiole object
          Bestiole b = Bestiole(5.0);
          b.setBehaviour(bestioleTypes[i]);
-         float camouflageDraw = static_cast<float>(std::rand()) / RAND_MAX;
-         float camouflage = cap_camouflage_min + camouflageDraw * (cap_camouflage_max - cap_camouflage_min);
-         b.detectionCapability = camouflage;
+
+         // Specifying its detection capability
+         float detectionCapabilityDraw = static_cast<float>(std::rand()) / RAND_MAX;
+         float detectionCapability = cap_camouflage_min + detectionCapabilityDraw * (cap_camouflage_max - cap_camouflage_min);
+         b.detectionCapability = detectionCapability;
+
+         // Assigning accessories and captors randomly
          float captorSDraw = static_cast<float>(std::rand()) / RAND_MAX;
          if (captorSDraw <= randomizer) {
             b.attachCaptorS(this->cap_detection_h_max, this->cap_detection_h_min, this->distance_hearing_max, this->distance_hearing_min);
          }
+
          float captorVDraw = static_cast<float>(std::rand()) / RAND_MAX;
          if (captorVDraw <= randomizer) {
             b.attachCaptorV(this->cap_detection_v_max, this->cap_detection_v_min,this->angle_vision_max, this->angle_vision_min, this->distance_vision_max, this->distance_vision_min);
          }
+
          float finDraw = static_cast<float>(std::rand()) / RAND_MAX;
          if (finDraw <= randomizer) {
             float finMultDraw = static_cast<float>(std::rand()) / RAND_MAX;
             shared_ptr<Accessoire> f = make_shared<Fins>(1 + finMultDraw * (this->multi_speed_max - 1));
             b.addAccessory(f);
          }
+
          float shellDraw = static_cast<float>(std::rand()) / RAND_MAX;
          if (shellDraw <= randomizer) {
             float shellRedDraw = static_cast<float>(std::rand()) / RAND_MAX;
@@ -214,11 +218,15 @@ void Aquarium::createBestioles(const float per_fear, const float per_greg, const
             b.addAccessory(s);
             b.detectionCapability *= 0.5;
          }
+
+         // Adding the created bestiole to the milieu
          this->flotte->addMember(b);
       }
    }
 }
 
+
+// A helper function to calculate statistics of the simulation
 void Aquarium::collectAndPrintStatistics() const {
     const Milieu& milieu = getMilieu();
     const std::vector<Bestiole>& bestioles = milieu.getBestioles();

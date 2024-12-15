@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+// Constructor for the visual sensor (CapteurV)
 CapteurV::CapteurV(float capVMax, float capVMin, float AngleMax, float AngleMin, float distMax, float distMin) {
     float randomDraw = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
     float rd = distMin + randomDraw * (distMax - distMin);
@@ -18,7 +19,7 @@ CapteurV::CapteurV(float capVMax, float capVMin, float AngleMax, float AngleMin,
 
 }
 
-
+// Default destructor for CapteurV
 CapteurV::~CapteurV() = default;
 
 
@@ -26,6 +27,7 @@ std::set<Bestiole *> CapteurV::update(std::vector<std::pair<double, double> > &c
                                       std::vector<Bestiole> &listeBestioles) {
     std::set<Bestiole *> bestioles;
     for (int i = 0; i < coordvector.size(); i++) {
+        // Check if the "Bestiole" is within the visual detection field (angle and radius) and is not the current one
         if (i != k && - angle < coordvector[i].second < angle && coordvector[i].first < r * r) {
             if (listeBestioles[i].detectionCapability <= cap_detec) {
                 bestioles.insert(&listeBestioles[i]);
@@ -34,4 +36,3 @@ std::set<Bestiole *> CapteurV::update(std::vector<std::pair<double, double> > &c
     }
     return bestioles;
 }
-

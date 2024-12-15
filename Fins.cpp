@@ -1,7 +1,7 @@
 
 #include "Fins.h"
 
-Fins::Fins(double multiplier) : speedMultiplier(multiplier) {}
+Fins::Fins(const double multiplier) : speedMultiplier(multiplier) {}
 
 
 double Fins::getSpeedFactor() const {

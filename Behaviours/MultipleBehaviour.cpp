@@ -4,12 +4,15 @@
 #include "Cautious.h"
 #include "Gregarious.h"
 #include "Kamikaze.h"
+#include "Fearful.h"
 
 int MultipleBehaviour::switchInterval = 20;
 
 MultipleBehaviour::MultipleBehaviour(Bestiole *bestiole, const std::vector<std::string> &behaviourNames): behaviourNames(behaviourNames),
-                                                                                                                        stepCounter(0) {
+                                                                                                                           stepCounter(0) {
     this->bestiole = bestiole;
+
+    // Assigns the behaviors as defined in the behaviourNames list
     for (const auto& name : behaviourNames) {
         if (name == "Cautious") {
         behaviours.push_back(std::make_unique<Cautious>(bestiole));
@@ -22,11 +25,14 @@ MultipleBehaviour::MultipleBehaviour(Bestiole *bestiole, const std::vector<std::
         }
     }
     if (behaviours.empty()) {
+        // If the behaviourNames is empty assign all behaviours
         behaviours.push_back(std::make_unique<Cautious>(bestiole));
         behaviours.push_back(std::make_unique<Fearful>(bestiole));
         behaviours.push_back(std::make_unique<Kamikaze>(bestiole));
         behaviours.push_back(std::make_unique<Gregarious>(bestiole));
     }
+
+    // Assign the first behaviour to the current behaviour attribute
     currentBehaviour = behaviours.front().get();
     this -> type = "Multiple";
 }

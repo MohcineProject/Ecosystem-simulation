@@ -1,12 +1,10 @@
 #include "Camouflage.h"
 
 
-#include "Camouflage.h"
 
 Camouflage::Camouflage(float camouflage_capacity)
     : camouflage_capacity(camouflage_capacity) {}
 
-Camouflage::~Camouflage() {}
 
 double Camouflage::getSpeedFactor() const {
     return 1.0;
