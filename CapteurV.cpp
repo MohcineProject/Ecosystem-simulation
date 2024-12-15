@@ -22,7 +22,14 @@ CapteurV::CapteurV(float capVMax, float capVMin, float AngleMax, float AngleMin,
 // Default destructor for CapteurV
 CapteurV::~CapteurV() = default;
 
-
+/**
+ * @brief Updates the set of detected "Bestiole" objects based on their positions and the visual detection field.
+ *
+ * @param coordvector A vector of pairs representing the squared distances and angles of other entities.
+ * @param k The index of the current "Bestiole" being updated.
+ * @param listeBestioles A vector containing all "Bestiole" objects.
+ * @return A set of pointers to "Bestiole" objects detected within the visual sensor's field of view.
+ */
 std::set<Bestiole *> CapteurV::update(std::vector<std::pair<double, double> > &coordvector, int k,
                                       std::vector<Bestiole> &listeBestioles) {
     std::set<Bestiole *> bestioles;
