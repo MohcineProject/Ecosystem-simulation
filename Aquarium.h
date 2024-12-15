@@ -3,7 +3,7 @@
 
 
 #include "CImg.h"
-#include <functional>
+#include <string>
 
 using namespace std;
 using namespace cimg_library;
@@ -41,15 +41,6 @@ class Aquarium : public CImgDisplay
     float cap_detection_v_max; ///< Maximum vision detection capability.
     float cap_detection_v_min; ///< Minimum vision detection capability.
 
-    /**
- * @brief Query a parameter based on user input and a condition.
- * @param user_query A description of the parameter being queried.
- * @param condition A pointer to a function that validates the query condition.
- * @param a Lower bound for the parameter.
- * @param b Upper bound for the parameter.
- * @return The queried parameter value.
- */
-    static float query_parameter(const char user_query[] , const function<bool(float , float , float )> *condition , float a , float b  ) ;
 
 
    int stepsBeforeStats; ///< Number of steps before collecting statistics.
@@ -57,6 +48,18 @@ class Aquarium : public CImgDisplay
 
 
     public :
+       /**
+       * @brief  A helper function to validate data in the config file.
+       *
+       * The function verifies if the data is valid by comparing it to the bounds. If it is not bounded, it prints an error
+       * and exits the program.
+       *
+       * @param  key The key of the value to be tested
+       * @param value the value to be tested
+       * @param minValue the lower bound of the value
+       * @param maxValue the upper bound of the value
+       */
+       static void validateAndAssign(const std::string &key, float value, float minValue, float maxValue);
 
    /**
   * @brief Constructs an Aquarium object.

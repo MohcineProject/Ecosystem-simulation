@@ -36,6 +36,7 @@ To adapt to the ecosystem, the creatures have evolved, for example by developing
 # Usage:
 
     1-Compilation with Makefile: Run make.
+    2-Enter the parameters of the simulation in the config file ("config.txt")
     2-Execution of the Program: Run ./main.
     3-Defining Parameters:
 

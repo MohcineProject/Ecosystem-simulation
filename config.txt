@@ -1,0 +1,48 @@
+
+
+# The min and max values shown here can be changed in the aquarium constructor
+
+# Maximum vision capacity (range: 0 to 10)
+max_vision_capacity=5
+
+# Minimum vision capacity (range: 0 to max_vision_capacity)
+min_vision_capacity=1
+
+# Maximum vision angle (range: 0 to 360)
+max_vision_angle=1
+
+# Minimum vision angle (range: 0 to max_vision_angle)
+min_vision_angle=1
+
+# Maximum vision distance (range: 0 to 200)
+max_vision_distance=2
+
+# Minimum vision distance (range: 0 to max_vision_distance)
+min_vision_distance=1
+
+# Maximum hearing distance (range: 0 to 120)
+max_hearing_distance=1
+
+# Minimum hearing distance (range: 0 to max_hearing_distance)
+min_hearing_distance=1
+
+# Maximum hearing capacity (range: 0 to 1)
+max_hearing_capacity=1
+
+# Minimum hearing capacity (range: 0 to max_hearing_capacity)
+min_hearing_capacity=1
+
+# Maximum camouflage capacity (range: 0 to 1)
+max_camouflage_capacity=1
+
+# Minimum camouflage capacity (range: 0 to max_camouflage_capacity)
+min_camouflage_capacity=1
+
+# Maximum speed multiplier (range: 1 to 3)
+max_speed_multiplier=1
+
+# Maximum speed reductor (range: 1 to 3)
+max_speed_reductor=1
+
+# Maximum resistance (range: 1 to 3)
+max_resistance=1
