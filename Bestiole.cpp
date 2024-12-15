@@ -300,7 +300,7 @@ void Bestiole::addAccessory(shared_ptr<Accessoire> accessoire) {
    }
 }
 
-void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix, int i, std::vector<Bestiole> &listeBestioles) {
+void Bestiole::updatematrix(std::vector<std::pair<double, double>> &coordmatrix, int i, std::vector<std::unique_ptr<Bestiole>> &listeBestioles) {
     this->detected.clear();
     this->coordvector = &coordmatrix;
     std::set<Bestiole*> sound;
@@ -479,8 +479,7 @@ Bestiole & Bestiole::operator=(Bestiole &&b) noexcept {
 }
 
 
-void Bestiole::setOrientation(double o) {
-
+void Bestiole::setOrientation(float o) {
     orientation = o;
 }
 
@@ -524,7 +523,7 @@ void Bestiole::doBehaviour() {
 
 }
 
-void Bestiole::seeCaptors(UImg &support) {
+void Bestiole::seeCaptors(UImg &support) const {
     if (captorV) {
         double angle = captorV->getTheta() * M_PI / 180; // Convert degrees to radians
         int radius = captorV->getR();

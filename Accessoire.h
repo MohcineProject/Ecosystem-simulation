@@ -6,8 +6,8 @@
 class Bestiole;
 
 /**
- * Abstract base class for accessories that can be added to a Bestiole.
- * Accessories can modify speed, detection capabilities, and resistance of a Bestiole.
+ * @brief Abstract base class for accessories that can be added to a Bestiole.
+ * @details Accessories can modify speed, detection capabilities, and resistance of a Bestiole.
  */
 class Accessoire {
 public:
