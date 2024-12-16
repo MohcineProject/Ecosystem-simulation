@@ -5,7 +5,6 @@
 #ifndef CAUTIOUS_H
 #define CAUTIOUS_H
 
-#include <memory>
 #include "Behaviour.h"
 
 class Bestiole;
@@ -17,7 +16,7 @@ class Bestiole;
  */
 class Cautious : public Behaviour {
     /**
-     * Computes an orientation for the bestiole to get away from the closest detected bestiole. 
+     * @brief Computes an orientation for the bestiole to get away from the closest detected bestiole.
      * @param closestBestiolePtr A pointer to the closest detected bestiole
      * @return The new direction that the bestiole should take
      */
@@ -36,8 +35,7 @@ class Cautious : public Behaviour {
     ~Cautious() = default;
 
     /**
-     * @brief Overrides the doBehaviour method from the Behaviour base class. It assigns
-     * a new direction to the bestiole
+     * @brief Overrides the doBehaviour method from the Behaviour base class. It assigns a new direction to the bestiole
      * @param neighbors 
      */
     void doBehaviour(std::set<Bestiole*> &neighbors) override;

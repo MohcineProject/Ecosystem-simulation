@@ -3,13 +3,13 @@
 
 #include "Bestiole.h"
 #include <vector>
-#include <memory>
 #include <set>
 
 class Bestiole;
 
 
 /**
+ * @class CapteurS
  * Sensor class for detecting nearby Bestiole objects using sound (CapteurS).
  * Implements a detection range and adds detected Bestiole objects to a set.
  */
@@ -21,17 +21,17 @@ private:
 
 public:
     /**
-     * Default constructor.
+     * @brief Default constructor.
      */
     CapteurS(float capSMax, float capSMin, float distMax, float distMin);
 
     /**
-     * Default destructor.
+     * @brief Default destructor.
      */
     ~CapteurS() ;
 
     /**
-     * Updates the sensor state by checking for nearby Bestiole objects based on sound detection.
+     * @brief Updates the sensor state by checking for nearby Bestiole objects based on sound detection.
      *
      * @param coordvector A vector of coordinates representing the positions of other Bestiole objects.
      * @param i Index of the current Bestiole object.

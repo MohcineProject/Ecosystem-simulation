@@ -5,7 +5,8 @@
 
 class Bestiole;
 /**
- * Represents the Camouflage accessory for a Bestiole.
+ * @class Camouflage
+ * @brief Represents the Camouflage accessory for a Bestiole.
  * Modifies the detection capabilities based on its camouflage capacity.
  */
 class Camouflage : public Accessoire {
@@ -17,7 +18,7 @@ private:
 
 public:
    /**
-    * Constructs the camouflage accessory with the passed value of camouflage capacity
+    * @brief Constructs the camouflage accessory with the passed value of camouflage capacity
     * @param camouflage_capacity a
     */
    explicit Camouflage(float camouflage_capacity);
@@ -30,7 +31,8 @@ public:
  */
     float getDetectionModifier() const override;
     /**
- * @briefReturns the resistance modifier for Camouflage (no modification, returns 1.0).
+ * @brief the resistance modifier for Camouflage (no modification, returns 1.0).
+ * @return the resistance modifier of the camouflage
  */
     float getResistanceModifier() const override;
     /**

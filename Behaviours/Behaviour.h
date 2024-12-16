@@ -5,7 +5,6 @@
 #ifndef BEHAVIOUR_H
 #define BEHAVIOUR_H
 
-#include <cmath>
 #include <set>
 #include <string>
 

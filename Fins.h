@@ -4,13 +4,14 @@
 #include <string>
 
 /**
- * Represents the Fins accessory for a Bestiole.
+ * @class Fins
+ * @brief Represents the Fins accessory for a Bestiole.
  * Modifies the speed of a Bestiole based on a multiplier.
  */
 class Fins : public Accessoire {
 private:
     /**
-     * Multiplier to increase the speed of the Bestiole.
+     * @brief Multiplier to increase the speed of the Bestiole.
      */
     double  speedMultiplier;
 
@@ -21,15 +22,17 @@ public:
      */
     explicit Fins(double multiplier);
     /**
- * Returns the speed factor modifier for Fins based on the multiplier.
+ * @brief Returns the speed factor modifier for Fins based on the multiplier.
+ * @return the speed factor modifier for Fins
  */
     double getSpeedFactor() const override ;
     /**
- * Returns the type of the accessory as "Fins".
+ * @brief Returns the type of the accessory as "Fins".
+ * @return the type of the accessory being "Fins"
  */
     std :: string getType() const override ;
     /**
- * Sets a new speed multiplier for the Fins accessory.
+ * @brief Sets a new speed multiplier for the Fins accessory.
  */
     void setSpeedMultiplier(double multiplier) ;
 };

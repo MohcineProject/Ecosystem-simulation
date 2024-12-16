@@ -4,9 +4,7 @@
 
 #include "UImg.h"
 #include "Bestiole.h"
-#include <iostream>
 #include <vector>
-#include "CapteurS.h"
 
 using namespace std;
 
@@ -56,6 +54,7 @@ private :
 public :
    /**
 * @brief A function to retrieve the list of all bestioles in the simulation
+* @return a list of bestioles used in the simulation
 */
    const std::vector<Bestiole> &getBestioles() const;
    /**
