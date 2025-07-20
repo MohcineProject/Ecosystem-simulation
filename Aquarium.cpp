@@ -9,6 +9,7 @@
 #include "Fins.h"
 #include <fstream>
 #include <map>
+#include "BestioleFactory.h"
 
 // A helper function to parse data from a config file
 map<std::string, std::string> readConfig(const std::string& filename) {
@@ -247,54 +248,16 @@ void Aquarium::createBestioles(const float per_fear, const float per_greg, const
    }
 
    // Loop over the bestiole types and add the members
-   // Define a threshold for attaching captors and accessories randomly to bestioles
-   float randomizer = 0.3;
+   // Retrieve the bestiole_factory
+   BestioleFactory* bestiole_factory = BestioleFactory::getBestioleFactory(this);
 
    // Loop over all types of the bestioles
    for (int i = 0; i < 5; ++i) {
       // Loop over the number of bestioles of this type
       for (int j = 0; j < numBestioles[i]; ++j) {
-
-         // Creating the bestiole object
-         Bestiole b = Bestiole(5.0);
-         b.setBehaviour(bestioleTypes[i]);
-
-         // Specifying its detection capability
-         float detectionCapabilityDraw = static_cast<float>(std::rand()) / RAND_MAX;
-         float detectionCapability = cap_camouflage_min + detectionCapabilityDraw * (cap_camouflage_max - cap_camouflage_min);
-         b.detectionCapability = detectionCapability;
-
-         // Assigning accessories and captors randomly
-         float captorSDraw = static_cast<float>(std::rand()) / RAND_MAX;
-         if (captorSDraw <= randomizer) {
-            b.attachCaptorS(this->cap_detection_h_max, this->cap_detection_h_min, this->distance_hearing_max, this->distance_hearing_min);
-         }
-
-         float captorVDraw = static_cast<float>(std::rand()) / RAND_MAX;
-         if (captorVDraw <= randomizer) {
-            b.attachCaptorV(this->cap_detection_v_max, this->cap_detection_v_min,this->angle_vision_max, this->angle_vision_min, this->distance_vision_max, this->distance_vision_min);
-         }
-
-         float finDraw = static_cast<float>(std::rand()) / RAND_MAX;
-         if (finDraw <= randomizer) {
-            float finMultDraw = static_cast<float>(std::rand()) / RAND_MAX;
-            shared_ptr<Accessoire> f = make_shared<Fins>(1 + finMultDraw * (this->multi_speed_max - 1));
-            b.addAccessory(f);
-         }
-
-         float shellDraw = static_cast<float>(std::rand()) / RAND_MAX;
-         if (shellDraw <= randomizer) {
-            float shellRedDraw = static_cast<float>(std::rand()) / RAND_MAX;
-            float shellRed = 1 + shellRedDraw * (this->red_speed_max - 1);
-            float shellResDraw = static_cast<float>(std::rand()) / RAND_MAX;
-            float shellRes = 1 + shellResDraw * (this->resistance_max - 1);
-            shared_ptr<Accessoire> s = make_shared<Carapace>(1, shellRes, shellRed);
-            b.addAccessory(s);
-            b.detectionCapability *= 0.5;
-         }
-
-         // Adding the created bestiole to the milieu
-         this->flotte->addMember(b);
+         // Creating the bestiole object and adding it to the flotte
+         Bestiole* new_bestiole = bestiole_factory->createBestiole(bestioleTypes[i]);
+         this->flotte->addMember((*new_bestiole));
       }
    }
 }

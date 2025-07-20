@@ -32,6 +32,8 @@ add_executable(BEproject main.cpp
         Behaviours/MultipleBehaviour.h
         Behaviours/MultipleBehaviour.cpp
         Behaviours/Kamikaze.cpp
+        BestioleFactory.cpp
+        BestioleFactory.h
 )
 
 
