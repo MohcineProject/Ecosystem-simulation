@@ -2,7 +2,6 @@
 
 #include <array>
 
-#include "CImg.h"
 #include "Milieu.h"
 #include <iostream>
 #include "Carapace.h"
@@ -63,69 +62,69 @@ Aquarium::Aquarium(const int width, const int height, const int _delay) :
    constexpr int screenHeight = 1024;
 
 
-// Read configuration file and retrieve the data
-   map<std::string, std::string> config = readConfig("config.txt");
+   // Read configuration file and retrieve the data
+   const map<std::string, std::string> config = readConfig("config.txt");
 
- // Validate and assign the parameters based on the config file
-cap_detection_v_max = std::stof(config["max_vision_capacity"]);
-validateAndAssign("max_vision_capacity", cap_detection_v_max, 0, 10);
-cout << "Max vision capacity: " << cap_detection_v_max << endl;
+   // Validate and assign the parameters based on the config file
+   cap_detection_v_max = std::stof(config.at("max_vision_capacity"));
+   validateAndAssign("max_vision_capacity", cap_detection_v_max, 0, 10);
+   cout << "Max vision capacity: " << cap_detection_v_max << endl;
 
-cap_detection_v_min = std::stof(config["min_vision_capacity"]);
-validateAndAssign("min_vision_capacity", cap_detection_v_min, 0, cap_detection_v_max);
-cout << "Min vision capacity: " << cap_detection_v_min << endl;
+   cap_detection_v_min = std::stof(config.at("min_vision_capacity"));
+   validateAndAssign("min_vision_capacity", cap_detection_v_min, 0, cap_detection_v_max);
+   cout << "Min vision capacity: " << cap_detection_v_min << endl;
 
-angle_vision_max = std::stof(config["max_vision_angle"]);
-validateAndAssign("max_vision_angle", angle_vision_max, 0, 360);
-cout << "Max vision angle: " << angle_vision_max << endl;
+   angle_vision_max = std::stof(config.at("max_vision_angle"));
+   validateAndAssign("max_vision_angle", angle_vision_max, 0, 360);
+   cout << "Max vision angle: " << angle_vision_max << endl;
 
-angle_vision_min = std::stof(config["min_vision_angle"]);
-validateAndAssign("min_vision_angle", angle_vision_min, 0, angle_vision_max);
-cout << "Min vision angle: " << angle_vision_min << endl;
+   angle_vision_min = std::stof(config.at("min_vision_angle"));
+   validateAndAssign("min_vision_angle", angle_vision_min, 0, angle_vision_max);
+   cout << "Min vision angle: " << angle_vision_min << endl;
 
-distance_vision_max = std::stof(config["max_vision_distance"]);
-validateAndAssign("max_vision_distance", distance_vision_max, 0, 200);
-cout << "Max vision distance: " << distance_vision_max << endl;
+   distance_vision_max = std::stof(config.at("max_vision_distance"));
+   validateAndAssign("max_vision_distance", distance_vision_max, 0, 200);
+   cout << "Max vision distance: " << distance_vision_max << endl;
 
-distance_vision_min = std::stof(config["min_vision_distance"]);
-validateAndAssign("min_vision_distance", distance_vision_min, 0, distance_vision_max);
-cout << "Min vision distance: " << distance_vision_min << endl;
+   distance_vision_min = std::stof(config.at("min_vision_distance"));
+   validateAndAssign("min_vision_distance", distance_vision_min, 0, distance_vision_max);
+   cout << "Min vision distance: " << distance_vision_min << endl;
 
-distance_hearing_max = std::stof(config["max_hearing_distance"]);
-validateAndAssign("max_hearing_distance", distance_hearing_max, 0, 120);
-cout << "Max hearing distance: " << distance_hearing_max << endl;
+   distance_hearing_max = std::stof(config.at("max_hearing_distance"));
+   validateAndAssign("max_hearing_distance", distance_hearing_max, 0, 120);
+   cout << "Max hearing distance: " << distance_hearing_max << endl;
 
-distance_hearing_min = std::stof(config["min_hearing_distance"]);
-validateAndAssign("min_hearing_distance", distance_hearing_min, 0, distance_hearing_max);
-cout << "Min hearing distance: " << distance_hearing_min << endl;
+   distance_hearing_min = std::stof(config.at("min_hearing_distance"));
+   validateAndAssign("min_hearing_distance", distance_hearing_min, 0, distance_hearing_max);
+   cout << "Min hearing distance: " << distance_hearing_min << endl;
 
-cap_detection_h_max = std::stof(config["max_hearing_capacity"]);
-validateAndAssign("max_hearing_capacity", cap_detection_h_max, 0, 1);
-cout << "Max hearing capacity: " << cap_detection_h_max << endl;
+   cap_detection_h_max = std::stof(config.at("max_hearing_capacity"));
+   validateAndAssign("max_hearing_capacity", cap_detection_h_max, 0, 1);
+   cout << "Max hearing capacity: " << cap_detection_h_max << endl;
 
-cap_detection_h_min = std::stof(config["min_hearing_capacity"]);
-validateAndAssign("min_hearing_capacity", cap_detection_h_min, 0, cap_detection_h_max);
-cout << "Min hearing capacity: " << cap_detection_h_min << endl;
+   cap_detection_h_min = std::stof(config.at("min_hearing_capacity"));
+   validateAndAssign("min_hearing_capacity", cap_detection_h_min, 0, cap_detection_h_max);
+   cout << "Min hearing capacity: " << cap_detection_h_min << endl;
 
-cap_camouflage_max = std::stof(config["max_camouflage_capacity"]);
-validateAndAssign("max_camouflage_capacity", cap_camouflage_max, 0, 1);
-cout << "Max camouflage capacity: " << cap_camouflage_max << endl;
+   cap_camouflage_max = std::stof(config.at("max_camouflage_capacity"));
+   validateAndAssign("max_camouflage_capacity", cap_camouflage_max, 0, 1);
+   cout << "Max camouflage capacity: " << cap_camouflage_max << endl;
 
-cap_camouflage_min = std::stof(config["min_camouflage_capacity"]);
-validateAndAssign("min_camouflage_capacity", cap_camouflage_min, 0, cap_camouflage_max);
-cout << "Min camouflage capacity: " << cap_camouflage_min << endl;
+   cap_camouflage_min = std::stof(config.at("min_camouflage_capacity"));
+   validateAndAssign("min_camouflage_capacity", cap_camouflage_min, 0, cap_camouflage_max);
+   cout << "Min camouflage capacity: " << cap_camouflage_min << endl;
 
-multi_speed_max = std::stof(config["max_speed_multiplier"]);
-validateAndAssign("max_speed_multiplier", multi_speed_max, 1, 3);
-cout << "Max speed multiplier: " << multi_speed_max << endl;
+   multi_speed_max = std::stof(config.at("max_speed_multiplier"));
+   validateAndAssign("max_speed_multiplier", multi_speed_max, 1, 3);
+   cout << "Max speed multiplier: " << multi_speed_max << endl;
 
-red_speed_max = std::stof(config["max_speed_reductor"]);
-validateAndAssign("max_speed_reductor", red_speed_max, 1, 3);
-cout << "Max speed reductor: " << red_speed_max << endl;
+   red_speed_max = std::stof(config.at("max_speed_reductor"));
+   validateAndAssign("max_speed_reductor", red_speed_max, 1, 3);
+   cout << "Max speed reductor: " << red_speed_max << endl;
 
-resistance_max = std::stof(config["max_resistance"]);
-validateAndAssign("max_resistance", resistance_max, 1, 3);
-cout << "Max resistance: " << resistance_max << endl;
+   resistance_max = std::stof(config.at("max_resistance"));
+   validateAndAssign("max_resistance", resistance_max, 1, 3);
+   cout << "Max resistance: " << resistance_max << endl;
 
 
    // Print initialization message
@@ -135,7 +134,7 @@ cout << "Max resistance: " << resistance_max << endl;
    flotte = new Milieu(width, height);
 
    // Assign the Milieu instance to the CImgDisplay interface
-   assign(*flotte, "Simulation d'ecosysteme");
+   assign(*flotte, "Ecosystem simulation");
 
    // Center the aquarium display on the screen
    move(static_cast<int>((screenWidth - width) / 2), static_cast<int>((screenHeight - height) / 2));
@@ -153,49 +152,49 @@ Aquarium::~Aquarium()
 
 //implementing getters for each simulation parameter
 float Aquarium::get_detec_v_max() const {
-   return(this -> cap_detection_v_max);
+   return(cap_detection_v_max);
 }
 float Aquarium::get_detec_v_min() const {
-   return(this -> cap_detection_v_min);
+   return(cap_detection_v_min);
 }
 float Aquarium::get_detec_h_max() const {
-   return(this -> cap_detection_h_max);
+   return(cap_detection_h_max);
 }
 float Aquarium::get_detec_h_min() const {
-   return(this -> cap_detection_h_min);
+   return(cap_detection_h_min);
 }
 float Aquarium::get_camouflage_max() const {
-   return(this -> cap_camouflage_max);
+   return(cap_camouflage_max);
 }
 float Aquarium::get_camouflage_min() const {
-   return(this -> cap_camouflage_min);
+   return(cap_camouflage_min);
 }
 float Aquarium::get_mult_speed_max() const {
-   return(this -> multi_speed_max);
+   return(multi_speed_max);
 }
 float Aquarium::get_red_speed_max() const {
-   return(this -> red_speed_max);
+   return(red_speed_max);
 }
 float Aquarium::get_resistance_max() const {
-   return(this -> resistance_max);
+   return(resistance_max);
 }
 float Aquarium::get_angle_vision_max() const {
-   return(this -> angle_vision_max);
+   return(angle_vision_max);
 }
 float Aquarium::get_angle_vision_min() const {
-   return(this -> angle_vision_min);
+   return(angle_vision_min);
 }
 float Aquarium::get_distance_hearing_max() const {
-   return(this -> distance_hearing_max);
+   return(distance_hearing_max);
 }
 float Aquarium::get_distance_hearing_min() const {
-   return(this -> distance_hearing_min);
+   return(distance_hearing_min);
 }
 float Aquarium::get_distance_vision_max() const {
-   return(this -> distance_vision_max);
+   return(distance_vision_max);
 }
 float Aquarium::get_distance_vision_min() const {
-   return(this -> distance_vision_min);
+   return(distance_vision_min);
 }
 
 
@@ -211,21 +210,18 @@ void Aquarium::run() {
       wait(delay);
       stepCount++;
 
+      // Check for user key input and close the simulation when escape is pressed
+      if (is_key()) {
+         unsigned int pressed_key = key();
+         cout << "You pressed key " << static_cast<unsigned char>(pressed_key);
+         cout << " (" << pressed_key << ")" << endl;
+         if (pressed_key == cimg::keyESC) close();
+      }
+
       // Periodically collect and print statistics
       if (stepCount >= stepsBeforeStats) {
          collectAndPrintStatistics();
          stepCount = 0;
-
-         // Check for user key input and close the simulation when escape is pressed
-         if (is_key()) {
-            cout << "You pressed key " << static_cast<unsigned char>(key());
-            cout << " (" << key() << ")" << endl;
-            if (is_keyESC()) close();
-         }
-
-         flotte->step();
-         display(*flotte);
-         wait(delay);
       }
    }
 }
@@ -247,7 +243,6 @@ void Aquarium::createBestioles(const float per_fear, const float per_greg, const
       numBestioles[i] = static_cast<int>(floor(float_total * percentages[i]));
    }
 
-   // Loop over the bestiole types and add the members
    // Retrieve the bestiole_factory
    BestioleFactory* bestiole_factory = BestioleFactory::getBestioleFactory(this);
 
@@ -268,7 +263,7 @@ void Aquarium::collectAndPrintStatistics() const {
     const Milieu& milieu = getMilieu();
     const std::vector<Bestiole>& bestioles = milieu.getBestioles();
 
-    // Containers to hold counts
+    // Variables to hold counts
     int totalSurvived = 0;
     int survivedFearful = 0;
     int survivedGregarious = 0;
@@ -307,7 +302,7 @@ void Aquarium::collectAndPrintStatistics() const {
 
     // Calculate survival rates
     float totalBestioles = static_cast<float>(bestioles.size());
-    float survivalRate = (totalSurvived / 100.0) * 100.0f;
+    float survivalRate = (totalSurvived / totalBestioles) * 100.0f;
 
     // Print statistics
     cout << "Statistics after " << stepsBeforeStats << " steps:" << endl;

@@ -36,6 +36,7 @@ public:
     * Pure virtual function, must be implemented by derived classes.
     */
     virtual std::string getType() const = 0;
+    
     /**
     * @brief Virtual destructor to ensure proper cleanup of derived classes.
     */
