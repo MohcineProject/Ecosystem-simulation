@@ -1,5 +1,5 @@
-main : main.cpp Aquarium.o Bestiole.o Milieu.o CapteurS.o CapteurV.o Camouflage.o Carapace.o Fins.o Behaviour.o Gregarious.o Fearful.o Cautious.o MultipleBehaviour.o Kamikaze.o
-	g++ -Wall -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o CapteurS.o CapteurV.o Camouflage.o Carapace.o Fins.o Behaviour.o Gregarious.o Fearful.o Cautious.o MultipleBehaviour.o Kamikaze.o -I . -lX11 -lpthread
+main : main.cpp Aquarium.o Bestiole.o Milieu.o CapteurS.o CapteurV.o Camouflage.o Carapace.o Fins.o Behaviour.o Gregarious.o Fearful.o Cautious.o MultipleBehaviour.o Kamikaze.o BestioleFactory.o
+	g++ -Wall -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o CapteurS.o CapteurV.o Camouflage.o Carapace.o Fins.o Behaviour.o Gregarious.o Fearful.o Cautious.o MultipleBehaviour.o Kamikaze.o BestioleFactory.o -I . -lX11 -lpthread
 
 Aquarium.o : Aquarium.h Aquarium.cpp
 	g++ -Wall -std=c++14 -c Aquarium.cpp -I .
@@ -42,6 +42,9 @@ MultipleBehaviour.o : Behaviours/MultipleBehaviour.h Behaviours/MultipleBehaviou
 
 Kamikaze.o : Behaviours/Kamikaze.cpp
 	g++ -Wall -std=c++14 -c Behaviours/Kamikaze.cpp -I .
+
+BestioleFactory.o : BestioleFactory.cpp BestioleFactory.h
+	g++ -Wall -std=c++14 -c BestioleFactory.cpp -I .
 
 clean:
 	rm -rf *.o main
