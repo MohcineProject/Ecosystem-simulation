@@ -75,10 +75,15 @@ class Aquarium : public CImgDisplay
      */
     ~Aquarium();
 
-   /**
- * @brief Gets a reference to the Milieu object managing the bestioles.
- * @return Reference to the Milieu object.
- */
+    /**
+     * @brief Displays a menu interface using CImg 
+     */
+    void display_menu();
+
+    /**
+     * @brief Gets a reference to the Milieu object managing the bestioles.
+     * @return Reference to the Milieu object.
+     */
     Milieu & getMilieu() const { return *flotte; }
 
     float get_detec_v_max() const; ///< Gets the maximum vision detection capability.

@@ -17,7 +17,7 @@ const T    Milieu::white[] = { static_cast<T>(255), static_cast<T>(255), static_
 
 Milieu::Milieu(const int _width, const int _height ) : UImg(_width, _height, 1, 3),
                                             width(_width), height(_height) {
-   cout << "const Milieu" << endl;
+   cout << "Creating Milieu" << endl;
    listeBestioles.reserve(500);
    std::srand(time(NULL));
 }

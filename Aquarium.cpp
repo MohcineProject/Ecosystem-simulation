@@ -202,6 +202,7 @@ float Aquarium::get_distance_vision_min() const {
 // Main loop to run the simulation
 void Aquarium::run() {
    cout << "Running Aquarium" << endl;
+   display_menu();
 
    while (!is_closed()) {
       // Update the ecosystem and display it
@@ -321,4 +322,33 @@ void Aquarium::collectAndPrintStatistics() const {
     cout << "Captors in Survivors:" << endl;
     cout << " - CaptorS: " << captorSCount << endl;
     cout << " - CaptorV: " << captorVCount << endl;
+}
+
+
+
+void Aquarium::display_menu() {
+    // Create the menu interface
+    CImg<unsigned char> menu(1020, 640, 1, 3, 0);
+    
+    // Define colors 
+    const unsigned char white[] = {255, 255, 255};  
+    const unsigned char black[] = {0, 0, 0};        
+    const unsigned char blue[] = {0, 100, 200};     
+    
+    // Fill the menu with white color
+    menu.fill(white);  
+    
+    // Draw the title of the simulation
+    menu.draw_text(100, 100, "AQUARIUM SIMULATION", black, 0, 1, 32);
+    
+    // Draw an informative text
+    menu.draw_text(100, 150, "Press any key to continue...", blue, 0, 1, 20);
+    
+    // Display the menu
+    display(menu);
+    
+    // Keep the window open until the user presses a key
+    while (!is_closed() && !is_key()) {
+        wait(20);
+    }
 }
