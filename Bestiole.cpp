@@ -26,7 +26,7 @@ static T RED[3] = {255, 0, 0};
 static T PURPLE[3] = {0, 255, 255};
 static T BLUE[3] = {0, 0, 255};
 static T GREEN[3] = {0, 255, 0};
-static  T GRAY[3] = {128, 128, 128};    // RGB for Brown
+static  T GRAY[3] = {128, 128, 128};  
 static  T LIGHT_BLUE[3] = {180, 0, 255};
 
 int               Bestiole::next = 0;
