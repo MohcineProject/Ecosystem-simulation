@@ -1,52 +1,52 @@
-main : main.cpp Aquarium.o Bestiole.o Milieu.o CapteurS.o CapteurV.o Camouflage.o Carapace.o Fins.o Behaviour.o Gregarious.o Fearful.o Cautious.o MultipleBehaviour.o Kamikaze.o BestioleFactory.o
-	g++ -Wall -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o CapteurS.o CapteurV.o Camouflage.o Carapace.o Fins.o Behaviour.o Gregarious.o Fearful.o Cautious.o MultipleBehaviour.o Kamikaze.o BestioleFactory.o -I . -lX11 -lpthread
+main : main.cpp Aquarium/Aquarium.o Bestioles/Bestiole.o Aquarium/Milieu.o Captors/CapteurS.o Captors/CapteurV.o Accessories/Camouflage.o Accessories/Carapace.o Accessories/Fins.o Behaviours/Behaviour.o Behaviours/Gregarious.o Behaviours/Fearful.o Behaviours/Cautious.o Behaviours/MultipleBehaviour.o Behaviours/Kamikaze.o Bestioles/BestioleFactory.o
+	g++ -Wall -std=c++14 -o main main.cpp Aquarium/Aquarium.o Bestioles/Bestiole.o Aquarium/Milieu.o Captors/CapteurS.o Captors/CapteurV.o Accessories/Camouflage.o Accessories/Carapace.o Accessories/Fins.o Behaviours/Behaviour.o Behaviours/Gregarious.o Behaviours/Fearful.o Behaviours/Cautious.o Behaviours/MultipleBehaviour.o Behaviours/Kamikaze.o Bestioles/BestioleFactory.o -I . -lX11 -lpthread
 
-Aquarium.o : Aquarium.h Aquarium.cpp
-	g++ -Wall -std=c++14 -c Aquarium.cpp -I .
+Aquarium/Aquarium.o : Aquarium/Aquarium.h Aquarium/Aquarium.cpp
+	g++ -Wall -std=c++14 -c Aquarium/Aquarium.cpp -I . -o Aquarium/Aquarium.o
 
-Bestiole.o : Bestiole.h Bestiole.cpp
-	g++ -Wall -std=c++14 -c Bestiole.cpp -I .
+Bestioles/Bestiole.o : Bestioles/Bestiole.h Bestioles/Bestiole.cpp
+	g++ -Wall -std=c++14 -c Bestioles/Bestiole.cpp -I . -o Bestioles/Bestiole.o
 
-Milieu.o : Milieu.h Milieu.cpp
-	g++ -Wall -std=c++14 -c Milieu.cpp -I .
+Aquarium/Milieu.o : Aquarium/Milieu.h Aquarium/Milieu.cpp
+	g++ -Wall -std=c++14 -c Aquarium/Milieu.cpp -I . -o Aquarium/Milieu.o
 
-CapteurS.o : CapteurS.h CapteurS.cpp ICapteur.h
-	g++ -Wall -std=c++14 -c CapteurS.cpp -I .
+Captors/CapteurS.o : Captors/CapteurS.h Captors/CapteurS.cpp Captors/ICapteur.h
+	g++ -Wall -std=c++14 -c Captors/CapteurS.cpp -I . -o Captors/CapteurS.o
 
-CapteurV.o : CapteurV.h CapteurV.cpp ICapteur.h
-	g++ -Wall -std=c++14 -c CapteurV.cpp -I .
+Captors/CapteurV.o : Captors/CapteurV.h Captors/CapteurV.cpp Captors/ICapteur.h
+	g++ -Wall -std=c++14 -c Captors/CapteurV.cpp -I . -o Captors/CapteurV.o
 
-Camouflage.o : Camouflage.h Camouflage.cpp
-	g++ -Wall -std=c++14 -c Camouflage.cpp -I .
+Accessories/Camouflage.o : Accessories/Camouflage.h Accessories/Camouflage.cpp
+	g++ -Wall -std=c++14 -c Accessories/Camouflage.cpp -I . -o Accessories/Camouflage.o
 
-Carapace.o : Carapace.h Carapace.cpp
-	g++ -Wall -std=c++14 -c Carapace.cpp -I .
+Accessories/Carapace.o : Accessories/Carapace.h Accessories/Carapace.cpp
+	g++ -Wall -std=c++14 -c Accessories/Carapace.cpp -I . -o Accessories/Carapace.o
 
-Fins.o : Fins.h Fins.cpp
-	g++ -Wall -std=c++14 -c Fins.cpp -I .
+Accessories/Fins.o : Accessories/Fins.h Accessories/Fins.cpp
+	g++ -Wall -std=c++14 -c Accessories/Fins.cpp -I . -o Accessories/Fins.o
 
-Behaviour.o : Behaviours/Behaviour.h Behaviours/Behaviour.cpp
-	g++ -Wall -std=c++14 -c Behaviours/Behaviour.cpp -I .
+Behaviours/Behaviour.o : Behaviours/Behaviour.h Behaviours/Behaviour.cpp
+	g++ -Wall -std=c++14 -c Behaviours/Behaviour.cpp -I . -o Behaviours/Behaviour.o
 
-Gregarious.o : Behaviours/Gregarious.h Behaviours/Gregarious.cpp
-	g++ -Wall -std=c++14 -c Behaviours/Gregarious.cpp -I .
+Behaviours/Gregarious.o : Behaviours/Gregarious.h Behaviours/Gregarious.cpp
+	g++ -Wall -std=c++14 -c Behaviours/Gregarious.cpp -I . -o Behaviours/Gregarious.o
 
-Fearful.o : Behaviours/Fearful.h Behaviours/Fearful.cpp
-	g++ -Wall -std=c++14 -c Behaviours/Fearful.cpp -I .
+Behaviours/Fearful.o : Behaviours/Fearful.h Behaviours/Fearful.cpp
+	g++ -Wall -std=c++14 -c Behaviours/Fearful.cpp -I . -o Behaviours/Fearful.o
 
-Cautious.o : Behaviours/Cautious.h Behaviours/Cautious.cpp
-	g++ -Wall -std=c++14 -c Behaviours/Cautious.cpp -I .
+Behaviours/Cautious.o : Behaviours/Cautious.h Behaviours/Cautious.cpp
+	g++ -Wall -std=c++14 -c Behaviours/Cautious.cpp -I . -o Behaviours/Cautious.o
 
-MultipleBehaviour.o : Behaviours/MultipleBehaviour.h Behaviours/MultipleBehaviour.cpp
-	g++ -Wall -std=c++14 -c Behaviours/MultipleBehaviour.cpp -I .
+Behaviours/MultipleBehaviour.o : Behaviours/MultipleBehaviour.h Behaviours/MultipleBehaviour.cpp
+	g++ -Wall -std=c++14 -c Behaviours/MultipleBehaviour.cpp -I . -o Behaviours/MultipleBehaviour.o
 
-Kamikaze.o : Behaviours/Kamikaze.cpp
-	g++ -Wall -std=c++14 -c Behaviours/Kamikaze.cpp -I .
+Behaviours/Kamikaze.o : Behaviours/Kamikaze.h Behaviours/Kamikaze.cpp
+	g++ -Wall -std=c++14 -c Behaviours/Kamikaze.cpp -I . -o Behaviours/Kamikaze.o
 
-BestioleFactory.o : BestioleFactory.cpp BestioleFactory.h
-	g++ -Wall -std=c++14 -c BestioleFactory.cpp -I .
+Bestioles/BestioleFactory.o : Bestioles/BestioleFactory.cpp Bestioles/BestioleFactory.h
+	g++ -Wall -std=c++14 -c Bestioles/BestioleFactory.cpp -I . -o Bestioles/BestioleFactory.o
 
 clean:
-	rm -rf *.o main
+	rm -rf *.o main Aquarium/*.o Bestioles/*.o Captors/*.o Accessories/*.o Behaviours/*.o
 
 

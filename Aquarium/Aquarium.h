@@ -2,7 +2,7 @@
 #define _AQUARIUM_H_
 
 
-#include "CImg.h"
+#include "../Dependencies/CImg.h"
 #include <string>
 
 using namespace std;

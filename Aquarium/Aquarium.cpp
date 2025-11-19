@@ -4,11 +4,11 @@
 
 #include "Milieu.h"
 #include <iostream>
-#include "Carapace.h"
-#include "Fins.h"
+#include "../Accessories/Carapace.h"
+#include "../Accessories/Fins.h"
 #include <fstream>
 #include <map>
-#include "BestioleFactory.h"
+#include "../Bestioles/BestioleFactory.h"
 
 // A helper function to parse data from a config file
 map<std::string, std::string> readConfig(const std::string& filename) {
@@ -336,7 +336,7 @@ void Aquarium::display_menu() {
     const unsigned char blue[] = {0, 100, 200};     
     
     // Fill the menu with white color
-    menu.fill(white);  
+    menu.fill(white[0], white[1], white[2]);  
     
     // Draw the title of the simulation
     menu.draw_text(100, 100, "AQUARIUM SIMULATION", black, 0, 1, 32);

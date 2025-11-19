@@ -3,7 +3,7 @@
 //
 
 #include "Kamikaze.h"
-#include "../Bestiole.h"
+#include "../Bestioles/Bestiole.h"
 
 Kamikaze::Kamikaze(Bestiole *bestiole) {
     this->bestiole = bestiole;

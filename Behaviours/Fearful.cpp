@@ -1,6 +1,6 @@
 
 #include "Fearful.h"
-#include "../Bestiole.h"
+#include "../Bestioles/Bestiole.h"
 
 const int Fearful::DENSITE_BESTIOLE = 1;
 const double Fearful::COEF_FPEUR = 3. ;

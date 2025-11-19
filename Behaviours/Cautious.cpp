@@ -3,7 +3,7 @@
 //
 
 #include "Cautious.h"
-#include "../Bestiole.h"
+#include "../Bestioles/Bestiole.h"
 
 #include <cmath>
 
