@@ -37,6 +37,7 @@ Here is a list of the accessories, sensors, and behaviors implemented:
 
 # Usage:
 
+    0-Download Dependencies: Run `make get-deps` to download and set up all dependencies.
     1-Compilation with Makefile: Run make.
     2-Enter the parameters of the simulation in the config file ("config.txt")
     3-Execution of the Program: Run ./main.

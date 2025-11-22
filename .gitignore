@@ -3,3 +3,4 @@ cmake-build-debug/
 .gitattributes
 .vscode/
 ./main
+Dependencies/
