@@ -493,25 +493,31 @@ double Bestiole::getBaseSpeed() const {
 }
 
 void Bestiole::setBehaviour(const std::string &s) {
+    // Delete old behaviour if it exists
+    if (this->behaviour != nullptr) {
+        delete this->behaviour;
+        this->behaviour = nullptr;
+    }
+    
     // Set behaviour according to the passed string
     if (s == "Fearful") {
         this->behaviour = new Fearful(this);
         this->type = "Fearful";
     }
     else if (s == "Kamikaze") {
-        behaviour = new Kamikaze(this);
+        this->behaviour = new Kamikaze(this);
         this->type = "Kamikaze";
     }
     else if (s == "Gregarious") {
-        behaviour = new Gregarious(this);
+        this->behaviour = new Gregarious(this);
         this->type = "Gregarious";
     }
     else if (s == "Cautious") {
-        behaviour = new Cautious(this);
+        this->behaviour = new Cautious(this);
         this->type = "Cautious";
     }
     else if (s == "Multiple"){
-        behaviour = new MultipleBehaviour(this);
+        this->behaviour = new MultipleBehaviour(this);
         this->type = "Multiple";
     }
 }
