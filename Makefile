@@ -16,17 +16,17 @@ TEST_SOURCES = tests/test_Bestiole.cpp
 
 # The building process
 
-$(BINARY_DIRECTORY)/main : main.cpp $(OBJECT_FILES)
+$(BINARY_DIRECTORY)/main : get-deps main.cpp $(OBJECT_FILES)
 	@mkdir -p $(BINARY_DIRECTORY)
 	@g++ -Wall -std=c++17 -o $(BINARY_DIRECTORY)/main main.cpp $(OBJECT_FILES) -I . -lX11 -lpthread
 
-Aquarium/Aquarium.o : Aquarium/Aquarium.h Aquarium/Aquarium.cpp
+Aquarium/Aquarium.o : get-deps Aquarium/Aquarium.h Aquarium/Aquarium.cpp
 	g++ -Wall -std=c++17 -c Aquarium/Aquarium.cpp -I . -o Aquarium/Aquarium.o
 
-Bestioles/Bestiole.o : Bestioles/Bestiole.h Bestioles/Bestiole.cpp
+Bestioles/Bestiole.o : get-deps Bestioles/Bestiole.h Bestioles/Bestiole.cpp
 	g++ -Wall -std=c++17 -c Bestioles/Bestiole.cpp -I . -o Bestioles/Bestiole.o
 
-Aquarium/Milieu.o : Aquarium/Milieu.h Aquarium/Milieu.cpp
+Aquarium/Milieu.o : get-deps Aquarium/Milieu.h Aquarium/Milieu.cpp
 	g++ -Wall -std=c++17 -c Aquarium/Milieu.cpp -I . -o Aquarium/Milieu.o
 
 Captors/CapteurS.o : Captors/CapteurS.h Captors/CapteurS.cpp Captors/ICapteur.h
