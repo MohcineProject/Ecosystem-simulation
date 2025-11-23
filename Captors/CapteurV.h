@@ -8,7 +8,7 @@
 #include <vector>
 #include <set>
 
-#include "../Bestioles/Bestiole.h"
+#include "Bestioles/Bestiole.h"
 
 
 /**

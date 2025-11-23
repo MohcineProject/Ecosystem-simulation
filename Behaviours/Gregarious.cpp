@@ -3,7 +3,7 @@
 //
 
 #include "Gregarious.h"
-#include "../Bestioles/Bestiole.h"
+#include "Bestioles/Bestiole.h"
 
 
 

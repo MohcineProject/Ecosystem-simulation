@@ -1,10 +1,24 @@
 DEPENDENCY = Dependencies
 STATIC_LIBRAIRIES_BUILD = Build/lib
+TEST_BINARY_DIRECTORY = Build/test
+BINARY_DIRECTORY = Build/bin
+
+# Object files for tests
+OBJECT_FILES = Bestioles/Bestiole.o Aquarium/Milieu.o Aquarium/Aquarium.o \
+               Captors/CapteurS.o Captors/CapteurV.o Accessories/Camouflage.o \
+               Accessories/Carapace.o Accessories/Fins.o Behaviours/Behaviour.o \
+               Behaviours/Gregarious.o Behaviours/Fearful.o Behaviours/Cautious.o \
+               Behaviours/MultipleBehaviour.o Behaviours/Kamikaze.o \
+               Bestioles/BestioleFactory.o
+
+# Test source files
+TEST_SOURCES = tests/test_Bestiole.cpp
 
 # The building process
 
-main : main.cpp Aquarium/Aquarium.o Bestioles/Bestiole.o Aquarium/Milieu.o Captors/CapteurS.o Captors/CapteurV.o Accessories/Camouflage.o Accessories/Carapace.o Accessories/Fins.o Behaviours/Behaviour.o Behaviours/Gregarious.o Behaviours/Fearful.o Behaviours/Cautious.o Behaviours/MultipleBehaviour.o Behaviours/Kamikaze.o Bestioles/BestioleFactory.o
-	g++ -Wall -std=c++17 -o main main.cpp Aquarium/Aquarium.o Bestioles/Bestiole.o Aquarium/Milieu.o Captors/CapteurS.o Captors/CapteurV.o Accessories/Camouflage.o Accessories/Carapace.o Accessories/Fins.o Behaviours/Behaviour.o Behaviours/Gregarious.o Behaviours/Fearful.o Behaviours/Cautious.o Behaviours/MultipleBehaviour.o Behaviours/Kamikaze.o Bestioles/BestioleFactory.o -I . -lX11 -lpthread
+$(BINARY_DIRECTORY)/main : main.cpp $(OBJECT_FILES)
+	@mkdir -p $(BINARY_DIRECTORY)
+	@g++ -Wall -std=c++17 -o $(BINARY_DIRECTORY)/main main.cpp $(OBJECT_FILES) -I . -lX11 -lpthread
 
 Aquarium/Aquarium.o : Aquarium/Aquarium.h Aquarium/Aquarium.cpp
 	g++ -Wall -std=c++17 -c Aquarium/Aquarium.cpp -I . -o Aquarium/Aquarium.o
@@ -52,7 +66,10 @@ Bestioles/BestioleFactory.o : Bestioles/BestioleFactory.cpp Bestioles/BestioleFa
 	g++ -Wall -std=c++17 -c Bestioles/BestioleFactory.cpp -I . -o Bestioles/BestioleFactory.o
 
 clean:
-	rm -rf *.o main Aquarium/*.o Bestioles/*.o Captors/*.o Accessories/*.o Behaviours/*.o
+	rm -rf *.o main Aquarium/*.o Bestioles/*.o Captors/*.o Accessories/*.o Behaviours/*.o $(BINARY_DIRECTORY)/main
+
+clean-all: clean
+	rm -rf Build/* Dependencies/*
 
 # Download the dependencies
 
@@ -85,3 +102,47 @@ get-CImg:
 	fi
 	@echo "Setup of CImg is done"
 
+# Launching the application
+
+launch: $(BINARY_DIRECTORY)/main
+	$(BINARY_DIRECTORY)/main
+
+# The testing process
+
+# A quick command to download and setup the required gtest static library
+setup-gtest:
+	@echo "Setting up gtest..."
+	@if [ ! -d "$(DEPENDENCY)/gtest/googletest" ]; then \
+		mkdir -p $(DEPENDENCY)/gtest; \
+		cd $(DEPENDENCY) ; \
+		git clone https://github.com/google/googletest.git gtest; \
+	fi
+	@if [ ! -f "$(STATIC_LIBRAIRIES_BUILD)/libgtest.a" ]; then \
+		mkdir -p $(STATIC_LIBRAIRIES_BUILD); \
+		g++ -Wall -std=c++17 -isystem $(DEPENDENCY)/gtest/googletest/include \
+		    -I$(DEPENDENCY)/gtest/googletest -pthread \
+		    -c $(DEPENDENCY)/gtest/googletest/src/gtest-all.cc \
+		    -o $(STATIC_LIBRAIRIES_BUILD)/gtest-all.o; \
+		g++ -Wall -std=c++17 -isystem $(DEPENDENCY)/gtest/googletest/include \
+			-I$(DEPENDENCY)/gtest/googletest -pthread \
+			-c $(DEPENDENCY)/gtest/googletest/src/gtest_main.cc \
+			-o $(STATIC_LIBRAIRIES_BUILD)/gtest_main.o; \
+		ar -rv $(STATIC_LIBRAIRIES_BUILD)/libgtest.a \
+			$(STATIC_LIBRAIRIES_BUILD)/gtest-all.o $(STATIC_LIBRAIRIES_BUILD)/gtest_main.o; \
+		rm $(STATIC_LIBRAIRIES_BUILD)/gtest-all.o; \
+		rm $(STATIC_LIBRAIRIES_BUILD)/gtest_main.o; \
+	fi
+	@echo "Setup of gtest was successful"
+
+test: setup-gtest $(OBJECT_FILES)
+	@mkdir -p $(TEST_BINARY_DIRECTORY)
+	@g++ -Wall -std=c++17 \
+	    -I. \
+	    -isystem $(DEPENDENCY)/gtest/googletest/include \
+	    -I$(DEPENDENCY)/gtest/googletest \
+	    $(TEST_SOURCES) $(OBJECT_FILES) \
+	    -L$(STATIC_LIBRAIRIES_BUILD) -lgtest -lX11 -lpthread \
+	    -o $(TEST_BINARY_DIRECTORY)/test_runner;
+	@./$(TEST_BINARY_DIRECTORY)/test_runner
+
+.PHONY: clean clean-all test setup-gtest get-deps get-CImg

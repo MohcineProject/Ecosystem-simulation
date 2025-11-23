@@ -3,7 +3,7 @@
 //
 
 #include "Behaviour.h"
-#include "../Bestioles/Bestiole.h"
+#include "Bestioles/Bestiole.h"
 
 
 /**

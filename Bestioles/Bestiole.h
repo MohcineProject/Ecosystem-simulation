@@ -1,14 +1,14 @@
 #ifndef _BESTIOLES_H_
 #define _BESTIOLES_H_
 
-#include "../Dependencies/UImg.h"
-#include "../Accessories/Accessoire.h"
+#include "Dependencies/UImg.h"
+#include "Accessories/Accessoire.h"
 #include <vector>
 #include <set>
 #include <memory>
-#include "../Captors/CapteurS.h"
-#include "../Captors/CapteurV.h"
-#include "../Behaviours/Behaviour.h"
+#include "Captors/CapteurS.h"
+#include "Captors/CapteurV.h"
+#include "Behaviours/Behaviour.h"
 
 
 using namespace std;
@@ -97,7 +97,7 @@ private:
      * @param xLim Maximum X boundary.
      * @param yLim Maximum Y boundary.
      */
-    void bouge(int xLim, int yLim);
+    void move(int xLim, int yLim);
 
 public:
     /**

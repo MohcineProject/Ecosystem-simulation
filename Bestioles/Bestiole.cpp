@@ -1,19 +1,19 @@
 #include "Bestiole.h"
 
-#include "../Aquarium/Milieu.h"
-#include "../Captors/CapteurS.h"
-#include "../Captors/CapteurV.h"
+#include "Aquarium/Milieu.h"
+#include "Captors/CapteurS.h"
+#include "Captors/CapteurV.h"
 
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
-#include "../Behaviours/Cautious.h"
-#include "../Behaviours/Fearful.h"
-#include "../Behaviours/Gregarious.h"
-#include "../Behaviours/Kamikaze.h"
-#include "../Behaviours/MultipleBehaviour.h"
-#include "../Accessories/Carapace.h"
-#include "../Accessories/Accessoire.h"
+#include "Behaviours/Cautious.h"
+#include "Behaviours/Fearful.h"
+#include "Behaviours/Gregarious.h"
+#include "Behaviours/Kamikaze.h"
+#include "Behaviours/MultipleBehaviour.h"
+#include "Accessories/Carapace.h"
+#include "Accessories/Accessoire.h"
 
 
 const double      Bestiole::AFF_SIZE = 8.;
@@ -159,7 +159,7 @@ void Bestiole::initCoords(int xLim, int yLim)
     y = rand() % yLim;
 }
 
-void Bestiole::bouge(int xLim, int yLim)
+void Bestiole::move(int xLim, int yLim)
 {
     double nx, ny;
     double dx = cos(orientation) * vitesse;
@@ -202,7 +202,7 @@ void Bestiole::bouge(int xLim, int yLim)
 void Bestiole::action(const Milieu & monMilieu )
 {
     // Move the bestiole and execute its behaviour
-    bouge(monMilieu.getWidth(), monMilieu.getHeight());
+    move(monMilieu.getWidth(), monMilieu.getHeight());
     this->doBehaviour();
 }
 

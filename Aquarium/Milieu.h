@@ -2,8 +2,8 @@
 #define _MILIEU_H_
 
 
-#include "../Dependencies/UImg.h"
-#include "../Bestioles/Bestiole.h"
+#include "Dependencies/UImg.h"
+#include "Bestioles/Bestiole.h"
 #include <vector>
 
 using namespace std;

@@ -1,7 +1,7 @@
 #ifndef CAPTEURS_H
 #define CAPTEURS_H
 
-#include "../Bestioles/Bestiole.h"
+#include "Bestioles/Bestiole.h"
 #include <vector>
 #include <set>
 

@@ -3,8 +3,8 @@
 //
 
 #include "BestioleFactory.h"
-#include "../Accessories/Fins.h"
-#include "../Accessories/Carapace.h"
+#include "Accessories/Fins.h"
+#include "Accessories/Carapace.h"
 
 
 

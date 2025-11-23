@@ -4,11 +4,11 @@
 
 #include "Milieu.h"
 #include <iostream>
-#include "../Accessories/Carapace.h"
-#include "../Accessories/Fins.h"
+#include "Accessories/Carapace.h"
+#include "Accessories/Fins.h"
 #include <fstream>
 #include <map>
-#include "../Bestioles/BestioleFactory.h"
+#include "Bestioles/BestioleFactory.h"
 
 // A helper function to parse data from a config file
 map<std::string, std::string> readConfig(const std::string& filename) {

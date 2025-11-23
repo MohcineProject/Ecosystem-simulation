@@ -5,7 +5,7 @@
 #ifndef BESTIOLEFACTORY_H
 #define BESTIOLEFACTORY_H
 
-#include "../Aquarium/Aquarium.h"
+#include "Aquarium/Aquarium.h"
 #include "Bestiole.h"
 
 class BestioleFactory {
