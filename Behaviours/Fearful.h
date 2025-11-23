@@ -23,9 +23,9 @@ class Fearful : public Behaviour {
   static const int DENSITE_BESTIOLE;
 
   /**
-   * @brief Coefficient for calculating the modified speed.
+   * @brief Speed multiplier factor when fearful (fleeing from neighbors).
    */
-  static const double COEF_FPEUR;
+  static const double FEAR_FACTOR;
 
   /**
    * @brief Calculates a new direction to avoid neighbors.

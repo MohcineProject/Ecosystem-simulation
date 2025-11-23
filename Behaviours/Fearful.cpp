@@ -3,7 +3,7 @@
 #include "Bestioles/Bestiole.h"
 
 const int Fearful::DENSITE_BESTIOLE = 1;
-const double Fearful::COEF_FPEUR = 3. ;
+const double Fearful::FEAR_FACTOR = 3. ;
 
 Fearful::Fearful(Bestiole *bestiole) {
     this->bestiole = bestiole;
@@ -38,19 +38,18 @@ double Fearful::calculateNewDirection(const std::set<Bestiole*>& neighbors) {
 
 
 void Fearful::doBehaviour(std::set<Bestiole*>& neighbors){
-
+    // If density is low (fewer neighbors than threshold), reset to normal speed
     if (neighbors.size() < DENSITE_BESTIOLE) {
-        // If the density is low, reset to base speed
-        bestiole->setVitesse(bestiole->getBaseSpeed());
+        bestiole->setBehaviorSpeedMultiplier(1.0);
         return;
     }
-    // If the density is high, calculate new direction and adjust speed
+    
+    // If density is high (at least DENSITE_BESTIOLE neighbors), flee and increase speed
+    // Calculate new direction away from neighbors
     bestiole->setOrientation(calculateNewDirection(neighbors));
-
-    // compute the new sped
-    double adjustedSpeed = bestiole->getBaseSpeed() * COEF_FPEUR;
-
-    // adjust the speed of the bestiole to not go over the max speed
-    bestiole->setVitesse(std::min(adjustedSpeed, bestiole->getMaxSpeed()));
-  }
+    
+    // Apply fear factor multiplier (3x speed when fleeing)
+    // getActualSpeed() will cap the final speed at MAX_VITESSE if needed
+    bestiole->setBehaviorSpeedMultiplier(FEAR_FACTOR);
+}
 

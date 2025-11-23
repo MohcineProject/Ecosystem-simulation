@@ -72,14 +72,15 @@ private:
     float orientation;
 
     /**
-     * @brief Speed of the Bestiole, a modified base speed due to presence of accessories and behaviors.
-     */
-    double vitesse;
-
-    /**
      * @brief The base speed of the Bestiole,
      */
     double baseSpeed;
+
+    /**
+     * @brief Temporary speed multiplier set by behaviors (defaults to 1.0).
+     * Behaviors can temporarily modify speed by setting this multiplier.
+     */
+    double behaviorSpeedMultiplier = 1.0;
 
     /**
      * @brief Resistance of the Bestiole to collisions.
@@ -251,10 +252,10 @@ public:
     static double getMaxSpeed() ;
 
     /**
-     * @brief Set the speed of the Bestiole.
-     * @param newv The new speed.
+     * @brief Set a temporary speed multiplier for behaviors.
+     * @param multiplier The speed multiplier (1.0 = normal speed, 2.0 = double speed, etc.)
      */
-    void setVitesse(double newv);
+    void setBehaviorSpeedMultiplier(double multiplier);
 
     /**
      * @brief Initialize the Bestiole's coordinates within simulation bounds.
@@ -358,6 +359,12 @@ public:
      * @return Unique ID.
      */
     int getIdentite() const { return identite; }
+
+    /**
+     * @brief Get the current value of the next ID counter (for testing purposes).
+     * @return The next ID that will be assigned.
+     */
+    static int getNextId() { return next; }
 
     /**
      * @brief Set the orientation of the Bestiole.

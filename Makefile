@@ -12,7 +12,7 @@ OBJECT_FILES = Bestioles/Bestiole.o Aquarium/Milieu.o Aquarium/Aquarium.o \
                Bestioles/BestioleFactory.o
 
 # Test source files
-TEST_SOURCES = tests/test_Bestiole.cpp
+TEST_SOURCES = tests/test_Bestiole.cpp tests/test_Behaviours.cpp tests/test_Accessories.cpp tests/test_Captors.cpp tests/test_BestioleFactory.cpp
 
 # The building process
 

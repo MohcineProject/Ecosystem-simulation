@@ -40,8 +40,8 @@ void debug_couleur(const char* context, const T* ptr) {
 Bestiole::Bestiole(const double baseSpeed)
     : cumulX(0.0), cumulY(0.0),
       orientation(static_cast<double>(rand()) / RAND_MAX * 2.0 * M_PI),
-      vitesse(static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE),
       baseSpeed(baseSpeed),
+      behaviorSpeedMultiplier(1.0),
       resistance(1.0),
       x(0),
       y(0),
@@ -63,8 +63,8 @@ Bestiole::Bestiole(const Bestiole& b)
       x(b.x), y(b.y),
       cumulX(b.cumulX), cumulY(b.cumulY),
       orientation(b.orientation),
-      vitesse(b.vitesse),
       baseSpeed(b.baseSpeed),
+      behaviorSpeedMultiplier(b.behaviorSpeedMultiplier),
       accessoires(b.accessoires),
       detectionCapability(b.detectionCapability),
       resistance(b.resistance), type(b.type), deathProbability(b.deathProbability),
@@ -108,8 +108,9 @@ Bestiole::Bestiole(const Bestiole& b)
 Bestiole::Bestiole(Bestiole&& b) noexcept
     : identite(b.identite), x(b.x), y(b.y),
       cumulX(b.cumulX), cumulY(b.cumulY),
-      orientation(b.orientation), vitesse(b.vitesse),
-      baseSpeed(b.baseSpeed), accessoires(std::move(b.accessoires)),
+      orientation(b.orientation),
+      baseSpeed(b.baseSpeed), behaviorSpeedMultiplier(b.behaviorSpeedMultiplier),
+      accessoires(std::move(b.accessoires)),
       detectionCapability(b.detectionCapability),
       resistance(b.resistance), deathflag(b.deathflag), deathProbability(b.deathProbability),
       myAgeLimit(b.myAgeLimit), myAge(b.myAge){
@@ -162,8 +163,9 @@ void Bestiole::initCoords(int xLim, int yLim)
 void Bestiole::move(int xLim, int yLim)
 {
     double nx, ny;
-    double dx = cos(orientation) * vitesse;
-    double dy = -sin(orientation) * vitesse;
+    double currentSpeed = getActualSpeed();  // Use actual speed accounting for accessories
+    double dx = cos(orientation) * currentSpeed;
+    double dy = -sin(orientation) * currentSpeed;
     int cx, cy;
 
     cx = static_cast<int>(cumulX);
@@ -345,17 +347,20 @@ double Bestiole::getMaxSpeed()  {
    return MAX_VITESSE;
 }
 
-void Bestiole::setVitesse(const double newv) {
-   vitesse = newv;
+void Bestiole::setBehaviorSpeedMultiplier(const double multiplier) {
+   behaviorSpeedMultiplier = multiplier;
 }
 
 double Bestiole::getActualSpeed() const {
-    // Return the modified speed depending on the existence of the fins
-    double speedFactor = 1.0;
+    // Calculate speed from baseSpeed, accessories (stacking multiplicatively), and behavior multiplier
+    double accessorySpeedFactor = 1.0;
     for (const auto& acc : accessoires) {
-        speedFactor = acc->getSpeedFactor();
+        accessorySpeedFactor *= acc->getSpeedFactor();  // Multiply factors to stack accessories
     }
-    return baseSpeed * speedFactor;
+    double calculatedSpeed = baseSpeed * accessorySpeedFactor * behaviorSpeedMultiplier;
+    
+    // Cap at maximum speed
+    return std::min(calculatedSpeed, MAX_VITESSE);
 }
 
 float Bestiole::getOrientation() const {
@@ -376,7 +381,7 @@ Bestiole & Bestiole::operator=(const Bestiole &b) {
         this->orientation = b.orientation;
         this->cumulX = b.cumulX;
         this->cumulY = b.cumulY;
-        this->vitesse = b.vitesse;
+        this->behaviorSpeedMultiplier = b.behaviorSpeedMultiplier;
         this->detectionCapability = b.detectionCapability;
 
         // Deep copy behaviour
@@ -427,8 +432,8 @@ Bestiole & Bestiole::operator=(Bestiole &&b) noexcept {
         cumulX = b.cumulX;
         cumulY = b.cumulY;
         orientation = b.orientation;
-        vitesse = b.vitesse;
         baseSpeed = b.baseSpeed;
+        behaviorSpeedMultiplier = b.behaviorSpeedMultiplier;
         accessoires = std::move(b.accessoires);
         detectionCapability = b.detectionCapability;
         resistance = b.resistance;
